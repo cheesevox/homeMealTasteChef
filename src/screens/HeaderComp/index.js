@@ -27,16 +27,19 @@ const HeaderComp = (props) => {
         style={{
           alignItems: "center",
           flex: 1,
+          padding:10
         }}
       >
         <Pressable
           style={({ pressed }) => [
             {
-              opacity: pressed ? 0.5 : 1,
-              backgroundColor:'orange',
-              padding:10,
-              marginRight:30,
-              borderRadius:50
+              backgroundColor: 'orange',
+              padding: 8,
+              borderBottomLeftRadius:17,
+              borderBottomRightRadius:17,
+              borderTopLeftRadius:17,
+              borderTopRightRadius:17,
+              width:'50%'
             },
           ]}
           onPress={onBack}
@@ -73,6 +76,7 @@ const HeaderComp = (props) => {
           alignItems: 'center',
           fontWeight: 'bold',
           width: '50%',
+          margin: 25,
           borderRadius: 20,
           borderWidth: 2
         }}

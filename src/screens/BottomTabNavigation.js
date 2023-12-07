@@ -2,11 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import FoodListScreen from "./FoodListScreen";
-import OrderCartScreen from "./OrderCartScreen";
 import UserProfileScreen from "./UserProfileScreen";
-import OrderScreen from "./OrderScreen";
-import WalletScreen from "./WalletScreen";
 import { useDispatch } from "react-redux";
 import ChefHomeScreen from "./ChefHome";
 import PostIcon from "../components/Icons/PostIcon";
@@ -25,7 +21,7 @@ const BottomTabNavigator = ({ route }) => {
     dispatch(getUserInfor(user));
   }, [user?.userId]);
   // const role = 3;
-  return user?.roleId == 3 ? (
+  return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
@@ -87,66 +83,68 @@ const BottomTabNavigator = ({ route }) => {
         component={UserProfileScreen}
       />
     </Tab.Navigator>
-  ) : (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: "orange",
-          borderTopRightRadius: 30,
-          borderTopLeftRadius: 30,
-          height: 50,
-        },
-        tabBarActiveTintColor: "#466fd4",
-        tabBarInactiveTintColor: "white",
-      }}
-    >
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={24} color={color}></Ionicons>
-          ),
-        }}
-        name="Home"
-        component={FoodListScreen}
-      />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="cart-outline" size={24} color={color}></Ionicons>
-          ),
-        }}
-        name="OrderCart"
-        component={OrderCartScreen}
-      />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="wallet-outline" size={24} color={color}></Ionicons>
-          ),
-        }}
-        name="Order"
-        component={OrderScreen}
-      />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons
-              name="person-circle-outline"
-              size={24}
-              color={color}
-            ></Ionicons>
-          ),
-        }}
-        name="UserProfile"
-        component={UserProfileScreen}
-      />
-    </Tab.Navigator>
-  );
+  ) 
 };
+  // : (
+  //   <Tab.Navigator
+  //     screenOptions={{
+  //       tabBarStyle: {
+  //         backgroundColor: "orange",
+  //         borderTopRightRadius: 30,
+  //         borderTopLeftRadius: 30,
+  //         height: 50,
+  //       },
+  //       tabBarActiveTintColor: "#466fd4",
+  //       tabBarInactiveTintColor: "white",
+  //     }}
+  //   >
+  //     <Tab.Screen
+  //       options={{
+  //         headerShown: false,
+  //         tabBarIcon: ({ color }) => (
+  //           <Ionicons name="home-outline" size={24} color={color}></Ionicons>
+  //         ),
+  //       }}
+  //       name="Home"
+  //       // component={FoodListScreen}
+  //     />
+  //     <Tab.Screen
+  //       options={{
+  //         headerShown: false,
+  //         tabBarIcon: ({ color }) => (
+  //           <Ionicons name="cart-outline" size={24} color={color}></Ionicons>
+  //         ),
+  //       }}
+  //       name="OrderCart"
+  //       // component={OrderCartScreen}
+  //     />
+  //     <Tab.Screen
+  //       options={{
+  //         headerShown: false,
+  //         tabBarIcon: ({ color }) => (
+  //           <Ionicons name="wallet-outline" size={24} color={color}></Ionicons>
+  //         ),
+  //       }}
+  //       name="Order"
+  //       // component={OrderScreen}
+  //     />
+  //     <Tab.Screen
+  //       options={{
+  //         headerShown: false,
+  //         tabBarIcon: ({ color }) => (
+  //           <Ionicons
+  //             name="person-circle-outline"
+  //             size={24}
+  //             color={color}
+  //           ></Ionicons>
+  //         ),
+  //       }}
+  //       name="UserProfile"
+  //       component={UserProfileScreen}
+  //     />
+  //   </Tab.Navigator>
+  // );
+
 
 // const styles = StyleSheet.create({});
 export default BottomTabNavigator;

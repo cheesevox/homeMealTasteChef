@@ -132,7 +132,7 @@ const MarketScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    paddingTop: 20,
+    paddingTop: 25,
     backgroundColor: "#FFF",
     height: '100%',
   },

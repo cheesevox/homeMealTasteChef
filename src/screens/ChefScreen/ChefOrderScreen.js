@@ -125,39 +125,6 @@ const ChefOrderScreen = ({ navigation }) => {
             </View>
           </View>
           <Text style={{color:'orange'}}>Status: {item.status}</Text>
-          {/* <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {
-              item?.status?.includes("PAID") ?
-                (
-                  <TouchableOpacity
-                    style={{
-                      padding: 1,
-                      marginVertical: 2,
-                      borderRadius: 5,
-                      width: "20%",
-                      display: "flex",
-                      backgroundColor: "#FFD580",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      elevation: 5,
-                    }}
-                    onPress={() => onHandleCompletedOrder(item?.orderId)}
-                  >
-                  </TouchableOpacity>
-                )
-                : ""
-            }
-            <View>
-              <Text>Status:<Text style={{ padding: 5, color: 'green' }}>{item?.status}</Text></Text>
-            </View>
-          </View> */}
         </View>
       </TouchableOpacity>
     );
@@ -186,7 +153,6 @@ const ChefOrderScreen = ({ navigation }) => {
       backgroundColor: "#FFF",
       height: "100%"
     }}>
-
       {/* <View style={{
         gap: 20,
         backgroundColor: "#FFF",
@@ -228,7 +194,7 @@ const ChefOrderScreen = ({ navigation }) => {
       {/* </View> */}
       <View style={{
         flexDirection: "row", alignItems: "center",
-        marginHorizontal: 40, marginVertical: 15, justifyContent: "center",
+        marginHorizontal: 40, marginVertical: 10, justifyContent: "center",
         borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
       }}>
         <TouchableOpacity onPress={showDatePicker}>
@@ -258,8 +224,7 @@ const ChefOrderScreen = ({ navigation }) => {
       </View>
       <View style={{
         backgroundColor: "blue", flex: 9,
-        margin: 10,
-        marginTop: 10,
+        margin: 15,
         borderRadius: 20,
         backgroundColor: "#FFD580",
         elevation: 5,

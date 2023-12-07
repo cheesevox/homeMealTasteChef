@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import { RouteName } from "../Constant";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation,route }) => {
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -32,6 +32,7 @@ const LoginScreen = ({ navigation }) => {
       })
       .catch((res) => console.log("that bai get api", res));
   };
+
   //create toast message ref
   const [toastType, setToastType] = useState("success");
   const toastRef = useRef(null);
@@ -41,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
       toastRef.current.show();
     }
   };
-
+  
   // get set
   const onChagePhone = (value) => {
     setPhone(value);
@@ -49,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
   const onChagePassword = (value) => {
     setPassword(value);
   };
-
+  const { loginFailure } = route.params || {};
   //button login
   const onClickLogin = () => {
     if (phone.length == 0 || password.length == 0) {
@@ -75,14 +76,18 @@ const LoginScreen = ({ navigation }) => {
           description="Login succes"
           ref={toastRef}
         />
+        {loginFailure && (
+        <Text style={{ textAlign: 'left' }}>Login failed. Please try again.</Text>
+      )}
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Image
-          source={require("../../assets/images/loginimage.png")}
+          source={require("../../assets/images/chef.png")}
           style={{
-            marginTop: 100,
+            marginTop: 80,
             justifyContent: "center",
             alignItems: "center",
+            height:170, width:170
           }}
         />
         <Text
@@ -104,7 +109,7 @@ const LoginScreen = ({ navigation }) => {
             color: "red",
           }}
         >
-          Welcome Back!
+          Welcome Back Chef !
         </Text>
       </View>
       <View style={{ paddingTop: 30 }}>

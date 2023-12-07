@@ -26,9 +26,7 @@ const ToastMessage = forwardRef(({ type = 'fail', text, description, timeout =10
             backgroundColor: '#e74c3c'
         }
     }
-
     const backlor = LOGIN_TYPE[type].backgroundColor;
-
     return (
         <>
 

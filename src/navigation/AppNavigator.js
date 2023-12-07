@@ -2,24 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import FoodListScreen from "../screens/FoodListScreen";
-import FoodDetailsScreen from "../screens/FoodDetailsScreen";
 import LoginScreen from "../screens/LoginScreen";
-import OrderCartScreen from "../screens/OrderCartScreen";
 import WalletScreen from "../screens/WalletScreen";
 import PaymentScreen from "../screens/PaymentScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
-import FeedBackScreen from "../screens/FeedBackScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import Ionicons from "@expo/vector-icons";
 import BottomTabNavigator from "../screens/BottomTabNavigation";
-import MealDetailScreen from "../screens/MealDetailScreen";
-import OrderScreen from "../screens/OrderScreen";
-import ChefScreen from "../screens/ChefScreen/ChefScreen";
-import MealSession from "../screens/MealSession";
 import linking from "../linking";
-import ChefHomeScreen from "../screens/ChefHome";
 import DishManagement from "../screens/DishManagement";
 import { RouteName } from "../Constant";
 import formDish from "../screens/DishManagement/components/form-dish";
@@ -28,11 +19,11 @@ import formMeal from "../screens/MealManagement/components/form-meal";
 import session from "../screens/MarketScreen/components/session";
 import ChefOrderDetailScreen from "../screens/ChefScreen/ChefOrderDetailScreen";
 import WebScreen from "../screens/WebScreen";
-import SessionManagement from "../screens/SessionManagement";
 import AddNewMealSession from "../screens/SessionManagement/component/AddNewMealSession";
 import EditUserProfileScreen from "../screens/EditUserProfileScreen";
 import MealSessionScreen from "../screens/MealSessionMAnagement/MealSessionScreen";
 import MealSessionDetailSceen from "../screens/MealSessionMAnagement/MealSessionDetailSceen";
+import SessionManagement from "../screens/SessionManagement";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,24 +35,17 @@ const AppNavigator = () => {
 			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="CustomerHome" component={BottomTabNavigator} />
 				<Stack.Screen name="Login" component={LoginScreen} />
-				<Stack.Screen name="FoodList" component={FoodListScreen} />
-				<Stack.Screen name="FoodDetail" component={FoodDetailsScreen} />
-				<Stack.Screen name="MealDetail" component={MealDetailScreen} />
-				<Stack.Screen name="OrderCart" component={OrderCartScreen} />
-				<Stack.Screen name="Order" component={OrderScreen}/>
 				<Stack.Screen name="Wallet" component={WalletScreen} />
 				<Stack.Screen name="Payment" component={PaymentScreen} />
 				<Stack.Screen name="UserProfile" component={UserProfileScreen} />
 				<Stack.Screen name="Regiter" component={RegisterScreen} />
-				<Stack.Screen name="Feedback" component={FeedBackScreen} />
-				<Stack.Screen name="MealSession" component={MealSession} />
 				<Stack.Screen name="ChefOrderDetail" component={ChefOrderDetailScreen} />
 				<Stack.Screen name="WebScreen" component={WebScreen} />
-				<Stack.Screen name="SessionManagement" component={SessionManagement} />
 				<Stack.Screen name="AddMealSession" component={AddNewMealSession} />
 				<Stack.Screen name="EditProfile" component={EditUserProfileScreen} />
 				<Stack.Screen name="MealSessionScreen" component={MealSessionScreen} />
-        <Stack.Screen name="MealSessionDetail" component={MealSessionDetailSceen} />
+				<Stack.Screen name="SessionManagement" component={SessionManagement} />
+                <Stack.Screen name="MealSessionDetail" component={MealSessionDetailSceen} />
 
         {/*Chef role*/}
         <Stack.Screen

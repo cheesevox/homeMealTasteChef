@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { RouteName } from "./Constant";
 import { id } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
 import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
+
 export const login = async (values, navigation) => {
   console.log(values);
   try {
@@ -17,7 +18,7 @@ export const login = async (values, navigation) => {
       const roleId = response.data.roleId;
       const userId = response.data.userId
       if (roleId === 2) {
-        navigation.navigate("CustomerHome", {user:response.data});
+        navigation.navigate("Login", { loginFailure: true });
       } else if (roleId === 3) {
         navigation.navigate(`${RouteName.KITCHEN}`, {user:response.data});
       } else {

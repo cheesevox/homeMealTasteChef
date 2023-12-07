@@ -16,7 +16,7 @@ import { getAllMealInSessionID } from "../../Api";
 import dayjs from "dayjs";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import MealSession from "../MealSession";
+import MealSession from "../../MealSession";
 
 const SessionManagement = (props) => {
   const { navigation, route } = props;
