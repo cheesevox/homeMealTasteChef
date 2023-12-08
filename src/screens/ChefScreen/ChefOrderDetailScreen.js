@@ -126,7 +126,7 @@ const ChefOrderDetailScreen = ({ navigation, route }) => {
         );
     };
     return (
-        <SafeAreaView style={{ backgroundColor: Colors.white, flex: 1 }}>
+        <SafeAreaView style={{ backgroundColor: Colors.white, flex: 1}}>
             <View>
                 <View style={styles.topNavigate}>
                     <View
@@ -138,19 +138,28 @@ const ChefOrderDetailScreen = ({ navigation, route }) => {
                             width: "90%",
                         }}
                     >
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <FontAwesomeIcon icon={faArrowLeft} size={20} color="white" />
+                        <TouchableOpacity onPress={() => navigation.goBack()} 
+                        style={{
+                            padding:5, borderRadius:20,
+                            backgroundColor:'orange'}}>
+                            <FontAwesomeIcon icon={faArrowLeft} size={20} color="white"  />
                         </TouchableOpacity>
+                        <View style={{backgroundColor:'orange', borderRadius:20}}>
                         <Text
                             style={{
-                                fontSize: 20,
+                                fontSize: 22,
                                 fontWeight: "bold",
-                                color: "white",
-                                width: "65%",
+                                color: "red",
+                                paddingHorizontal:30,
+                                borderRadius:20,
+                                height:35
                             }}
                         >
                             Order Detail
                         </Text>
+                        </View>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -288,7 +297,6 @@ const styles = StyleSheet.create({
     },
     topNavigate: {
         height: 50,
-        backgroundColor: "#FFAB01",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

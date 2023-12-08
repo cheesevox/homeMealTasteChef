@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image
 } from "react-native";
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
@@ -53,6 +54,7 @@ const ChefHomeScreen = ({ navigation }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
+            paddingTop:20
           }}
         >
           <TouchableOpacity>
@@ -67,16 +69,22 @@ const ChefHomeScreen = ({ navigation }) => {
             flex: 1,
           }}
         >
+          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
           <Text
             style={{
               fontSize: 30,
               fontWeight: 500,
               color: "white",
               textAlign: "center",
+              width:'60%',
+              padding:15
             }}
           >
             Hi! Chef, Welcome back!
           </Text>
+          <Image source={require("./../../../assets/images/girlchef.jpg")} style={{height:150, width:150}} />
+          </View>
+        
         </View>
       </View>
       <View style={{ padding: 20 }}>
@@ -116,8 +124,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     padding: 20,
-    height: 200,
-    backgroundColor: "#FFAB01",
+    height: 250,
+    backgroundColor: "#FEE8C4",
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     elevation: 5,

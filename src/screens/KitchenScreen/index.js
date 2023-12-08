@@ -1,16 +1,53 @@
-import React from "react";
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Pressable, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
 import DishIcon from "../../components/Icons/DishIcon";
 import MealIcon from "../../components/Icons/MealIcon";
 import { RouteName } from "../../Constant";
 import HeaderComp from "../../screens/HeaderComp";
 import * as Icon from "react-native-feather";
 import { rows } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllMealSessionByKitchen } from "../../Api";
+import { useSelector } from "react-redux";
 
 const KitchenScreen = ({ navigation }) => {
+  const user = useSelector(state => state.user.user)
+
+  const [mealSession, setMealSession] = useState([])
+  const fectAllMealSessionByKitchenId = () => {
+    getAllMealSessionByKitchen(user.kitchenId).then((res) => {
+      // console.log("Ress allmealsession by kitchen", res);
+      setMealSession(res);
+    });
+    console.log("all meal session:", user.kitchenId);
+  };
+
+
+  const [dish, setDish] = useState([])
+  const fectAllDishByKitchenId = () => {
+    getAllDishByKitchenId(user.kitchenId).then((res) => {
+      // console.log("Ress allmealsession by kitchen", res);
+      setDish(res);
+    });
+    console.log("all meal  dish:", user.kitchenId);
+  };
+  
+
+  const [meal, setMeal] = useState([])
+  const fectAllMealByKitchenId= () => {
+    getAllMealByKitchen(user.kitchenId).then((res) => {
+      // console.log("Ress allmealsession by kitchen", res);
+      setMeal(res);
+    });
+    console.log("all meal  meal:", user.kitchenId);
+  };
+  useEffect(() => {
+    fectAllDishByKitchenId()
+    fectAllMealByKitchenId()
+    fectAllMealSessionByKitchenId()
+  }, [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <HeaderComp
         label={"Kitchen"}
         isHasBackIcon={false}
@@ -67,12 +104,20 @@ const KitchenScreen = ({ navigation }) => {
         >
           <DishIcon />
           <View style={{ flexDirection: "column" }}>
-
             <Text style={styles.buttonText}>{"Dish"}</Text>
             <Text style={styles.buttonText}>{"Let’s see your dish now"}</Text>
           </View>
-
         </Pressable>
+        <FlatList
+          data={dish}
+          horizontal={true} // Set this to render the list horizontally
+          renderItem={({ item }) => (
+            <View style={{ marginRight: 10 , borderWidth:1, padding:5, borderRadius:20}}>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.name}</Text>
+            </View>
+          )}
+        />
+
         <Pressable
           style={({ pressed }) => [
             {
@@ -90,6 +135,17 @@ const KitchenScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>{"Your meal ready now "}</Text>
           </View>
         </Pressable>
+
+        <FlatList
+          data={meal}
+          horizontal={true} // Set this to render the list horizontally
+          renderItem={({ item }) => (
+            <View style={{ marginRight: 10 , borderWidth:1, padding:5, borderRadius:20}}>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.name}</Text>
+            </View>
+          )}
+        />
+
         <Pressable
           style={({ pressed }) => [
             {
@@ -101,16 +157,25 @@ const KitchenScreen = ({ navigation }) => {
           }
         >
           <Image source={require("../../../assets/images/dining-table.png")}
-          style={{ width: 80, height: 80, resizeMode: 'cover' }}
-          resizeMethod="scale"        
-               />
+            style={{ width: 80, height: 80, resizeMode: 'cover' }}
+            resizeMethod="scale"
+          />
           <View style={{ flexDirection: "column" }}>
             <Text style={styles.buttonText}>{"Meal Session"}</Text>
             <Text style={styles.buttonText}>{"Your meal session now"}</Text>
           </View>
         </Pressable>
+        <FlatList
+          data={mealSession}
+          horizontal={true} // Set this to render the list horizontally
+          renderItem={({ item }) => (
+            <View style={{ marginRight: 10 , borderWidth:1, padding:5, borderRadius:20}}>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.mealDtoForMealSession?.name}</Text>
+            </View>
+          )}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -120,7 +185,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     height: "100%",
     flex: 1,
-    paddingTop:5
+    paddingTop: 5
   },
   titleHeaderContainer: {
     backgroundColor: "#EFE6DA",

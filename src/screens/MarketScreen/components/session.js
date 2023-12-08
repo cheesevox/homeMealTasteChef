@@ -44,7 +44,7 @@ const Session = (props) => {
             style={{ ...styles.text, fontSize: 15 }}
           >{`End time: ${item?.endTime}`}</Text>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center"}}>
           <Pressable
             style={({ pressed }) => [
               {
@@ -76,7 +76,7 @@ const Session = (props) => {
       />
       {/* <View style={{ flex: 1 }}> */}
       <FlatList
-      style={{height:'90%'}}
+      style={{height:'85%'}}
         data={session}
         keyExtractor={(item) => item.sessionId}
         renderItem={(item) => SessionItem(item)}
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginHorizontal: 10,
     marginVertical: 20,
-    flex:1
+    flex:1,
   },
   text: {
     color: "#FFF",

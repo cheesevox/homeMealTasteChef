@@ -6,9 +6,11 @@ import HeaderComp from "../HeaderComp";
 import Area from "./components/area";
 import { getAllDistrict, getAreaByDistrictId } from "../../Api";
 import * as Icon from "react-native-feather";
-
+import { useSelector } from "react-redux";
 
 const MarketScreen = ({ navigation }) => {
+  const districtDefault = useSelector((state) => state.user.user?.districtId);
+  console.log("district defaulttttttttttttttttt", districtDefault);
   const [district, setDistrict] = useState([]);
   const [districtId, setDistrcitId] = useState();
   const [area, setArea] = useState([]);
@@ -40,9 +42,9 @@ const MarketScreen = ({ navigation }) => {
     fetchAllDistrict();
   }, []);
   useEffect(() => {
-    console.log("districtId là", districtId);
-    fetchAllAreaBySessionId(districtId);
-  }, [districtId]);
+    console.log("districtId là", districtId ? districtId : districtDefault);
+    fetchAllAreaBySessionId(districtId ? districtId : districtDefault);
+  }, [districtId ? districtId : districtDefault]);
   return (
     <View>
       {/* <HeaderComp label={"Area"} isHasBackIcon={false} /> */}
@@ -95,28 +97,27 @@ const MarketScreen = ({ navigation }) => {
           resizeMode="cover"
         />
       </View> */}
-        <View style={{ flex: 8, justifyContent:"center", alignItems:"center" , elevation:2}}>
-           <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={district}
-          maxHeight={300}
-          labelField="districtName"
-          valueField="districtId"
-          placeholder={!isFocus ? "Select District" : "..."}
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item) => {
-            console.log("item trong dopdown area",item)
-            setValue(item.districtId);
-            setDistrcitId(item.districtId);
-            setIsFocus(false);
-          }}
-        ></Dropdown>
+        <View style={{ flex: 8, justifyContent: "center", alignItems: "center", elevation: 2 }}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={district}
+            maxHeight={300}
+            labelField="districtName"
+            valueField="districtId"
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              console.log("item trong dopdown area", item)
+              setValue(item.districtId);
+              setDistrcitId(item.districtId);
+              setIsFocus(false);
+            }}
+          ></Dropdown>
           <FlatList
             data={area}
             keyExtractor={(item) => item.areaId}
@@ -143,14 +144,14 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     // elevation: 2,
-    padding:15,
-    borderColor:'grey',
+    padding: 15,
+    borderColor: 'grey',
     borderRadius: 10,
-    borderWidth:2,
-    alignItems:"center",
-    width:'80%',
-    justifyContent:"center",
-    marginVertical:30,
+    borderWidth: 2,
+    alignItems: "center",
+    width: '80%',
+    justifyContent: "center",
+    marginVertical: 30,
   }
 });
 
