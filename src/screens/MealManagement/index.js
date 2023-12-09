@@ -119,7 +119,9 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingHorizontal: 20,
     backgroundColor: "#FFF",
+
     height: "98%",
+
   },
   titleHeaderContainer: {
     backgroundColor: "#EFE6DA",
