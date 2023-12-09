@@ -165,7 +165,7 @@ const KitchenScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>{"Your meal session now"}</Text>
           </View>
         </Pressable>
-        <FlatList
+        {/* <FlatList
           data={mealSession}
           horizontal={true} // Set this to render the list horizontally
           renderItem={({ item }) => (
@@ -173,7 +173,7 @@ const KitchenScreen = ({ navigation }) => {
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.mealDtoForMealSession?.name}</Text>
             </View>
           )}
-        />
+        /> */}
       </View>
     </ScrollView>
   );

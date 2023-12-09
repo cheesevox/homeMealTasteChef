@@ -58,9 +58,9 @@ const ChefHomeScreen = ({ navigation }) => {
           }}
         >
           <TouchableOpacity>
-          <BellIcon color={"white"} />
+          <BellIcon color={"orange"} />
           </TouchableOpacity>
-          <MessageIcon color={"white"} />
+          <MessageIcon color={"orange"} />
         </View>
         <View
           style={{
@@ -74,7 +74,7 @@ const ChefHomeScreen = ({ navigation }) => {
             style={{
               fontSize: 30,
               fontWeight: 500,
-              color: "white",
+              color: "orange",
               textAlign: "center",
               width:'60%',
               padding:15

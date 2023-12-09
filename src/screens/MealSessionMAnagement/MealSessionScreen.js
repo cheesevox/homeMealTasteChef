@@ -194,7 +194,7 @@ const MealSessionScreen = ({ navigation }) => {
           // data={mealSession}
           // data={newData} 
           data={newData.slice().reverse()}
-          keyExtractor={(item) => item.mealSessionId}
+          keyExtractor={(item) => item.mealSessionId.toString()}
           renderItem={(item) => renderSessionItem(item)}
           showsHorizontalScrollIndicator={false}
         />

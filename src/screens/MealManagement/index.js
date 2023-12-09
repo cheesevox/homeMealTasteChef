@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 20,
     backgroundColor: "#FFF",
-    height: "100%",
+    height: "92%",
   },
   titleHeaderContainer: {
     backgroundColor: "#EFE6DA",
