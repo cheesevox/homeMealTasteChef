@@ -22,13 +22,15 @@ import React, { useEffect, useState } from "react";
 import { RouteName, colors } from "../../../Constant";
 // import { launchImageLibraryAsync } from "expo-image-picker";
 import CameraIcon from "../../../components/Icons/CameraIcon";
-import { createNewDish, getAllDishType } from "../../../Api";
+import { createNewDish, getAllDishType, updateDish } from "../../../Api";
 
 const FormDish = (props) => {
+
   let options = {
     saveToPhotos: true,
     mediaType: "photo",
   };
+
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [gallery, setGallery] = useState();
   const [cameraPhoto, setCameraPhoto] = useState();
@@ -52,6 +54,7 @@ const FormDish = (props) => {
       setHasGalleryPermission(galleryStatus.status === "granted");
     };
   }, []);
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
@@ -82,8 +85,17 @@ const FormDish = (props) => {
   };
 
   const initData = () => {};
+  // const handleCreateNewDish = () => {
+
+  //   createNewDish(imageToApi, values);
+
+  // };
   const handleCreateNewDish = () => {
-    createNewDish(imageToApi, values);
+    if (id) {
+      updateDish();
+    } else {
+      createNewDish();
+    }
   };
 
   const onSelectAvatar = () => {

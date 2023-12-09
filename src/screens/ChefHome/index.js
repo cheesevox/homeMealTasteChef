@@ -53,24 +53,6 @@ const ChefHomeScreen = ({ navigation }) => {
         <ImageBackground
           source={require('../../../assets/images/background.jpg')}
           style={{
-<<<<<<< HEAD
-=======
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingTop:20
-          }}
-        >
-          <TouchableOpacity>
-          <BellIcon color={"orange"} />
-          </TouchableOpacity>
-          <MessageIcon color={"orange"} />
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
->>>>>>> f96c979b068512277bc8654840ccb0e3062e3392
             flex: 1,
             resizeMode: 'cover'
           }}
@@ -78,19 +60,14 @@ const ChefHomeScreen = ({ navigation }) => {
         >
           <View
             style={{
-<<<<<<< HEAD
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              paddingTop: 20, marginHorizontal:20
-=======
               fontSize: 30,
               fontWeight: 500,
               color: "orange",
               textAlign: "center",
-              width:'60%',
-              padding:15
->>>>>>> f96c979b068512277bc8654840ccb0e3062e3392
+              padding:20
             }}
           >
             <TouchableOpacity>
@@ -118,7 +95,7 @@ const ChefHomeScreen = ({ navigation }) => {
               </Text>
             </View>
             <Image source={require("../../../assets/images/open.png")} style={{ height: 50, width: 50, 
-              padding: 40, position: "absolute", top: 220, right: 50 }} />
+              padding: 40, position: "absolute", top: 200, right: 50 }} />
           </View>
         </ImageBackground>
       </View>

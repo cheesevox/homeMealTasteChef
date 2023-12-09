@@ -305,6 +305,7 @@ export const createNewDish = async (image, attribute) => {
     }
   }
 };
+
 export const getAllDishType = async () => {
   try {
     const response = await axios.get(
@@ -467,6 +468,45 @@ export const createNewMeal = async (image, attribute, dishes) => {
     );
     if (response.status === 200) {
       console.log("Create new meal successfully.");
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.error("Error creating new dish:", error.message);
+    console.error("Error details:", error.response);
+
+    // Log the entire error object for more information
+    console.error("Full error object:", error);
+
+    // If error.response is not available, log the entire error object
+    if (!error.response) {
+      console.error("Error object without response:", error);
+    }
+  }
+};
+export const updateDish = async (image, attribute) => {
+  const formData = new FormData();
+  formData.append("image", {
+    uri: image,
+    type: "image/jpeg", // or 'image/png'
+    name: "myImage.jpg",
+  });
+
+  // Append additional attributes to FormData
+  Object.entries(attribute).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  try {
+    const response = await axios.put(
+      "https://homemealtaste.azurewebsites.net/api/Dish/update-dish-not-exist-in-session",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 200) {
+      console.log("udpate successfully.");
       console.log(response.data);
     }
   } catch (error) {
