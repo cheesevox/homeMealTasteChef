@@ -149,7 +149,7 @@ const ChefOrderDetailScreen = ({ navigation, route }) => {
                             style={{
                                 fontSize: 22,
                                 fontWeight: "bold",
-                                color: "red",
+                                color: "#e65332",
                                 paddingHorizontal:30,
                                 borderRadius:20,
                                 height:35

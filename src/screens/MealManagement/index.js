@@ -5,6 +5,7 @@ import HeaderComp from "../HeaderComp";
 import AddIcon from "../../components/Icons/AddIcon";
 import { RouteName } from "../../Constant";
 import { getAllMealByKitchen } from "../../Api";
+import { Ionicons } from "@expo/vector-icons";
 
 const MealManagement = ({ navigation }) => {
   const [meal, setMeal] = useState([]);
@@ -42,7 +43,7 @@ const MealManagement = ({ navigation }) => {
         <View
           style={{
             width: "100%",
-            height: "75%",
+            height: "70%",
           }}
         >
           <FlatList
@@ -50,10 +51,29 @@ const MealManagement = ({ navigation }) => {
             keyExtractor={(item) => item.mealId}
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}
+            numColumns={2}
           />
         </View>
+        <View style={{ alignItems: "center" }}>
+          <Pressable
+            onPress={handleClickAdd}>
+            <View style={{
+              backgroundColor: 'orange',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: 15,
+              width: '50%',
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30
+            }}>
+              <Ionicons name="checkmark-circle-outline" size={20} />
+              <Text style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}> ADD MORE MEAL</Text>
+              <Ionicons name="add-circle-outline" size={20} />
+            </View>
+          </Pressable>
+        </View>
       </View>
-      <View
+      {/* <View
         style={{
           alignItems: "center",
           position: "absolute",
@@ -88,7 +108,7 @@ const MealManagement = ({ navigation }) => {
           </Text>
           <AddIcon />
         </Pressable>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -97,10 +117,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     gap: 20,
-    paddingTop: 30,
     paddingHorizontal: 20,
     backgroundColor: "#FFF",
-    height: "100%",
+    height: "98%",
   },
   titleHeaderContainer: {
     backgroundColor: "#EFE6DA",

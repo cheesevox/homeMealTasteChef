@@ -6,6 +6,8 @@ import HeaderComp from "../HeaderComp";
 import { RouteName } from "../../Constant";
 import { getAllDishByKitchenId } from "../../Api";
 import { useFocusEffect } from "@react-navigation/core";
+import { Bold } from "react-native-feather";
+import { Ionicons } from "@expo/vector-icons";
 const DishManagement = ({ navigation }) => {
   const [dish, setDish] = useState([]);
 
@@ -26,7 +28,7 @@ const DishManagement = ({ navigation }) => {
   const handleClickAdd = () => {
     navigation.navigate(RouteName.FORM_DISH);
   };
-  
+
   return (
     <View>
       <HeaderComp
@@ -39,7 +41,7 @@ const DishManagement = ({ navigation }) => {
         <View
           style={{
             width: "100%",
-            height: "75%",
+            height: "70%",
           }}
         >
           <FlatList
@@ -49,14 +51,28 @@ const DishManagement = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
+        <View style={{ alignItems: "center" }}>
+          <Pressable
+            onPress={handleClickAdd}>
+            <View style={{
+              backgroundColor: 'orange',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: 15,
+              width: '50%',
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30
+            }}>
+              <Ionicons name="checkmark-circle-outline" size={20} />
+              <Text style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}> ADD MORE DISH</Text>
+              <Ionicons name="add-circle-outline" size={20} />
+            </View>
+          </Pressable>
+        </View>
       </View>
-      <View
+      {/* <View
         style={{
-          alignItems: "center",
-          position: "absolute",
-          bottom: 80,
-          left: 0,
-          right: 0,
+          bottom: 90,
         }}
       >
         <Pressable
@@ -69,7 +85,6 @@ const DishManagement = ({ navigation }) => {
               paddingHorizontal: 24,
               paddingVertical: 8,
               borderRadius: 20,
-              justifyContent: "center",
               alignItems: "center",
               gap: 4,
             },
@@ -85,19 +100,18 @@ const DishManagement = ({ navigation }) => {
           </Text>
           <AddIcon />
         </Pressable>
-      </View>
-    </View>
+      </View> */}
+    </View >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    gap: 20,
-    paddingTop: 30,
+    gap: 15,
     paddingHorizontal: 20,
     backgroundColor: "#FFF",
-    height: "100%",
+    height: "98%",
   },
   titleHeaderContainer: {
     backgroundColor: "#EFE6DA",
@@ -109,7 +123,6 @@ const styles = StyleSheet.create({
   titleText: {
     color: "#E88C80",
     textAlign: "center",
-    // fontFamily: "Poppins",
     fontSize: 20,
     fontWeight: "700",
     paddingVertical: 12,

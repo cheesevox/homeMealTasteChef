@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { RouteName } from "../../../Constant";
 
 const Area = (props) => {
@@ -7,31 +7,33 @@ const Area = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20 }}
-      >
-        {data?.areaName}
-      </Text>
-      <Pressable
-        onPress={() => {
-          navigation.navigate(RouteName.SESSION, { areaId: data?.areaId });
-        }}
-      >
-        <View
-          style={{
-            justifyContent: "center",
-            flexDirection: "row",
-            paddingTop: 20,
-            padding: 20,
+      <Image source={require("../../../../assets/images/phuc-loc-tho.jpg")} style={{ height: 120, width: 120, resizeMode: "cover", alignItems: "center", borderRadius: 20 }} />
+      <View style={{ padding: 10 }}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate(RouteName.SESSION, { areaId: data?.areaId });
           }}
         >
           <Text
-            style={{ ...styles.text, fontSize: 15 }}
-          >{`Address: ${data?.address}`}</Text>
-        </View>
-      </Pressable>
-      <View style={{ alignItems: "center" }}>
-        {/* <Pressable
+            style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20 }}
+          >
+            {data?.areaName}
+          </Text>
+
+          <View
+            style={{
+              justifyContent: "center",
+              flexDirection: "row",
+              paddingTop: 20,
+              padding: 20,
+            }}
+          >
+            <Text
+              style={{ ...styles.text, fontSize: 15 }}
+            >{`Address: ${data?.address}`}</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            {/* <Pressable
           style={({ pressed }) => [
             {
               opacity: pressed ? 0.5 : 1,
@@ -42,6 +44,8 @@ const Area = (props) => {
             navigation.navigate(RouteName.SESSION);
           }}
         ></Pressable> */}
+          </View>
+        </Pressable>
       </View>
     </View>
   );
@@ -56,7 +60,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginBottom: 30,
     marginHorizontal: 10,
-    minWidth:400
+    minWidth: 400,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 15
   },
   text: {
     color: "#FFF",

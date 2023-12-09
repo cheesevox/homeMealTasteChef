@@ -78,7 +78,7 @@ const MealSessionScreen = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={{
-          padding: 10
+          padding: 10,
         }}
         onPress={() => {
           // if (item.status === 'PROCESS') {
@@ -194,11 +194,11 @@ const MealSessionScreen = ({ navigation }) => {
           // data={mealSession}
           // data={newData} 
           data={newData.slice().reverse()}
-          keyExtractor={(item) => item.mealSessionId}
+          keyExtractor={(item) => item.mealSessionId.toString()}
           renderItem={(item) => renderSessionItem(item)}
           showsHorizontalScrollIndicator={false}
-        />
 
+        />
       </View>
     </View>
   )

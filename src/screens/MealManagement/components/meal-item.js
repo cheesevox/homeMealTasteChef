@@ -2,9 +2,16 @@ import React from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import { RouteName } from "../../../Constant";
+import { deleteMealByMealId } from "../../../Api";
 
 const MealItem = (props) => {
   const { data, navigation } = props;
+  const handleDelete = (id) => {
+    deleteMealByMealId(id)
+      .then((res) => console.log("Delete meal successfully."))
+      .catch((error) => console.log(error));
+  };
+  console.log("MEALLLLLLLLLLLLLL " ,data)
   return (
     <View style={styles.container}>
       <View
@@ -23,7 +30,7 @@ const MealItem = (props) => {
         />
       </View>
       <View
-        style={{ flex: 1, paddingLeft: 10, gap: 4, justifyContent: "center" }}
+        style={{ flex: 1, paddingLeft: 10, gap: 4, justifyContent: "center", width:'90%' }}
       >
         <Text style={styles.nameText}>{data?.name}</Text>
         {/* <Text style={{ ...styles.nameText, fontSize: 12 }}>
@@ -35,10 +42,12 @@ const MealItem = (props) => {
       </View>
       <View
         style={{
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
           gap: 4,
+          width:'80%',
+          marginVertical:10,
         }}
       >
         <Pressable
@@ -66,6 +75,25 @@ const MealItem = (props) => {
             {"Edit"}
           </Text>
         </Pressable>
+        <Pressable
+          onPress={() => handleDelete(data?.mealId)}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.5 : 1,
+              backgroundColor: "#E64B17",
+            },
+            styles.buttonStyle,
+          ]}
+        >
+          <Text
+            style={{
+              color: "white",
+              ...styles.buttonText,
+            }}
+          >
+            {"Remove"}
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -74,10 +102,12 @@ const MealItem = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffd580",
-    flexDirection: "row",
     marginVertical: 10,
     borderRadius: 20,
     padding: 12,
+    marginHorizontal:5,
+    width:'48%',
+    alignItems:"center"
   },
   nameText: {
     color: "#000",

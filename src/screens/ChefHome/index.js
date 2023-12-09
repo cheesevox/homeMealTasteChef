@@ -5,7 +5,8 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Image
+  Image,
+  ImageBackground
 } from "react-native";
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
@@ -49,43 +50,50 @@ const ChefHomeScreen = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.header}>
-        <View
+        <ImageBackground
+          source={require('../../../assets/images/background.jpg')}
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingTop:20
-          }}
-        >
-          <TouchableOpacity>
-          <BellIcon color={"white"} />
-          </TouchableOpacity>
-          <MessageIcon color={"white"} />
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
             flex: 1,
+            resizeMode: 'cover'
           }}
+          imageStyle={{ borderRadius: 40}}
         >
-          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <Text
+          <View
             style={{
-              fontSize: 30,
-              fontWeight: 500,
-              color: "white",
-              textAlign: "center",
-              width:'60%',
-              padding:15
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingTop: 20, marginHorizontal:20
             }}
           >
-            Hi! Chef, Welcome back!
-          </Text>
-          <Image source={require("./../../../assets/images/girlchef.jpg")} style={{height:150, width:150}} />
+            <TouchableOpacity>
+              <BellIcon color={"orange"} />
+            </TouchableOpacity>
+            <MessageIcon color={"orange"} />
           </View>
-        
-        </View>
+          <View
+            style={{
+              alignItems: "center",
+              bottom:40
+            }}
+          >
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: 500,
+                  color: "#e06666",
+                  textAlign: "center",
+                  width: '60%',
+                }}
+              >
+                Welcome! {user?.name}
+              </Text>
+            </View>
+            <Image source={require("../../../assets/images/open.png")} style={{ height: 50, width: 50, 
+              padding: 40, position: "absolute", top: 220, right: 50 }} />
+          </View>
+        </ImageBackground>
       </View>
       <View style={{ padding: 20 }}>
         <Text style={styles.titleStyle}>{"Dish of Kitchen"}</Text>
@@ -123,12 +131,11 @@ const styles = StyleSheet.create({
   header: {
     display: "flex",
     flexDirection: "column",
-    padding: 20,
     height: 250,
-    backgroundColor: "#FEE8C4",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    elevation: 5,
+    backgroundColor: "#ffe6bc",
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    elevation: 10,
   },
   headerText: {
     color: "#F95A0B",

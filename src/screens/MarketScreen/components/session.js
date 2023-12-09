@@ -33,13 +33,12 @@ const Session = (props) => {
             paddingTop: 20,
             padding: 20,
             display:'flex',
-            flexDirection:'row'
           }}
         >
           <Text
             style={{ ...styles.text, fontSize: 15 }}
           >{`Start time: ${item?.startTime}`}</Text>
-          <Text style={{color:'white',marginHorizontal:20}}>-</Text>
+          {/* <Text style={{color:'white',marginHorizontal:20}}>-</Text> */}
           <Text
             style={{ ...styles.text, fontSize: 15 }}
           >{`End time: ${item?.endTime}`}</Text>
@@ -76,11 +75,12 @@ const Session = (props) => {
       />
       {/* <View style={{ flex: 1 }}> */}
       <FlatList
-      style={{height:'85%'}}
+        style={{height:'85%', width:'100%'}}
         data={session}
-        keyExtractor={(item) => item.sessionId}
+        keyExtractor={(item) => item.sessionId.toString()}
         renderItem={(item) => SessionItem(item)}
         showsHorizontalScrollIndicator={false}
+        numColumns={2}
       />
       {/* </View> */}
     </View>
@@ -91,8 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fcd27e",
     borderRadius: 20,
     elevation: 8,
-    padding:10,
-    marginBottom: 30,
+    padding:20,
     marginHorizontal: 10,
     marginVertical: 20,
     flex:1,

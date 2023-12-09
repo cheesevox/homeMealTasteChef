@@ -8,7 +8,18 @@ const Dish = (props) => {
   const handleDelete = (id) => {
     deleteDishByDishId(id)
       .then((res) => console.log("Delete dish successfully."))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log("ERRROR", error)
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: 'Error',
+          text2: 'Failed to delete dish. Please try again.',
+          visibilityTime: 3000,
+          autoHide: true,
+        });
+      }
+      );
   };
   return (
     <View style={styles.container}>
@@ -62,7 +73,7 @@ const Dish = (props) => {
               ({
                 color: "#FFF",
               },
-              styles.buttonText)
+                styles.buttonText)
             }
           >
             {"Edit"}

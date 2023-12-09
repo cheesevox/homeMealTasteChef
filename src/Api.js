@@ -249,11 +249,21 @@ export const getAllDishByKitchenId = async (id) => {
 export const deleteDishByDishId = async (id) => {
   try {
     await axios.delete(
-      `https://homemealtaste.azurewebsites.net/api/Dish?id=${id}`
+      `https://homemealtaste.azurewebsites.net/api/Dish/delete-dish-not-exist-in-session-by-dish-id?dishid=${id}`
     );
     console.log("Delete successfully.");
   } catch (error) {
     console.log("delete dish", error);
+  }
+};
+export const deleteMealByMealId = async (id) => {
+  try {
+    await axios.delete(
+      `https://homemealtaste.azurewebsites.net/api/Meal/delete-meal-id-not-exist-in-session?mealid=${id}`
+    );
+    console.log("Delete successfully.");
+  } catch (error) {
+    console.log("delete meal", error);
   }
 };
 export const createNewDish = async (image, attribute) => {
