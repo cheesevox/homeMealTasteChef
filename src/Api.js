@@ -453,7 +453,6 @@ export const createNewMeal = async (image, attribute, dishes) => {
     formData.append("DishIds", dishId);
   });
   // formData.append("DishIds", dishes);
-
   console.log("formdata la", formData);
   console.log("dish dc gui sang api la", dishes);
   try {
@@ -483,18 +482,22 @@ export const createNewMeal = async (image, attribute, dishes) => {
     }
   }
 };
-export const updateDish = async (image, attribute) => {
+
+export const updateDish = async (id, image, attribute) => {
   const formData = new FormData();
+  // Append image with correct file name and type
+  formData.append("dishId", id)
   formData.append("image", {
-    uri: image,
+    uri: image, // Make sure this is the correct path or URL
     type: "image/jpeg", // or 'image/png'
-    name: "myImage.jpg",
+    name: "myImage.jpg", // You can extract the file name from the URI or provide it dynamically
   });
 
-  // Append additional attributes to FormData
+  // Append other attributes
   Object.entries(attribute).forEach(([key, value]) => {
     formData.append(key, value);
   });
+  console.log("daaaaaaaaaaaaaaaaata",formData)
   try {
     const response = await axios.put(
       "https://homemealtaste.azurewebsites.net/api/Dish/update-dish-not-exist-in-session",
@@ -505,18 +508,63 @@ export const updateDish = async (image, attribute) => {
         },
       }
     );
+
+    console.log("Response:", response.data); // Log the response data for debugging
+
     if (response.status === 200) {
-      console.log("udpate successfully.");
-      console.log(response.data);
+      console.log("Update successful.");
     }
   } catch (error) {
-    console.error("Error creating new dish:", error.message);
+    console.error("Error updating dish:", error.message);
     console.error("Error details:", error.response);
 
     // Log the entire error object for more information
     console.error("Full error object:", error);
 
     // If error.response is not available, log the entire error object
+    if (!error.response) {
+      console.error("Error object without response:", error);
+    }
+  }
+};
+
+export const updateMeal = async (id, image, attribute) => {
+  const formData = new FormData();
+  // Append image with correct file name and type
+  formData.append("mealId", id)
+  formData.append("image", {
+    uri: image, // Make sure this is the correct path or URL
+    type: "image/jpeg", // or 'image/png'
+    name: "myImage.jpg", // You can extract the file name from the URI or provide it dynamically
+  });
+
+  // Append other attributes
+  Object.entries(attribute).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  console.log("daaaaaaaaaaaaaaaaata",formData)
+  try {
+    const response = await axios.put(
+      "https://homemealtaste.azurewebsites.net/api/Meal/update-meal-not-exist-in-session",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Response:", response.data); // Log the response data for debugging
+
+    if (response.status === 200) {
+      console.log("Update successful.");
+    }
+  } catch (error) {
+    console.error("Error updating meal:", error.message);
+    console.error("Error details:", error.response);
+    // Log the entire error object for more information
+    console.error("Full error object:", error);
+
     if (!error.response) {
       console.error("Error object without response:", error);
     }

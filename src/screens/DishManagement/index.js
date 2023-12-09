@@ -41,11 +41,11 @@ const DishManagement = ({ navigation }) => {
         <View
           style={{
             width: "100%",
-            height: "70%",
+            height: "77%",
           }}
         >
           <FlatList
-            data={dish}
+            data={dish.slice().reverse()}
             keyExtractor={(item) => item.dishId}
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}
