@@ -413,7 +413,8 @@ export const postStatusOrderForCustomer = async (id, value)=>{
   try {
     console.log("posrtttttttttt id",id)
     console.log("valuuuuuuuuu post",value)
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-DONE?mealsessionid=${id}&status=${value}`)
+    //  await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-DONE?mealsessionid=${id}&status=${value}`)
+     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order?mealsessionid=${id}&status=${value}`)
   } catch (error) {
     console.log("post status for order customer", error)
   }
@@ -570,3 +571,12 @@ export const updateMeal = async (id, image, attribute) => {
     }
   }
 };
+// export const refunf = async (id, value)=>{
+//   try {
+//     console.log("posrtttttttttt id",id)
+//     console.log("valuuuuuuuuu post",value)
+//      await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-DONE?mealsessionid=${id}&status=${value}`)
+//   } catch (error) {
+//     console.log("post status for order customer", error)
+//   }
+// };
