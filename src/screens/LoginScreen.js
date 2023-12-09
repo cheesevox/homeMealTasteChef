@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import { RouteName } from "../Constant";
 
-const LoginScreen = ({ navigation,route }) => {
+const LoginScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation,route }) => {
       toastRef.current.show();
     }
   };
-  
+
   // get set
   const onChagePhone = (value) => {
     setPhone(value);
@@ -77,22 +77,20 @@ const LoginScreen = ({ navigation,route }) => {
           ref={toastRef}
         />
         {loginFailure && (
-        <Text style={{ textAlign: 'left' }}>Login failed. Please try again.</Text>
-      )}
+          <Text style={{ textAlign: 'left' }}>Login failed. Please try again.</Text>
+        )}
       </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: '#5caee6', padding: 30, }}>
         <Image
           source={require("../../assets/images/chef.png")}
           style={{
-            marginTop: 80,
             justifyContent: "center",
             alignItems: "center",
-            height:170, width:170
+            height: 170, width: 170
           }}
         />
         <Text
           style={{
-            marginTop: 20,
             fontSize: 30,
             fontWeight: "bold",
             justifyContent: "center",
@@ -107,12 +105,19 @@ const LoginScreen = ({ navigation,route }) => {
             fontSize: 25,
             fontWeight: "bold",
             color: "red",
+            padding: 5
           }}
         >
           Welcome Back Chef !
         </Text>
       </View>
-      <View style={{ paddingTop: 30 }}>
+      <View style={{
+        paddingTop: 50,
+        bottom: 30,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        backgroundColor: 'white'
+      }}>
         <View
           style={{
             paddingLeft: 10,
@@ -169,38 +174,37 @@ const LoginScreen = ({ navigation,route }) => {
                   password: text,
                 })
               }
-              // value={password}
-              // secureTextEntry={true}
-              // width={280}
-              // onChangeText={onChagePassword}
+            // value={password}
+            // secureTextEntry={true}
+            // width={280}
+            // onChangeText={onChagePassword}
             ></TextInput>
           </View>
         </View>
-      </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <TouchableOpacity
-          // onPress={() => navigation.navigate("FoodList")}
-          onPress={Login}
-          // onPress={onClickLogin}
-          type=""
-          style={{
-            backgroundColor: "#f96163",
-            borderRadius: 18,
-            marginTop: 60,
-            justifyContent: "center",
-            paddingVertical: 18,
-            width: "60%",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
-            Login
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ marginTop: 50 }}>If You Don't Have An Account ?</Text>
-        <View>
+
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <TouchableOpacity
+            // onPress={() => navigation.navigate("FoodList")}
+            onPress={Login}
+            // onPress={onClickLogin}
+            type=""
+            style={{
+              backgroundColor: "#f96163",
+              borderRadius: 18,
+              marginTop: 60,
+              justifyContent: "center",
+              paddingVertical: 18,
+              width: "60%",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
+              Login
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ marginTop: 50 }}>If You Don't Have An Account ?</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Regiter")}
             style={{
@@ -210,7 +214,7 @@ const LoginScreen = ({ navigation,route }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "black", fontWeight: "500" }}>
+            <Text style={{ color: "black", fontWeight: "500", height:'100%' }}>
               Regiter Account
             </Text>
           </TouchableOpacity>
@@ -249,7 +253,7 @@ const LoginScreen = ({ navigation }) => {
 
   //button login
   const onClickLogin = () => {
-	navigation.navigate(RouteName.CHEF_HOME);
+  navigation.navigate(RouteName.CHEF_HOME);
     // if (phone.length == 0 || password.length == 0) {
     //   navigation.navigate("CustomerHome");
     //   return console.log("Please enter login infomation");

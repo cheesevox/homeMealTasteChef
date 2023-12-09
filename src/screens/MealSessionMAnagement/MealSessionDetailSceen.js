@@ -6,6 +6,8 @@ import { getAllOrderByMealSessionId, getMealSessionById, login, postStatusOrderF
 import { color } from 'react-native-elements/dist/helpers';
 import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { rows } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
 
 const MealSessionDetailSceen = ({ navigation, route }) => {
   const item = route.params
@@ -13,6 +15,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   const [value, setValue] = useState({
     status: status
   })
+  const [newStatus, setNewStatus] = useState([])
   console.log("mealsession : ", item?.mealSessionId)
 
   const onHandleCompletedOrder = (mealSessionId, newStatus) => {
@@ -21,6 +24,13 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
       status: newStatus,
     });
     console.log("valueeeeeeeeeeeeeeee", newStatus);
+    if (newStatus === 'CANCELLED') {
+      Toast.show({
+        type: 'error',
+        text1: 'Order Canceled',
+        text2: 'Your order has been canceled.',
+      });
+    }
     postStatusOrderForCustomer(mealSessionId, newStatus);  // Assuming status is defined elsewhere
   };
   const [order, setOrder] = useState([])
@@ -46,11 +56,10 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   }, [item?.mealSessionId])
   console.log("LOGGGGGGGGGGG ALL MEALSESS", mealsesion)
   console.log("LOGGGGGGGGGGG ALL ORder status", order)
-
   const renderItem = ({ item }) => (
-    <View style={{ padding:20, margin: 10, elevation: 5, borderRadius: 10, flexDirection: 'row' }}>
-      <Image style={{ width: 100, height: 100 , resizeMode:'cover', borderRadius:20}} source={require("../../../assets/images/avatar.jpg")}></Image>
-      <View style={{marginHorizontal:20}}>
+    <View style={{ padding: 20, margin: 10, elevation: 5, borderRadius: 10, flexDirection: 'row' }}>
+      <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20 }} source={require("../../../assets/images/avatar.jpg")}></Image>
+      <View style={{ marginHorizontal: 20 }}>
         <Text>Order ID: {item.orderId}</Text>
         <Text>Status: {item.status}</Text>
         <Text>Name Cusotmer: {item?.cutomerDtoGetAllOrderByMealSessionId?.name}</Text>
@@ -59,8 +68,9 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
       </View>
       {/* Add more details as needed */}
     </View>
-
   );
+
+  console.log("LOGGGGGGG ORDER STATUS", order[0]?.status)
   return (
     <View style={{ flex: 1 }}>
       <HeaderComp label="Meal Detail" onBack={() => navigation.goBack()} />
@@ -87,14 +97,25 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Address : {mealsesion?.sessionDtoForMealSession?.areaDtoForMealSession?.areaName}</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Slot: {mealsesion?.quantity}</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',paddingVertical:20}}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Order Cutomer :</Text>
-          <TouchableOpacity style={{ borderWidth: 1, padding: 5, borderRadius: 10 }}
-            onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'DONE')}
-          ><Text>Approve</Text></TouchableOpacity>
-          <TouchableOpacity style={{ borderWidth: 1, padding: 5, borderRadius: 10 }}
-            onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'CANCELLED')}
-          ><Text>Cancel</Text></TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 20 }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Order MealSession :</Text>
+          {order[0]?.status !== 'CANCELLED' && (
+            <View style={{flexDirection:'row'}}>
+              <TouchableOpacity
+                style={{ borderWidth: 1, padding: 5, borderRadius: 10, marginHorizontal:20 }}
+                onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'DONE')}
+              >
+                <Text>DONE</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{ borderWidth: 1, padding: 5, borderRadius: 10 }}
+                onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'CANCELLED')}
+              >
+                <Text>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
         <FlatList
           data={order}

@@ -2,12 +2,19 @@ import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { RouteName } from "../../../Constant";
 import { deleteDishByDishId } from "../../../Api";
+import Toast from "react-native-toast-message";
 
 const Dish = (props) => {
   const { data, navigation } = props;
   const handleDelete = (id) => {
     deleteDishByDishId(id)
-      .then((res) => console.log("Delete dish successfully."))
+      .then((res) => {console.log("Delete dish successfully.")
+      Toast.show({
+        type: 'error',
+        text1: 'Meal Remove',
+        text2: 'Your order has been canceled.',
+      });
+    })
       .catch((error) => {
         console.log("ERRROR", error)
         Toast.show({

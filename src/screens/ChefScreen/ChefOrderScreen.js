@@ -113,7 +113,7 @@ const ChefOrderScreen = ({ navigation }) => {
               }}
             >
               <Text style={styles.textItem}>Order ID : {item.orderId}</Text>
-              <Text style={styles.textItem}>Quantity: {item?.mealSession?.quantity}</Text>
+              <Text style={styles.textItem}>Quantity: {item?.quantity}</Text>
               <Text style={{ fontSize: 12, fontWeight: "bold" }}>
                 Total: {item.totalPrice}
               </Text>

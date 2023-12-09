@@ -39,7 +39,7 @@ const HeaderComp = (props) => {
               borderBottomRightRadius:17,
               borderTopLeftRadius:17,
               borderTopRightRadius:17,
-              width:'50%'
+              width:'60%'
             },
           ]}
           onPress={onBack}

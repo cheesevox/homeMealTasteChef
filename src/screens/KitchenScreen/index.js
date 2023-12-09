@@ -10,41 +10,41 @@ import { getAllDishByKitchenId, getAllMealByKitchen, getAllMealSessionByKitchen 
 import { useSelector } from "react-redux";
 
 const KitchenScreen = ({ navigation }) => {
-  const user = useSelector(state => state.user.user)
+  // const user = useSelector(state => state.user.user)
 
-  const [mealSession, setMealSession] = useState([])
-  const fectAllMealSessionByKitchenId = () => {
-    getAllMealSessionByKitchen(user.kitchenId).then((res) => {
-      // console.log("Ress allmealsession by kitchen", res);
-      setMealSession(res);
-    });
+  // const [mealSession, setMealSession] = useState([])
+  // const fectAllMealSessionByKitchenId = () => {
+  //   getAllMealSessionByKitchen(user.kitchenId).then((res) => {
+  //     // console.log("Ress allmealsession by kitchen", res);
+  //     setMealSession(res);
+  //   });
     // console.log("all meal session:", user.kitchenId);
-  };
+  // };
 
 
-  const [dish, setDish] = useState([])
-  const fectAllDishByKitchenId = () => {
-    getAllDishByKitchenId(user.kitchenId).then((res) => {
-      // console.log("Ress allmealsession by kitchen", res);
-      setDish(res);
-    });
-    // console.log("all meal  dish:", user.kitchenId);
-  };
+  // const [dish, setDish] = useState([])
+  // const fectAllDishByKitchenId = () => {
+  //   getAllDishByKitchenId(user.kitchenId).then((res) => {
+  //     // console.log("Ress allmealsession by kitchen", res);
+  //     setDish(res);
+  //   });
+  //   // console.log("all meal  dish:", user.kitchenId);
+  // };
   
 
-  const [meal, setMeal] = useState([])
-  const fectAllMealByKitchenId= () => {
-    getAllMealByKitchen(user.kitchenId).then((res) => {
-      console.log("Ress meal by kitchen", res);
-      setMeal(res);
-    });
-    // console.log("all meal  meal:", user.kitchenId);
-  };
-  useEffect(() => {
-    fectAllDishByKitchenId()
-    fectAllMealByKitchenId()
-    fectAllMealSessionByKitchenId()
-  }, [])
+  // const [meal, setMeal] = useState([])
+  // const fectAllMealByKitchenId= () => {
+  //   getAllMealByKitchen(user.kitchenId).then((res) => {
+  //     console.log("Ress meal by kitchen", res);
+  //     setMeal(res);
+  //   });
+  //   // console.log("all meal  meal:", user.kitchenId);
+  // };
+  // useEffect(() => {
+  //   fectAllDishByKitchenId()
+  //   fectAllMealByKitchenId()
+  //   fectAllMealSessionByKitchenId()
+  // }, [])
 
   return (
     <ScrollView style={styles.container}>
@@ -108,7 +108,7 @@ const KitchenScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>{"Let’s see your dish now"}</Text>
           </View>
         </Pressable>
-        <FlatList
+        {/* <FlatList
           data={dish}
           horizontal={true} // Set this to render the list horizontally
           renderItem={({ item }) => (
@@ -116,7 +116,7 @@ const KitchenScreen = ({ navigation }) => {
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.name}</Text>
             </View>
           )}
-        />
+        /> */}
 
         <Pressable
           style={({ pressed }) => [
@@ -136,7 +136,7 @@ const KitchenScreen = ({ navigation }) => {
           </View>
         </Pressable>
 
-        <FlatList
+        {/* <FlatList
           data={meal}
           horizontal={true} // Set this to render the list horizontally
           renderItem={({ item }) => (
@@ -144,7 +144,7 @@ const KitchenScreen = ({ navigation }) => {
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item?.name}</Text>
             </View>
           )}
-        />
+        /> */}
 
         <Pressable
           style={({ pressed }) => [

@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import { RouteName } from "../../../Constant";
-import { deleteMealByMealId } from "../../../Api";
+import { deleteMealByMealId, getAllMealByKitchen } from "../../../Api";
+import { useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 
 const MealItem = (props) => {
   const { data, navigation } = props;
+  const [meals, setMeals] = useState([]);
+  const user = useSelector((state) => state.user.user);
+
+  // const fetchMealsData= () => {
+  //   getAllMealByKitchen(user.kitchenId).then((res) => {
+  //     console.log("Ress meal by kitchen", res);
+  //     setMeal(res);
+  //   });
+  //   // console.log("all meal  meal:", user.kitchenId);
+  // };
+
+  // useEffect(() => {
+  //   fetchMealsData() // Replace with your actual function to fetch meals
+  //     .then((data) => setMeals(data))
+  //     .catch((error) => console.log(error));
+  // }, []); 
+
   const handleDelete = (id) => {
     deleteMealByMealId(id)
-      .then((res) => console.log("Delete meal successfully."))
+      .then((res) => {
+        console.log('Delete meal successfully.');
+          Toast.show({
+            type: 'error',
+            text1: 'Meal Remove',
+            text2: 'Your order has been canceled.',
+          });
+      })
       .catch((error) => console.log(error));
   };
+
   console.log("MEALLLLLLLLLLLLLL " ,data)
   return (
     <View style={styles.container}>
