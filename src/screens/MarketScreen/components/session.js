@@ -77,7 +77,7 @@ const Session = (props) => {
       <FlatList
       style={{height:'85%'}}
         data={session}
-        keyExtractor={(item) => item.sessionId}
+        keyExtractor={(item) => item.sessionId.toString()}
         renderItem={(item) => SessionItem(item)}
         showsHorizontalScrollIndicator={false}
       />

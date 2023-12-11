@@ -24,6 +24,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     setValue({
       status: newStatus,
     });
+    fectAllOrderByMealSesssionId()
     console.log("valueeeeeeeeeeeeeeee", newStatus);
     if (newStatus === 'CANCELLED') {
       Toast.show({
@@ -100,7 +101,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
         <View style={{paddingHorizontal:20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 20 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Order MealSession :</Text>
-          {order[0]?.status !== 'CANCELLED' && (
+          {order[0]?.status == 'PAID' && (
             <View style={{flexDirection:'row'}}>
               <TouchableOpacity
                 style={{ elevation:5,

@@ -11,6 +11,7 @@ import * as Icon from "react-native-feather";
 import { TextInput } from "react-native-paper";
 
 const EditUserProfileScreen = ({ navigation, route }) => {
+  
   const profile = route.params;
   console.log("EDITTTTTTTTTTTTTTTTT PROOOOOOOO", profile);
   return (
@@ -59,28 +60,27 @@ const EditUserProfileScreen = ({ navigation, route }) => {
           {profile?.profile?.name} # {profile?.profile?.userId}
         </Text>
       </View>
-
       <View>
-        <TextInput
-          placeholder="Your Name"
+        {/* <TextInput
+          placeholder={profile?.profile?.name}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
         ></TextInput>
         <TextInput
-          placeholder="Your Address"
+          placeholder={profile?.profile?.username}
+          style={{ marginVertical: 20, marginHorizontal: 40 }}
+        ></TextInput>
+         <TextInput
+          placeholder={profile?.profile?.email}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
         ></TextInput>
         <TextInput
-          placeholder="Your Email"
+          placeholder={profile?.profile?.address}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
         ></TextInput>
         <TextInput
-          placeholder="Your Location"
+          placeholder="Your District"
           style={{ marginVertical: 20, marginHorizontal: 40 }}
-        ></TextInput>
-        <TextInput
-          placeholder="Your Area"
-          style={{ marginVertical: 20, marginHorizontal: 40 }}
-        ></TextInput>
+        ></TextInput> */}
       </View>
 
       <View

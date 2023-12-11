@@ -12,9 +12,12 @@ export const userSlice = createSlice({
         console.log("payload item la///////////////",action.payload)
       state.user = action.payload
     },
+    logoutUser: (state) => {
+      state.user = {}; // Clear the user data when logging out
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getUserInfor } = userSlice.actions;
+export const { getUserInfor , logoutUser} = userSlice.actions;
 export default userSlice.reducer;

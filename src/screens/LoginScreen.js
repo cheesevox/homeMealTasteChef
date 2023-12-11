@@ -7,16 +7,19 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import ToastMessage from "../components/ToastMessage";
 import { useRef } from "react";
 import { login } from "../Api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import { RouteName } from "../Constant";
+import Toast from "react-native-toast-message";
 
 const LoginScreen = ({ navigation, route }) => {
+  const user = useSelector((state)=>state.user.user)
+  console.log("Account when login",user)
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -26,7 +29,7 @@ const LoginScreen = ({ navigation, route }) => {
     password: null,
   });
   const Login = () => {
-    login(values, navigation)
+    login(values, navigation,Toast)
       .then((res) => {
         dispatch(getUserInfor(res));
       })
@@ -43,13 +46,6 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  // get set
-  const onChagePhone = (value) => {
-    setPhone(value);
-  };
-  const onChagePassword = (value) => {
-    setPassword(value);
-  };
   const { loginFailure } = route.params || {};
   //button login
   const onClickLogin = () => {
@@ -66,6 +62,22 @@ const LoginScreen = ({ navigation, route }) => {
       password,
     });
   };
+
+  useEffect(() => {
+    // Check if the logout parameter is true and clear inputs
+    if (route.params && route.params.logout) {
+      setValues({
+        ...values,
+        phone: "",
+      }) &&
+      setValues({
+        ...values,
+        password: "text",
+      })
+    }
+  }, [route.params]);
+
+  // console.log("MASSSSSSSSSSSSSSSS", route.params.logout)
 
   return (
     <View style={{}}>
@@ -137,13 +149,13 @@ const LoginScreen = ({ navigation, route }) => {
             <View style={{ padding: 20 }}>
               <TextInput
                 placeholder="Your Phone Numbers"
-                // value={phone}
                 width={280}
                 onChangeText={(text) =>
                   setValues({
                     ...values,
                     phone: text,
                   })
+                  
                 }
               ></TextInput>
             </View>

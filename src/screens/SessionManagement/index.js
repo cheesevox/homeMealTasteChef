@@ -154,6 +154,14 @@ const SessionManagement = (props) => {
   // }, [formatter.format(selectedDate), tab.value])
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchAllMealSession();
+      console.log("Data refreshed!");
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
     console.log("selected date", formatter.format(selectedDate))
     if (selectedDate !== undefined && tab !== undefined) {
       console.log("default tab la",tab)
@@ -191,6 +199,7 @@ const SessionManagement = (props) => {
         <TouchableOpacity
           onPress={() => {
             setTab(item.value);
+            fetchAllMealSession()
           }}
         >
           <Text

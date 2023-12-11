@@ -2,10 +2,8 @@ import axios from "axios";
 // <<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import { RouteName } from "./Constant";
-import { id } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
-import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 
-export const login = async (values, navigation) => {
+export const login = async (values, navigation,Toast) =>{
   console.log(values);
   try {
     const response = await axios.post(
@@ -14,13 +12,23 @@ export const login = async (values, navigation) => {
     );
 
     if (response.data) {
+      console.log("REPSSSSSSSSSSssss", response.data)
       console.log("role",response.data.roleId)
       const roleId = response.data.roleId;
       const userId = response.data.userId
+      const status = response.data.status
       if (roleId === 2) {
         navigation.navigate("Login", { loginFailure: true });
       } else if (roleId === 3) {
+        if(status == true){
         navigation.navigate(`${RouteName.KITCHEN}`, {user:response.data});
+        } else{
+          Toast.show({
+            type:"error",
+            text1:"Home Meal Taste",
+            text2:"Your account is ban!"
+          })
+        }
       } else {
         console.log("Unknown roleId:", roleId);
       }
@@ -571,12 +579,43 @@ export const updateMeal = async (id, image, attribute) => {
     }
   }
 };
-// export const refunf = async (id, value)=>{
-//   try {
-//     console.log("posrtttttttttt id",id)
-//     console.log("valuuuuuuuuu post",value)
-//      await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-DONE?mealsessionid=${id}&status=${value}`)
-//   } catch (error) {
-//     console.log("post status for order customer", error)
-//   }
-// };
+
+export const updateProfile = async (id, image, attribute) => {
+  const formData = new FormData();
+  // Append image with correct file name and type
+  formData.append("userId", id)
+
+  // Append other attributes
+  Object.entries(attribute).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  console.log("daaaaaaaaaaaaaaaaata",formData)
+  try {
+    const response = await axios.put(
+      "https://homemealtaste.azurewebsites.net/api/User/update-user",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Response:", response.data); // Log the response data for debugging
+
+    if (response.status === 200) {
+      console.log("Update successful.");
+    }
+  } catch (error) {
+    console.error("Error updating meal:", error.message);
+    console.error("Error details:", error.response);
+    // Log the entire error object for more information
+    console.error("Full error object:", error);
+
+    if (!error.response) {
+      console.error("Error object without response:", error);
+    }
+  }
+};
+
+

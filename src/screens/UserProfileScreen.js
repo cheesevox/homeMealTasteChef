@@ -5,15 +5,16 @@ import * as Icon from "react-native-feather";
 import UserCard from '../components/UserCard'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons/build/Icons';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { getUserByID } from '../Api';
 import TabViewSession from '../components/TabViewSession';
 import Toast from "react-native-toast-message";
+import { logoutUser } from "../../slices/userSlice";
 
 const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
   const [profile, setProfile] = useState()
-
+  const dispatch = useDispatch();
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
       setProfile(res)
@@ -34,7 +35,8 @@ const UserProfileScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   const handleLogout = () => {
-    navigation.navigate("Login", { user: user })
+    navigation.navigate("Login",{ logout: true })
+    dispatch(logoutUser());
     Toast.show({
       type: "success",
       text1: "Logout",
@@ -49,6 +51,10 @@ const UserProfileScreen = ({ navigation, route }) => {
       navigation.goBack();
     }, 5100);
   }
+ 
+  const clearUser = () => ({
+    type: 'CLEAR_USER',
+  });
 
   return (
     <SafeAreaView style={{
