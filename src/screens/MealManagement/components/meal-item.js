@@ -39,6 +39,8 @@ const MealItem = (props) => {
   };
 
   console.log("MEALLLLLLLLLLLLLL " ,data)
+  console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD " ,data?.mealId)
+  
   return (
     <View style={styles.container}>
       <View

@@ -204,7 +204,8 @@ const LoginScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ marginTop: 50 }}>If You Don't Have An Account ?</Text>
+          <Text style={{ marginTop: 60 }}>If You Don't Have An Account ?</Text>
+          
           <TouchableOpacity
             onPress={() => navigation.navigate("Regiter")}
             style={{

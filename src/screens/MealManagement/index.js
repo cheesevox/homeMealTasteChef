@@ -47,7 +47,7 @@ const MealManagement = ({ navigation }) => {
           }}
         >
           <FlatList
-            data={meal}
+            data={meal.slice().reverse()}
             keyExtractor={(item) => item.mealId}
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}

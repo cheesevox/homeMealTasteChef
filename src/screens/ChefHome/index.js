@@ -60,11 +60,14 @@ const ChefHomeScreen = ({ navigation }) => {
         >
           <View
             style={{
-
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              paddingTop: 20, marginHorizontal:20
+              fontSize: 30,
+              fontWeight: 500,
+              color: "orange",
+              textAlign: "center",
+              padding:20
             }}
           >
             <TouchableOpacity>
@@ -92,7 +95,7 @@ const ChefHomeScreen = ({ navigation }) => {
               </Text>
             </View>
             <Image source={require("../../../assets/images/open.png")} style={{ height: 50, width: 50, 
-              padding: 40, position: "absolute", top: 220, right: 50 }} />
+              padding: 40, position: "absolute", top: 200, right: 50 }} />
           </View>
         </ImageBackground>
       </View>

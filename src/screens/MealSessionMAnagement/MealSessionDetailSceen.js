@@ -8,6 +8,7 @@ import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { rows } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
+import { Ionicons } from '@expo/vector-icons';
 
 const MealSessionDetailSceen = ({ navigation, route }) => {
   const item = route.params
@@ -57,7 +58,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   console.log("LOGGGGGGGGGGG ALL MEALSESS", mealsesion)
   console.log("LOGGGGGGGGGGG ALL ORder status", order)
   const renderItem = ({ item }) => (
-    <View style={{ padding: 20, margin: 10, elevation: 5, borderRadius: 10, flexDirection: 'row' }}>
+    <View style={{ padding: 30, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor:'white' }}>
       <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20 }} source={require("../../../assets/images/avatar.jpg")}></Image>
       <View style={{ marginHorizontal: 20 }}>
         <Text>Order ID: {item.orderId}</Text>
@@ -76,8 +77,8 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
       <HeaderComp label="Meal Detail" onBack={() => navigation.goBack()} />
       <View style={{
         flexDirection: "row", alignItems: "center",
-        marginHorizontal: 40, marginVertical: 15, justifyContent: "center",
-        borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
+        marginHorizontal: 30, marginVertical: 15, justifyContent: "center",
+        borderRadius: 30, backgroundColor: '#00000000'
       }}>
       </View>
       <View style={{
@@ -92,27 +93,42 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             borderTopRightRadius: 30, borderTopLeftRadius: 30,
           }}
         />
-        <Text style={{ fontSize: 22, fontWeight: 'bold', color: 'white' }}>Name : {mealsesion?.mealDtoForMealSession?.name}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Description : {mealsesion?.mealDtoForMealSession?.description}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Address : {mealsesion?.sessionDtoForMealSession?.areaDtoForMealSession?.areaName}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Slot: {mealsesion?.quantity}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 20 }}>
+        <Text style={{paddingHorizontal:20, fontSize: 22, fontWeight: 'bold', color: 'white' }}>Name : {mealsesion?.mealDtoForMealSession?.name}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Description : {mealsesion?.mealDtoForMealSession?.description}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Address : {mealsesion?.sessionDtoForMealSession?.areaDtoForMealSession?.areaName}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Slot: {mealsesion?.quantity}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
+        <View style={{paddingHorizontal:20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 20 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Order MealSession :</Text>
           {order[0]?.status !== 'CANCELLED' && (
             <View style={{flexDirection:'row'}}>
               <TouchableOpacity
-                style={{ borderWidth: 1, padding: 5, borderRadius: 10, marginHorizontal:20 }}
+                style={{ elevation:5,
+                  padding: 5, borderRadius: 10, 
+                  marginHorizontal:20, 
+                  backgroundColor:'#0fd196', 
+                  flexDirection:"row",
+                  justifyContent:'space-between',
+                  width:70
+                 }}
                 onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'DONE')}
               >
-                <Text>DONE</Text>
+                <Text>DONE</Text> 
+                <Ionicons  size={18} name='checkmark-circle-outline'/>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{ borderWidth: 1, padding: 5, borderRadius: 10 }}
+                style={{ elevation:5,
+                  flexDirection:"row",
+                  marginHorizontal:20, 
+                  justifyContent:'space-between',
+                  width:75,
+                  padding: 5, borderRadius: 10,
+                  backgroundColor:'#f0491f' }}
                 onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'CANCELLED')}
               >
                 <Text>Cancel</Text>
+                <Ionicons size={18} name='close-circle-outline' />
               </TouchableOpacity>
             </View>
           )}

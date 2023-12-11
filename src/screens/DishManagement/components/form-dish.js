@@ -22,26 +22,32 @@ import React, { useEffect, useState } from "react";
 import { RouteName, colors } from "../../../Constant";
 // import { launchImageLibraryAsync } from "expo-image-picker";
 import CameraIcon from "../../../components/Icons/CameraIcon";
-import { createNewDish, getAllDishType } from "../../../Api";
+import { createNewDish, getAllDishType, updateDish } from "../../../Api";
+import { useSelector } from "react-redux";
+import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
+import Toast from "react-native-toast-message";
 
 const FormDish = (props) => {
+
   let options = {
     saveToPhotos: true,
     mediaType: "photo",
   };
+  const user = useSelector(state => state.user.user)
+  console.log("IDDDDDDDD", user.kitchenId)
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [gallery, setGallery] = useState();
   const [cameraPhoto, setCameraPhoto] = useState();
   const { navigation, route } = props;
   const id = route.params;
-  console.log("FormDish", id);
+  console.log("FormDish id", id);
   const [typeOfDish, setTypeOfDish] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [typeOfDishes, setTypeOfDishes] = useState([]);
   const [values, setValues] = useState({
     name: "",
     dishTypeId: "null",
-    kitchenId: 1,
+    kitchenId: user.kitchenId,
   });
   const [imageToApi, setImageToApi] = useState();
 
@@ -52,6 +58,7 @@ const FormDish = (props) => {
       setHasGalleryPermission(galleryStatus.status === "granted");
     };
   }, []);
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
@@ -82,8 +89,22 @@ const FormDish = (props) => {
   };
 
   const initData = () => {};
+  // const handleCreateNewDish = () => {
+
+  //   createNewDish(imageToApi, values);
+
+  // };
   const handleCreateNewDish = () => {
-    createNewDish(imageToApi, values);
+    if (id?.id) {
+      updateDish(id?.id, imageToApi, values);
+      Toast.show({
+        type: "success",
+        text1: "Update",
+        text2: "Update Dish Successfully.",
+      });
+    } else {
+      createNewDish(imageToApi, values);
+    }
   };
 
   const onSelectAvatar = () => {

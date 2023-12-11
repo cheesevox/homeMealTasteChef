@@ -19,13 +19,18 @@ import {
   createNewMeal,
   getAllDishByKitchenId,
   getMealById,
+  updateMeal,
 } from "../../../Api";
 import { Image } from "react-native";
 import dish from "../../DishManagement/components/dish";
 import { useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 
 const FromMeal = (props) => {
   const { navigation, route } = props;
+  const id = route.params;
+
+  console.log(":IDDDDDDDD", id?.id)
   const meal = route.params || {};
   const user = useSelector((state) => state.user.user);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
@@ -101,9 +106,22 @@ const FromMeal = (props) => {
       console.error("Selected dish not found or undefined.");
     }
   };
+  // const onHandleCreateNewMeal = () => {
+
+  //   console.log("aray dish la", arrayDishToAPI);
+  //   createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
+  // };
   const onHandleCreateNewMeal = () => {
-    console.log("aray dish la", arrayDishToAPI);
-    createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
+    if (id) {
+      updateMeal( id?.id, imageToApi, mealObjectToAPI,arrayDishToAPI);
+      Toast.show({
+        type: "success",
+        text1: "Update",
+        text2: "Update Successfully.",
+      });
+    } else {
+         createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
+    }
   };
   const renderDishItem = (dish, unSelect = undefined) => {
     return (

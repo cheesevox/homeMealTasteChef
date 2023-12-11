@@ -179,6 +179,7 @@ const RegisterScreen = ({ navigation }) => {
         >
           By signing up you agree to our Terms &
         </Text>
+<TouchableOpacity onPress={()=> navigation.navigate("PrivePolycy")}>
         <Text
           style={{
             justifyContent: "center",
@@ -189,6 +190,7 @@ const RegisterScreen = ({ navigation }) => {
         >
           Condition and Privacy Policy
         </Text>
+        </TouchableOpacity>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
