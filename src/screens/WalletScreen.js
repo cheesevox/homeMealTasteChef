@@ -3,42 +3,53 @@ import React, { useState } from 'react'
 import { FlatList, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Linking } from 'react-native'
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { createPayment } from '../Api';
+import { createPayment, getMoneyExportFile } from '../Api';
 import { userimage } from '../Constant';
 import { CheckBox } from 'react-native-elements'
-import { rows } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
-import { WebView } from 'react-native-webview';
-
+import DownloadFileExample from './DownloadFileExample ';
 
 const WalletScreen = ({ navigation, route }) => {
-  const { item } = route.params;
-const [showWebView, setShowWebView] = useState(false);
-const yourLink = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=678900&vnp_Command=pay&vnp_CreateDate=20231128172549&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=5&vnp_OrderType=Recharge&vnp_ReturnUrl=https%3A%2F%2Fhomemealtaste.azurewebsites.net%2Fapi%2FPayment%2Fget-payment-return&vnp_TmnCode=V25Y8STO&vnp_TxnRef=638367639499956841&vnp_Version=2.1.0&vnp_SecureHash=e46f8343b778224b1075f674aac39cf12ed3b276b7a8832eccc27435cfadbfb1e2261e6b2318b7658daf42dc225a7dc482e9345fb6916296cff4207a28a70ce1';
-
-const handlePressWeb = () => {
-  // MyWebComponent(link);
-  setShowWebView(true);
-  navigation.navigate('WebScreen',{link})
-};
-
+  const { user } = route.params;
+  console.log("itemmmmmmmmmmm", user)
+  console.log("kitchne Idddddddddddddd", user?.kitchenId)
   const [link, setLink] = useState('')
-
-  console.log("item wallet $$$$$$", item)
-  const [balance, setBalance] = useState('')
+  const [value, setValue] = useState('')
   const [isSelected, setSelection] = useState(false);
-  const [values, setValues] = useState({
-    userId: item?.userId,
-    balance: null,
-  })
-  const createPaymentCustomer = () => {
-    createPayment(values).then((res) => {
-      console.log("link vnpayu: ", res)
+  // const [values, setValues] = useState({
+  //   kitchenId: item?.kitchenId,
+  //   balance: null,
+  // })
+
+
+  const createFile = () => {
+    getMoneyExportFile(user?.kitchenId, value).then((res) => {
+      console.log("link file export: ", res)
       setLink(res)
     })
   }
-  console.log("link", link)
-  // console.log("balance", item?.walletDto?.balance)
 
+  const handleDownload = () => {
+    if (link) {
+      RNFetchBlob.config({
+        fileCache: true,
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          path: RNFetchBlob.fs.dirs.DownloadDir + '/myfile.pdf',
+        },
+      })
+        .fetch('GET', link)
+        .then((res) => {
+          console.log('File downloaded successfully:', res.path());
+        })
+        .catch((error) => {
+          console.error('Error downloading file:', error);
+        });
+    } else {
+      console.warn('No link available to download');
+    }
+  };
+  console.log("link", link)
 
   const openLink = async () => {
     const url = link;
@@ -51,13 +62,14 @@ const handlePressWeb = () => {
     }
   };
 
-  const handlePress = async () => {
+  const handlePressWithrow = async () => {
     // Call createPaymentCustomer first
-    await createPaymentCustomer();
+    await getMoneyExportFile(values);
     // Then open the link
     //  openLink();
     setSelection(!isSelected);
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -117,46 +129,22 @@ const handlePressWeb = () => {
       <View style={{ flex: 4, marginHorizontal: 30 }}>
         {/* <Text style={{fontSize:20, fontWeight:'bold', color:'white'}}>Balance :</Text> */}
         <Text style={{ fontSize: 21, fontWeight: 'bold', color: 'orange' }}>
-          Balance : {item.walletDto?.balance} vnd</Text>
+          Balance : {user?.walletDtoResponse?.balance} vnd</Text>
         <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Input For Reacharge</Text>
         <View style={{ borderWidth: 2, padding: 20, borderRadius: 30, width: '100%', marginTop: 10 }}>
           <TextInput placeholder='Input monney incomming'
-            onChangeText={(text) => setValues({ ...values, balance: text })}
+            onChangeText={(text) => setValue(text)}
           ></TextInput>
-        </View>
-        <View style={{ justifyContent: 'center', marginTop: 10 }}>
-          <View style={{
-            width: '100%',
-            borderWidth: 2,
-            borderRadius: 30,
-            padding: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-              <Image style={{ width: 40, height: 40 }} source={require("../../assets/images/Icon.png")}></Image>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}> VN Pay</Text>
-            </View>
-            {/* <Ionicons style={{ fontSize: 30 }} name='checkmark-circle-outline'></Ionicons> */}
-            <CheckBox
-              checkedIcon='dot-circle-o'
-              uncheckedIcon='circle-o'
-              // checked={this.st.ate.checked}
-              checked={isSelected}
-              onPress={handlePress}
-            />
-          </View>
         </View>
 
       </View>
-      <View style={{
+      {/* <View style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
         <TouchableOpacity
-          onPress={handlePressWeb}
+          onPress={creteFile()}
           style={{
             backgroundColor: "#f96163",
             borderRadius: 29,
@@ -165,13 +153,24 @@ const handlePressWeb = () => {
             marginBottom: 20
           }}
         >
-       
+
           <Text style={{ textAlign: 'center', fontSize: 18, color: "#fff", fontWeight: "700", }}>
-            Re-Charge Wallet
+            Withdraw Money Export File
           </Text>
         </TouchableOpacity>
-       
-      </View>
+
+      </View> */}
+      <View>
+      <Text>Click the button to create a file and download:</Text>
+      <TouchableOpacity onPress={createFile}>
+        <Text>Create File</Text>
+      </TouchableOpacity>
+
+      <Text>Click the button to download the file:</Text>
+      <TouchableOpacity onPress={handleDownload}>
+        <Text>Download File</Text>
+      </TouchableOpacity>
+    </View>
     </SafeAreaView>
   )
 }

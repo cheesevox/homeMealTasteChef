@@ -16,7 +16,6 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = ({ route }) => {
   const dispatch = useDispatch();
   const { user } = route.params || {};
-  console.log("user bottom navigator : ::::::::", user);
   useEffect(() => {
     dispatch(getUserInfor(user));
   }, [user?.userId]);

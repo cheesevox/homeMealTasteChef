@@ -244,6 +244,14 @@ export const createPayment = async (values)=>{
     console.log("create payment $$$$",error)
   }
 }
+export const getMoneyExportFile = async (id,value) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Kitchen/withdraw-money-from-chef-wallet-export-file-PDF?kitchenid=${id}&moneyWithdraw=${value}`
+    );
+    return response.data;
+  } catch (error) {console.log("REPOSSSSSSSSSSSSSSsss link" , error)}
+};
 // =======
 // chef dish
 export const getAllDishByKitchenId = async (id) => {
@@ -580,42 +588,28 @@ export const updateMeal = async (id, image, attribute) => {
   }
 };
 
-export const updateProfile = async (id, image, attribute) => {
-  const formData = new FormData();
-  // Append image with correct file name and type
-  formData.append("userId", id)
+export const updateProfile = async (values) => {
+  console.log("values for updating profile:", values);
 
-  // Append other attributes
-  Object.entries(attribute).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
-  console.log("daaaaaaaaaaaaaaaaata",formData)
   try {
     const response = await axios.put(
-      "https://homemealtaste.azurewebsites.net/api/User/update-user",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      "https://homemealtaste.azurewebsites.net/api/User/update-profile-chef",
+      values
     );
 
-    console.log("Response:", response.data); // Log the response data for debugging
+    // Log the response data for debugging
+    console.log("Update Profile Response:", response.data);
 
     if (response.status === 200) {
       console.log("Update successful.");
+    } else {
+      console.error("Update failed. Unexpected status code:", response.status);
     }
   } catch (error) {
-    console.error("Error updating meal:", error.message);
+    console.error("Error updating profile:", error.message);
     console.error("Error details:", error.response);
+
     // Log the entire error object for more information
     console.error("Full error object:", error);
-
-    if (!error.response) {
-      console.error("Error object without response:", error);
-    }
   }
 };
-
-

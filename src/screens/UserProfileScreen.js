@@ -13,6 +13,7 @@ import { logoutUser } from "../../slices/userSlice";
 
 const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
+  console.log("uwaseeeeeeeeeeeeeeeeee", user)
   const [profile, setProfile] = useState()
   const dispatch = useDispatch();
   const fectProfileByCustomerId = () => {
@@ -126,7 +127,7 @@ const UserProfileScreen = ({ navigation, route }) => {
               <Ionicons name='call-outline' size={20} paddingVertical={20}> Phone : {profile?.phone} </Ionicons>
               <Ionicons name='mail-outline' size={20} paddingVertical={20}> Email : {profile?.email}</Ionicons>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Wallet", { item: profile })}
+                onPress={() => navigation.navigate("Wallet", { user })}
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}

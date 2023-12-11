@@ -8,4 +8,4 @@ if (__DEV__) {
   import('./config/firebaseConfig').then(() => console.log('Firebase Initialized'));
 }
 // initializeApp(firebaseConfig);
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(homemealtaste, () => App);
