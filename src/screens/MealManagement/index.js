@@ -6,22 +6,31 @@ import AddIcon from "../../components/Icons/AddIcon";
 import { RouteName } from "../../Constant";
 import { getAllMealByKitchen } from "../../Api";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const MealManagement = ({ navigation }) => {
   const [meal, setMeal] = useState([]);
-
+  const user = useSelector(state => state.user.user)
   useEffect(() => {
     console.log("RUN fetchAllMealByKitchenId");
     fetchAllMealByKitchenId();
   }, []);
 
   const fetchAllMealByKitchenId = () => {
-    getAllMealByKitchen(1)
+    getAllMealByKitchen(user.kitchenId)
       .then((res) => {
         setMeal(res);
       })
       .catch((error) => console.log(error));
   };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchAllMealByKitchenId
+      console.log("Data refreshed!");
+    });
+    // Clean up the listener when the component is unmounted
+    return unsubscribe;
+  }, [navigation]);
 
   const renderItem = (item) => {
     return <MealItem data={item.item} navigation={navigation} />;

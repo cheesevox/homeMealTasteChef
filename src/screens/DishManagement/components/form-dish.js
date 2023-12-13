@@ -19,12 +19,12 @@ import {
 import HeaderComp from "../../HeaderComp";
 import { Dropdown } from "react-native-element-dropdown";
 import React, { useEffect, useState } from "react";
-import { RouteName, colors } from "../../../Constant";
+import { RouteName, colors, item } from "../../../Constant";
 // import { launchImageLibraryAsync } from "expo-image-picker";
 import CameraIcon from "../../../components/Icons/CameraIcon";
 import { createNewDish, getAllDishType, updateDish } from "../../../Api";
 import { useSelector } from "react-redux";
-import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
+import { placeholder, value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 import Toast from "react-native-toast-message";
 
 const FormDish = (props) => {
@@ -36,21 +36,22 @@ const FormDish = (props) => {
   const user = useSelector(state => state.user.user)
   console.log("IDDDDDDDD", user.kitchenId)
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [gallery, setGallery] = useState();
   const [cameraPhoto, setCameraPhoto] = useState();
   const { navigation, route } = props;
-  const id = route.params;
+  const item = route.params
+  const id = item?.id?.dishId || {}
+  const [gallery, setGallery] = useState(item?.id?.image);
   console.log("FormDish id", id);
   const [typeOfDish, setTypeOfDish] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [typeOfDishes, setTypeOfDishes] = useState([]);
   const [values, setValues] = useState({
-    name: "",
-    dishTypeId: "null",
-    kitchenId: user.kitchenId,
+    name: item?.id?.name,
+    dishTypeId:item?.id?.dishTypeResponse?.dishTypeId,
+    kitchenId: user?.kitchenId,
   });
   const [imageToApi, setImageToApi] = useState();
-
+  console.log("IAMGEMMMMMMMMMMM", item?.id?.image)
   useEffect(() => {
     async () => {
       const galleryStatus =
@@ -60,6 +61,7 @@ const FormDish = (props) => {
   }, []);
   
   const pickImage = async () => {
+   
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
       allowEditing: true,
@@ -87,7 +89,6 @@ const FormDish = (props) => {
       })
       .catch((error) => console.log(error));
   };
-
   const initData = () => {};
   // const handleCreateNewDish = () => {
 
@@ -95,15 +96,31 @@ const FormDish = (props) => {
 
   // };
   const handleCreateNewDish = () => {
-    if (id?.id) {
-      updateDish(id?.id, imageToApi, values);
-      Toast.show({
-        type: "success",
-        text1: "Update",
-        text2: "Update Dish Successfully.",
-      });
+    if (item?.id?.dishId) {
+    console.log("values in handde update",values)
+      updateDish(item?.id?.dishId, imageToApi, values).then((res)=>{
+        navigation.navigate(RouteName.DISH_MANAGEMENT);
+        Toast.show({
+          type: "success",
+          text1: "Update",
+          text2: "Update Dish Successfully.",
+        });
+      })
     } else {
-      createNewDish(imageToApi, values);
+      createNewDish(imageToApi, values).then((res)=> {
+        navigation.navigate(RouteName.DISH_MANAGEMENT);
+        Toast.show({
+          type: "success",
+          text1: "Home Meal Taste",
+          text2: "Create Dish Successfully.",
+        });
+      }).catch(error =>{
+        Toast.show({
+          type: "error",
+          text1: "Home Meal Taste",
+          text2: "Create Dish Fail.",
+        });
+      })
     }
   };
 
@@ -193,7 +210,7 @@ const FormDish = (props) => {
       >
         <Dropdown
           data={typeOfDishes}
-          placeholder={"Select type of dish"}
+          placeholder={id ? item?.id?.dishTypeResponse?.name : 'Select Type of dish'}
           placeholderStyle={{
             color: "#C1C1C1",
             fontSize: 18,
@@ -204,6 +221,7 @@ const FormDish = (props) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(value) => {
+            console.log("value cua dropdown",value.dishTypeId)
             setTypeOfDish(value);
             setValues({ ...values, dishTypeId: value.dishTypeId });
             setIsFocus(false);
@@ -216,27 +234,29 @@ const FormDish = (props) => {
         />
         <TextInput
           style={styles.textInput}
-          placeholder="Name of dish"
+          placeholder={id ? item?.id?.name : 'Name of dish'}
           placeholderTextColor="#C1C1C1"
           onChangeText={(text) => setValues({ ...values, name: text })}
         />
-
+        
         <TouchableOpacity
           style={styles.uploadImages}
           onPress={() => pickImage()}
         >
-          {gallery ? (
+          {gallery ?  (
             <Image
               source={{ uri: gallery }}
+              // source={{uri:item?.id?.image}}
+              // source={item?.id?.image ? {uri : item?.id?.image} :  {uri:gallery}  }
               // resizeMode="cover"
               style={{ width: 100, height: 100, zIndex: 10000 }}
             />
-          ) : (
+          ) :(
             <>
               <CameraIcon />
               <Text>{"Post picture of dish"}</Text>
             </>
-          )}
+          ) }
         </TouchableOpacity>
       </View>
       <View
@@ -260,7 +280,7 @@ const FormDish = (props) => {
           }}
           onPress={() => {
             handleCreateNewDish();
-            navigation.navigate(RouteName.DISH_MANAGEMENT);
+            // navigation.navigate(RouteName.DISH_MANAGEMENT);
           }}
         >
           <Text style={styles.buttonTextStyle}>{"Save"}</Text>

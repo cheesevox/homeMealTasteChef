@@ -5,18 +5,32 @@ import { Provider } from "react-redux";
 import {store} from './store'
 import Toast from 'react-native-toast-message';
 import { AppRegistry } from 'react-native';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import messaging from '@react-native-firebase/messaging';
+import { getFcmToken, requestUserPermission } from "./src/NotificationHelper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  // useEffect(() => {
-  //   const unsubscribeOnTokenRefresh = messaging().onTokenRefresh((token) => {
-  //     console.log('Device Token:', token);
-  //   });
+  const [token, setToken] = useState('');
 
-  //   return () => unsubscribeOnTokenRefresh();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await requestUserPermission();
+      await getToken();
+    };
 
+    fetchData();
+  }, []);
+
+  const getToken = async () => {
+    try {
+      const fcmToken = await getFcmToken();
+      console.log('FCM Token:', fcmToken);
+      setToken(fcmToken); // Optionally, you can update your state with the FCM token
+    } catch (error) {
+      console.error('Error getting FCM token:', error);
+    }
+  };
   return (
   <Provider store={store}>
     <AppNavigator />

@@ -6,6 +6,7 @@ import Toast from "react-native-toast-message";
 
 const Dish = (props) => {
   const { data, navigation } = props;
+  console.log("itemmmmmmmmm", data)
   const handleDelete = (id) => {
     deleteDishByDishId(id)
       .then((res) => {console.log("Delete dish successfully.")
@@ -64,7 +65,7 @@ const Dish = (props) => {
         <Pressable
           onPress={() => {
             navigation.navigate(RouteName.FORM_DISH, {
-              id: data.dishId,
+              id: data,
             });
           }}
           style={({ pressed }) => [

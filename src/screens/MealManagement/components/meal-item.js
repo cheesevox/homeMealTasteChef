@@ -10,7 +10,7 @@ const MealItem = (props) => {
   const { data, navigation } = props;
   const [meals, setMeals] = useState([]);
   const user = useSelector((state) => state.user.user);
-
+  console.log("DATAAAAAAAAAAAAAAAAAAAAAAAAa", data)
   // const fetchMealsData= () => {
   //   getAllMealByKitchen(user.kitchenId).then((res) => {
   //     console.log("Ress meal by kitchen", res);
@@ -82,7 +82,7 @@ const MealItem = (props) => {
         <Pressable
           onPress={() => {
             navigation.navigate(RouteName.FORM_MEAL, {
-              id: data?.mealId,
+              data,
             });
           }}
           style={({ pressed }) => [

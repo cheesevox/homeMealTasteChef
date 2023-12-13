@@ -19,34 +19,35 @@ import {
   createNewMeal,
   getAllDishByKitchenId,
   getMealById,
+  updateDish,
   updateMeal,
 } from "../../../Api";
 import { Image } from "react-native";
 import dish from "../../DishManagement/components/dish";
 import { useSelector } from "react-redux";
-import Toast from "react-native-toast-message";
 
 const FromMeal = (props) => {
   const { navigation, route } = props;
-  const id = route.params;
-
-  console.log(":IDDDDDDDD", id?.id)
   const meal = route.params || {};
+  console.log("mealmmmmmmmmmmmmmmmmmmmmmmm", meal?.data.dishModel)
   const user = useSelector((state) => state.user.user);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [selected, setSelected] = useState();
   const [mealObjectToAPI, setMealObjectToAPI] = useState({
-    name: "",
+    name: meal?.data?.name,
     kitchenId: user.kitchenId,
-    description: "",
+    description: meal?.data?.description,
     // DishIds: [],
   });
   const [imageToApi, setImageToApi] = useState();
-  const [arrayDishToAPI, setArrayDishToAPI] = useState([]);
   // const [meal, setMeal] = useState([]);
   const [dish, setDish] = useState([]);
   // const [dishInMeal, setDishInMeal] = useState([meal.meal?.dishModel]);
-  const [dishInMeal, setDishInMeal] = useState(meal.meal?.dishModel || []);
+  const [dishInMeal, setDishInMeal] = useState(meal?.data.dishModel || []);
+  const [arrayDishToAPI, setArrayDishToAPI] = useState(meal?.data.dishModel.map((item)=>{
+    return item.dishId
+  }));
+
   // const initData = () => {};
   const fetchAllDishByKitchenId = () => {
     getAllDishByKitchenId(user?.kitchenId).then((res) => {
@@ -106,21 +107,13 @@ const FromMeal = (props) => {
       console.error("Selected dish not found or undefined.");
     }
   };
-  // const onHandleCreateNewMeal = () => {
-
-  //   console.log("aray dish la", arrayDishToAPI);
-  //   createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
-  // };
   const onHandleCreateNewMeal = () => {
-    if (id) {
-      updateMeal( id?.id, imageToApi, mealObjectToAPI,arrayDishToAPI);
-      Toast.show({
-        type: "success",
-        text1: "Update",
-        text2: "Update Successfully.",
-      });
-    } else {
-         createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
+    if(meal?.data?.mealId){
+      console.log("aray meal update la", meal?.data.dishModel);
+      updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
+    }else{
+      console.log("aray meal  create la", arrayDishToAPI);
+      createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
     }
   };
   const renderDishItem = (dish, unSelect = undefined) => {
@@ -226,7 +219,7 @@ const FromMeal = (props) => {
         onBack={() => {
           navigation.goBack();
         }}
-        label={meal?.meal?.mealId ? "Edit meal" : "Create meal"}
+        label={meal?.data?.mealId ? "Edit meal" : "Create meal"}
       />
       <ScrollView
         style={{
@@ -254,7 +247,7 @@ const FromMeal = (props) => {
             }}
             onPress={() => pickImage()}
           >
-            {meal.meal?.image ? (
+            {meal.data?.image ? (
               <Image
                 style={{
                   width: "100%",
@@ -262,7 +255,7 @@ const FromMeal = (props) => {
                   borderRadius: 10,
                   resizeMode: "cover",
                 }}
-                source={{ uri: meal.meal?.image }}
+                source={{ uri: meal.data?.image }}
               ></Image>
             ) : imageToApi ? (
               <Image
@@ -294,7 +287,7 @@ const FromMeal = (props) => {
               placeholder="Meal's Name"
               placeholderTextColor={"#C1C1C1"}
               // value={meal.meal?.name}
-              defaultValue={meal.meal?.name}
+              defaultValue={meal.data?.name}
               onChangeText={(text) =>
                 setMealObjectToAPI({ ...mealObjectToAPI, name: text })
               }
@@ -305,7 +298,7 @@ const FromMeal = (props) => {
               style={styles.textInput}
               placeholder="Description"
               placeholderTextColor={"#C1C1C1"}
-              defaultValue={meal.meal?.description}
+              defaultValue={meal.data?.description}
               onChangeText={(text) =>
                 setMealObjectToAPI({ ...mealObjectToAPI, description: text })
               }

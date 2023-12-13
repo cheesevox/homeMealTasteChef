@@ -8,11 +8,12 @@ import { getAllDishByKitchenId } from "../../Api";
 import { useFocusEffect } from "@react-navigation/core";
 import { Bold } from "react-native-feather";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 const DishManagement = ({ navigation }) => {
   const [dish, setDish] = useState([]);
-
+  const user = useSelector(state => state.user.user)
   useEffect(() => {
-    getAllDishByKitchenId(1)
+    getAllDishByKitchenId(user.kitchenId)
       .then((result) => {
         setDish(result);
       })
@@ -28,6 +29,17 @@ const DishManagement = ({ navigation }) => {
   const handleClickAdd = () => {
     navigation.navigate(RouteName.FORM_DISH);
   };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getAllDishByKitchenId(user.kitchenId).then((res)=>{
+        setDish(res)
+      })
+      console.log("Data refreshed!");
+    });
+
+    // Clean up the listener when the component is unmounted
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View>
@@ -45,7 +57,7 @@ const DishManagement = ({ navigation }) => {
           }}
         >
           <FlatList
-            data={dish.slice().reverse()}
+            data={dish?.slice().reverse()}
             keyExtractor={(item) => item.dishId}
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}

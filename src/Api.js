@@ -501,6 +501,7 @@ export const createNewMeal = async (image, attribute, dishes) => {
 };
 
 export const updateDish = async (id, image, attribute) => {
+  console.log("ben api update dish",id,image,attribute)
   const formData = new FormData();
   // Append image with correct file name and type
   formData.append("dishId", id)
@@ -545,7 +546,7 @@ export const updateDish = async (id, image, attribute) => {
   }
 };
 
-export const updateMeal = async (id, image, attribute) => {
+export const updateMeal = async (id, image, attribute, dishes) => {
   const formData = new FormData();
   // Append image with correct file name and type
   formData.append("mealId", id)
@@ -554,12 +555,14 @@ export const updateMeal = async (id, image, attribute) => {
     type: "image/jpeg", // or 'image/png'
     name: "myImage.jpg", // You can extract the file name from the URI or provide it dynamically
   });
-
-  // Append other attributes
   Object.entries(attribute).forEach(([key, value]) => {
     formData.append(key, value);
   });
-  console.log("daaaaaaaaaaaaaaaaata",formData)
+  dishes.forEach((dishId, index) => {
+    formData.append("DishIds", dishId);
+  });
+  // Assuming dishes is an array of key-value pairs (objects)
+ console.log("daaaaaaaaaaaaaaaaata",formData)
   try {
     const response = await axios.put(
       "https://homemealtaste.azurewebsites.net/api/Meal/update-meal-not-exist-in-session",
