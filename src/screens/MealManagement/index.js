@@ -38,7 +38,6 @@ const MealManagement = ({ navigation }) => {
 
   const handleClickAdd = () => {
     navigation.navigate(RouteName.FORM_MEAL);
-    
   };
 
   return (

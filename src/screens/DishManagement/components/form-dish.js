@@ -35,6 +35,7 @@ const FormDish = (props) => {
   };
   const user = useSelector(state => state.user.user)
   console.log("IDDDDDDDD", user.kitchenId)
+  console.log("mewwwwwwwwwwwwwwwwwww", item?.image)
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [cameraPhoto, setCameraPhoto] = useState();
   const { navigation, route } = props;
@@ -45,9 +46,10 @@ const FormDish = (props) => {
   const [typeOfDish, setTypeOfDish] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [typeOfDishes, setTypeOfDishes] = useState([]);
+  const [status, setStatus] = useState(false)
   const [values, setValues] = useState({
     name: item?.id?.name,
-    dishTypeId:item?.id?.dishTypeResponse?.dishTypeId,
+    dishTypeId: item?.id?.dishTypeResponse?.dishTypeId,
     kitchenId: user?.kitchenId,
   });
   const [imageToApi, setImageToApi] = useState();
@@ -59,9 +61,9 @@ const FormDish = (props) => {
       setHasGalleryPermission(galleryStatus.status === "granted");
     };
   }, []);
-  
+
   const pickImage = async () => {
-   
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
       allowEditing: true,
@@ -89,32 +91,43 @@ const FormDish = (props) => {
       })
       .catch((error) => console.log(error));
   };
-  const initData = () => {};
+  const initData = () => { };
   // const handleCreateNewDish = () => {
 
   //   createNewDish(imageToApi, values);
 
   // };
+  console.log("LOGGGGGGGGGGGGGGGG", item?.id?.dishTypeResponse?.dishTypeId)
   const handleCreateNewDish = () => {
     if (item?.id?.dishId) {
-    console.log("values in handde update",values)
-      updateDish(item?.id?.dishId, imageToApi, values).then((res)=>{
+      console.log("values in handde update", values)
+      if (typeOfDish !== item?.id?.dishTypeResponse?.dishTypeId) {
+        setStatus(true)
+
+      } else {
+        setStatus(false)
+      }
+      updateDish(item?.id?.dishId, imageToApi, values).then((res) => {
         navigation.navigate(RouteName.DISH_MANAGEMENT);
         Toast.show({
           type: "success",
           text1: "Update",
           text2: "Update Dish Successfully.",
         });
+      }).catch(err => {
+        console.log("ERRRRRRRRRRRRRRRRrr", err)
       })
-    } else {
-      createNewDish(imageToApi, values).then((res)=> {
+    }
+
+    else {
+      createNewDish(imageToApi, values).then((res) => {
         navigation.navigate(RouteName.DISH_MANAGEMENT);
         Toast.show({
           type: "success",
           text1: "Home Meal Taste",
           text2: "Create Dish Successfully.",
         });
-      }).catch(error =>{
+      }).catch(error => {
         Toast.show({
           type: "error",
           text1: "Home Meal Taste",
@@ -180,7 +193,7 @@ const FormDish = (props) => {
         onBack={() => {
           navigation.goBack();
         }}
-        label={id ? "Edit dish" : "Create dish"}
+        label={item?.id ? "Edit dish" : "Create dish"}
       />
       {/* <TouchableOpacity title="lay hinh" onPress={openGallery}>
         <Text>Lay hinh</Text>
@@ -221,7 +234,7 @@ const FormDish = (props) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(value) => {
-            console.log("value cua dropdown",value.dishTypeId)
+            console.log("value cua dropdown", value.dishTypeId)
             setTypeOfDish(value);
             setValues({ ...values, dishTypeId: value.dishTypeId });
             setIsFocus(false);
@@ -238,25 +251,35 @@ const FormDish = (props) => {
           placeholderTextColor="#C1C1C1"
           onChangeText={(text) => setValues({ ...values, name: text })}
         />
-        
+
         <TouchableOpacity
           style={styles.uploadImages}
           onPress={() => pickImage()}
         >
-          {gallery ?  (
+          {gallery ? (
             <Image
               source={{ uri: gallery }}
               // source={{uri:item?.id?.image}}
               // source={item?.id?.image ? {uri : item?.id?.image} :  {uri:gallery}  }
               // resizeMode="cover"
-              style={{ width: 100, height: 100, zIndex: 10000 }}
+              style={{ width: '100%', height: 150, zIndex: 10000, borderRadius: 20 }}
             />
-          ) :(
-            <>
-              <CameraIcon />
-              <Text>{"Post picture of dish"}</Text>
-            </>
-          ) }
+          ) :
+            // item?.id?.image ? (
+            //   <Image
+            //     source={{ uri: item?.id?.image }}
+            //     // source={{uri:item?.id?.image}}
+            //     // source={item?.id?.image ? {uri : item?.id?.image} :  {uri:gallery}  }
+            //     // resizeMode="cover"
+            //     style={{ width: '80%', height: '70%', zIndex: 10000 }}
+            //   />
+            // ) :s
+            (
+              <>
+                <CameraIcon />
+                <Text>{"Post picture of dish"}</Text>
+              </>
+            )}
         </TouchableOpacity>
       </View>
       <View
@@ -321,7 +344,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   uploadImages: {
-    padding: 50,
+    padding: 20,
     backgroundColor: "#F8F8FC",
     gap: 5,
     borderRadius: 12,

@@ -526,7 +526,6 @@ export const updateDish = async (id, image, attribute) => {
         },
       }
     );
-
     console.log("Response:", response.data); // Log the response data for debugging
 
     if (response.status === 200) {

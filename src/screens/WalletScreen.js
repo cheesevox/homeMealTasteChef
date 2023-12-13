@@ -15,11 +15,6 @@ const WalletScreen = ({ navigation, route }) => {
   const [link, setLink] = useState('')
   const [value, setValue] = useState('')
   const [isSelected, setSelection] = useState(false);
-  // const [values, setValues] = useState({
-  //   kitchenId: item?.kitchenId,
-  //   balance: null,
-  // })
-
 
   const createFile = () => {
     getMoneyExportFile(user?.kitchenId, value).then((res) => {

@@ -32,6 +32,12 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         text1: 'Order Canceled',
         text2: 'Your order has been canceled.',
       });
+    }else{
+      Toast.show({
+        type: 'success',
+        text1: 'Order Success',
+        text2: 'Your order has been done.',
+      });
     }
     postStatusOrderForCustomer(mealSessionId, newStatus);  // Assuming status is defined elsewhere
   };

@@ -25,6 +25,7 @@ import {
 import { Image } from "react-native";
 import dish from "../../DishManagement/components/dish";
 import { useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 
 const FromMeal = (props) => {
   const { navigation, route } = props;
@@ -47,7 +48,7 @@ const FromMeal = (props) => {
   const [dishInMeal, setDishInMeal] = useState(meal?.data?.dishModel || []);
 
   const [arrayDishToAPI, setArrayDishToAPI] = useState(
-      meal?.data?.dishModel?.map((item) => item.dishId) || []
+    meal?.data?.dishModel?.map((item) => item.dishId) || []
   );
 
   // const initData = () => {};
@@ -114,10 +115,21 @@ const FromMeal = (props) => {
     if (meal?.data?.mealId) {
       // console.log("aray meal update la", meal?.data.dishModel);
       updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
+      navigation.navigate("MealManagement")
+      Toast.show({
+        type: "success",
+        text1: "Home Meal Taste",
+        text2: "Update Meal Successfull",
+      });
     } else {
       console.log("aray meal  create la", arrayDishToAPI);
       createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
       navigation.navigate("MealManagement")
+      Toast.show({
+        type: "success",
+        text1: "Home Meal Taste",
+        text2: "Update Meal Successfull",
+      });
     }
   };
   const renderDishItem = (dish, unSelect = undefined) => {
@@ -251,39 +263,46 @@ const FromMeal = (props) => {
             }}
             onPress={() => pickImage()}
           >
-            {meal.data?.image ? (
-              <Image
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 10,
-                  resizeMode: "cover",
-                }}
-                source={{ uri: meal.data?.image }}
-              ></Image>
-            ) : imageToApi ? (
-              <Image
-                style={{
-                  width: 130,
-                  height: '100%',
-                  borderRadius: 10,
-                }}
-                source={{ uri: imageToApi }}
-              ></Image>
-            ) : (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  height: "100%",
-                  alignItems: "center",
-                }}
-              >
-                <CameraIcon />
-                <Text>{"Post picture"}</Text>
-              </View>
-            )}
+            {
+              meal.data?.image ? (
+                // Display meal.data.image if it exists
+                <Image
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 10,
+                    resizeMode: "cover",
+                  }}
+                  source={{ uri: meal.data?.image }}
+                ></Image>
+              ) : 
+              imageToApi ? (
+                // Display imageToApi if it exists
+                <Image
+                  style={{
+                    width: 130,
+                    height: '100%',
+                    borderRadius: 10,
+                  }}
+                  source={{ uri: imageToApi }}
+                ></Image>
+              ) : (
+                // Display default content if neither meal.data.image nor imageToApi exists
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    height: "100%",
+                    alignItems: "center",
+                  }}
+                >
+                  <CameraIcon />
+                  <Text>{"Post picture"}</Text>
+                </View>
+              )
+            }
+
           </TouchableOpacity>
           <View style={{ width: "60%" }}>
             <TextInput

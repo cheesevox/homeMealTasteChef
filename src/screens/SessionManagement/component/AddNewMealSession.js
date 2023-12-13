@@ -77,7 +77,7 @@ import {
             {/* <Text>Image</Text> */}
             <Image
               source={{ uri: item.image }}
-              style={{ height: 80, width: 80, borderRadius: 10 }}
+              style={{ height: 200, width: 180, borderRadius: 10 }}
             />
           </View>
           <View
