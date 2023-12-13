@@ -279,7 +279,7 @@ export const deleteMealByMealId = async (id) => {
     );
     console.log("Delete successfully.");
   } catch (error) {
-    console.log("delete meal", error);
+    console.log("Meal Exit IN Session", error);
   }
 };
 export const createNewDish = async (image, attribute) => {

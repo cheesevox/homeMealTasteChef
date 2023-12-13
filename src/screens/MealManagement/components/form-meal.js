@@ -29,7 +29,8 @@ import { useSelector } from "react-redux";
 const FromMeal = (props) => {
   const { navigation, route } = props;
   const meal = route.params || {};
-  console.log("mealmmmmmmmmmmmmmmmmmmmmmmm", meal?.data.dishModel)
+  const id = meal?.data?.mealId
+  // console.log("mealmmmmmmmmmmmmmmmmmmmmmmm", meal?.data.dishModel)
   const user = useSelector((state) => state.user.user);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [selected, setSelected] = useState();
@@ -43,10 +44,11 @@ const FromMeal = (props) => {
   // const [meal, setMeal] = useState([]);
   const [dish, setDish] = useState([]);
   // const [dishInMeal, setDishInMeal] = useState([meal.meal?.dishModel]);
-  const [dishInMeal, setDishInMeal] = useState(meal?.data.dishModel || []);
-  const [arrayDishToAPI, setArrayDishToAPI] = useState(meal?.data.dishModel.map((item)=>{
-    return item.dishId
-  }));
+  const [dishInMeal, setDishInMeal] = useState(meal?.data?.dishModel || []);
+
+  const [arrayDishToAPI, setArrayDishToAPI] = useState(
+      meal?.data?.dishModel?.map((item) => item.dishId) || []
+  );
 
   // const initData = () => {};
   const fetchAllDishByKitchenId = () => {
@@ -92,6 +94,7 @@ const FromMeal = (props) => {
   const onHandleRemove = (id) => {
     setDishInMeal(dishInMeal.filter((item) => item.dishId !== id));
     setArrayDishToAPI(arrayDishToAPI.filter((item) => item !== id));
+
   };
   const onHandleSelectDishAddToMeal = (id) => {
     const selectedDish = dish.find((item) => {
@@ -108,12 +111,13 @@ const FromMeal = (props) => {
     }
   };
   const onHandleCreateNewMeal = () => {
-    if(meal?.data?.mealId){
-      console.log("aray meal update la", meal?.data.dishModel);
+    if (meal?.data?.mealId) {
+      // console.log("aray meal update la", meal?.data.dishModel);
       updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
-    }else{
+    } else {
       console.log("aray meal  create la", arrayDishToAPI);
       createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
+      navigation.navigate("MealManagement")
     }
   };
   const renderDishItem = (dish, unSelect = undefined) => {
@@ -261,7 +265,7 @@ const FromMeal = (props) => {
               <Image
                 style={{
                   width: 130,
-                  height: 130,
+                  height: '100%',
                   borderRadius: 10,
                 }}
                 source={{ uri: imageToApi }}
@@ -410,9 +414,9 @@ const FromMeal = (props) => {
               backgroundColor: "#E64B17",
               borderRadius: 20,
             }}
-            // onPress={() => {
-            //   //call api
-            // }}
+          // onPress={() => {
+          //   //call api
+          // }}
           >
             <Text style={styles.buttonTextStyle}>{"Remove"}</Text>
           </TouchableOpacity>

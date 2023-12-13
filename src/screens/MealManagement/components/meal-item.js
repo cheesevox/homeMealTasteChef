@@ -29,18 +29,26 @@ const MealItem = (props) => {
     deleteMealByMealId(id)
       .then((res) => {
         console.log('Delete meal successfully.');
-          Toast.show({
-            type: 'error',
-            text1: 'Meal Remove',
-            text2: 'Your order has been canceled.',
-          });
+        Toast.show({
+          type: 'error',
+          text1: 'Meal Remove',
+          text2: 'Your order has been canceled.',
+        });
+        navigation.navigate("MealManagement")
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        Toast.show({
+          type: 'error',
+          text1: 'Home Meal Taste',
+          text2: 'Your Meal Exited In Session.',
+        });
+      });
   };
 
-  console.log("MEALLLLLLLLLLLLLL " ,data)
-  console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD " ,data?.mealId)
-  
+  console.log("MEALLLLLLLLLLLLLL ", data)
+  console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD ", data?.mealId)
+
   return (
     <View style={styles.container}>
       <View
@@ -59,7 +67,7 @@ const MealItem = (props) => {
         />
       </View>
       <View
-        style={{ flex: 1, paddingLeft: 10, gap: 4, justifyContent: "center", width:'90%' }}
+        style={{ flex: 1, paddingLeft: 10, gap: 4, justifyContent: "center", width: '90%' }}
       >
         <Text style={styles.nameText}>{data?.name}</Text>
         {/* <Text style={{ ...styles.nameText, fontSize: 12 }}>
@@ -75,8 +83,8 @@ const MealItem = (props) => {
           alignItems: "center",
           flexDirection: "row",
           gap: 4,
-          width:'80%',
-          marginVertical:10,
+          width: '80%',
+          marginVertical: 10,
         }}
       >
         <Pressable
@@ -98,7 +106,7 @@ const MealItem = (props) => {
               ({
                 color: "#FFF",
               },
-              styles.buttonText)
+                styles.buttonText)
             }
           >
             {"Edit"}
@@ -134,9 +142,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 20,
     padding: 12,
-    marginHorizontal:5,
-    width:'48%',
-    alignItems:"center"
+    marginHorizontal: 5,
+    width: '48%',
+    alignItems: "center"
   },
   nameText: {
     color: "#000",

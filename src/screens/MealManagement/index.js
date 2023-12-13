@@ -25,7 +25,7 @@ const MealManagement = ({ navigation }) => {
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchAllMealByKitchenId
+      fetchAllMealByKitchenId()
       console.log("Data refreshed!");
     });
     // Clean up the listener when the component is unmounted
@@ -38,6 +38,7 @@ const MealManagement = ({ navigation }) => {
 
   const handleClickAdd = () => {
     navigation.navigate(RouteName.FORM_MEAL);
+    
   };
 
   return (
