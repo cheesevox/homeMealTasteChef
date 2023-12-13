@@ -11,7 +11,7 @@ import HeaderComp from "../../HeaderComp";
 import * as ImagePicker from "expo-image-picker";
 import { MultiSelect } from "react-native-element-dropdown";
 import React, { useEffect, useState } from "react";
-import { colors } from "../../../Constant";
+import { RouteName, colors } from "../../../Constant";
 import CameraIcon from "../../../components/Icons/CameraIcon";
 import MinusIcon from "../../../components/Icons/MinusIcon";
 import AddIcon from "../../../components/Icons/AddIcon";
@@ -114,8 +114,8 @@ const FromMeal = (props) => {
   const onHandleCreateNewMeal = () => {
     if (meal?.data?.mealId) {
       // console.log("aray meal update la", meal?.data.dishModel);
-      updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
-      navigation.navigate("MealManagement")
+       updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
+      navigation.navigate(RouteName.MEAL_MANAGEMENT)
       Toast.show({
         type: "success",
         text1: "Home Meal Taste",
@@ -124,7 +124,7 @@ const FromMeal = (props) => {
     } else {
       console.log("aray meal  create la", arrayDishToAPI);
       createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
-      navigation.navigate("MealManagement")
+      navigation.navigate(RouteName.MEAL_MANAGEMENT)
       Toast.show({
         type: "success",
         text1: "Home Meal Taste",

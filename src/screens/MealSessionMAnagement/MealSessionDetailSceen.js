@@ -119,7 +119,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
                   width:70
                  }}
                 onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'DONE')}
-              >
+              >   
                 <Text>DONE</Text> 
                 <Ionicons  size={18} name='checkmark-circle-outline'/>
               </TouchableOpacity>

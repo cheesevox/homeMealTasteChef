@@ -11,10 +11,6 @@ import { useSelector } from "react-redux";
 const MealManagement = ({ navigation }) => {
   const [meal, setMeal] = useState([]);
   const user = useSelector(state => state.user.user)
-  useEffect(() => {
-    console.log("RUN fetchAllMealByKitchenId");
-    fetchAllMealByKitchenId();
-  }, []);
 
   const fetchAllMealByKitchenId = () => {
     getAllMealByKitchen(user.kitchenId)
@@ -24,8 +20,18 @@ const MealManagement = ({ navigation }) => {
       .catch((error) => console.log(error));
   };
   useEffect(() => {
+    console.log("RUN fetchAllMealByKitchenId");
+    fetchAllMealByKitchenId();
+  }, []);
+
+  useEffect(() => {
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++")
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchAllMealByKitchenId()
+      getAllMealByKitchen(user.kitchenId)
+      .then((res) => {
+        setMeal(res);
+      })
+      .catch((error) => console.log(error));
       console.log("Data refreshed!");
     });
     // Clean up the listener when the component is unmounted
