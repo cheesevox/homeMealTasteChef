@@ -15,6 +15,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
   console.log("uwaseeeeeeeeeeeeeeeeee", user)
   const [profile, setProfile] = useState()
+  console.log("PROFFFFFFFFFFILE", profile)
   const dispatch = useDispatch();
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
@@ -140,6 +141,30 @@ const UserProfileScreen = ({ navigation, route }) => {
                   <Ionicons name='chevron-forward-outline' size={20} paddingVertical={20} />
                 </View>
 
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Privacy")}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons
+                      name="shield-outline"
+                      size={20}
+                      paddingVertical={20}
+                    >
+                      {" "}
+                      Privacy
+                    </Ionicons>
+                  </View>
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    size={20}
+                    paddingVertical={20}
+                  />
+                </View>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleLogout()}

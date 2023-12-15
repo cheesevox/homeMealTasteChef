@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import messaging from '@react-native-firebase/messaging';
 
 // Request permission for notification message
 export const requestUserPermission = async () => {

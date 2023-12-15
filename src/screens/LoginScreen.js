@@ -19,7 +19,7 @@ import Toast from "react-native-toast-message";
 
 const LoginScreen = ({ navigation, route }) => {
   const user = useSelector((state)=>state.user.user)
-  console.log("Account when login",user)
+  // console.log("Account when login",user)
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");

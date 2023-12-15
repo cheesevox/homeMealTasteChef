@@ -28,6 +28,7 @@ const BottomTabNavigator = ({ route }) => {
           borderTopRightRadius: 30,
           borderTopLeftRadius: 30,
           height:55,
+          borderTopColor:'white'
         },
         tabBarActiveTintColor: "#466fd4",
         tabBarInactiveTintColor: "white",

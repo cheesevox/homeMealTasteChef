@@ -360,9 +360,7 @@ export const getMealById = async (id) => {
     console.log("get meal by id", error);
   }
 };
-// >>>>>>> CaoVanTruong/chef
 
-// kitchen
 export const getOrderByKitchenId = async (id)=>{
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-order-by-kitchen-id?kitchenid=${id}`)

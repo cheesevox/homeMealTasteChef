@@ -12,8 +12,6 @@
       "backgroundColor": "#ffffff"
     },
     "plugins":  [
-      "@react-native-firebase/app",
-      "@react-native-firebase/perf"
     ],
     "assetBundlePatterns": [
       "**/*"

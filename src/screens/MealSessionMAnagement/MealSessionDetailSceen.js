@@ -24,7 +24,6 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     setValue({
       status: newStatus,
     });
-    fectAllOrderByMealSesssionId()
     console.log("valueeeeeeeeeeeeeeee", newStatus);
     if (newStatus === 'CANCELLED') {
       Toast.show({
@@ -39,7 +38,9 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         text2: 'Your order has been done.',
       });
     }
-    postStatusOrderForCustomer(mealSessionId, newStatus);  // Assuming status is defined elsewhere
+    postStatusOrderForCustomer(mealSessionId, newStatus); 
+    fectSingerMealSessionById()
+     // Assuming status is defined elsewhere
   };
   const [order, setOrder] = useState([])
   const [mealsesion, setMealSession] = useState([])
@@ -58,6 +59,16 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   useEffect(() => {
     fectSingerMealSessionById()
   }, [item?.mealSessionId])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fectSingerMealSessionById();
+      console.log("Data refreshed!");
+    });
+
+    // Clean up the listener when the component is unmounted
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     fectAllOrderByMealSesssionId()
