@@ -273,14 +273,10 @@ export const deleteDishByDishId = async (id) => {
   }
 };
 export const deleteMealByMealId = async (id) => {
-  try {
     await axios.delete(
       `https://homemealtaste.azurewebsites.net/api/Meal/delete-meal-id-not-exist-in-session?mealid=${id}`
     );
-    console.log("Delete successfully.");
-  } catch (error) {
-    console.log("Meal Exit IN Session", error);
-  }
+
 };
 export const createNewDish = async (image, attribute) => {
   const formData = new FormData();
@@ -560,7 +556,6 @@ export const updateMeal = async (id, image, attribute, dishes) => {
   });
   // Assuming dishes is an array of key-value pairs (objects)
  console.log("daaaaaaaaaaaaaaaaata",formData)
-  try {
     const response = await axios.put(
       "https://homemealtaste.azurewebsites.net/api/Meal/update-meal-not-exist-in-session",
       formData,
@@ -570,22 +565,7 @@ export const updateMeal = async (id, image, attribute, dishes) => {
         },
       }
     );
-
     console.log("Response:", response.data); // Log the response data for debugging
-
-    if (response.status === 200) {
-      console.log("Update successful.");
-    }
-  } catch (error) {
-    console.error("Error updating meal:", error.message);
-    console.error("Error details:", error.response);
-    // Log the entire error object for more information
-    console.error("Full error object:", error);
-
-    if (!error.response) {
-      console.error("Error object without response:", error);
-    }
-  }
 };
 
 export const updateProfile = async (values) => {

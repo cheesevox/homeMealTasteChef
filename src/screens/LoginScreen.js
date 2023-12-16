@@ -32,6 +32,10 @@ const LoginScreen = ({ navigation, route }) => {
     login(values, navigation,Toast)
       .then((res) => {
         dispatch(getUserInfor(res));
+        setValues({...values,
+          phone: null,
+          password:null
+        })
       })
       .catch((res) => console.log("that bai get api", res));
   };
@@ -69,10 +73,7 @@ const LoginScreen = ({ navigation, route }) => {
       setValues({
         ...values,
         phone: "",
-      }) &&
-      setValues({
-        ...values,
-        password: "text",
+        password:""
       })
     }
   }, [route.params]);
@@ -150,6 +151,7 @@ const LoginScreen = ({ navigation, route }) => {
               <TextInput
                 placeholder="Your Phone Numbers"
                 width={280}
+                value ={ values.phone}
                 onChangeText={(text) =>
                   setValues({
                     ...values,
@@ -180,6 +182,7 @@ const LoginScreen = ({ navigation, route }) => {
               placeholder="Your Password"
               secureTextEntry={true}
               width={280}
+              value ={ values.password}
               onChangeText={(text) =>
                 setValues({
                   ...values,

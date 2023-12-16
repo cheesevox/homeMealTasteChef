@@ -25,7 +25,7 @@ const MarketScreen = ({ navigation }) => {
       setArea(res);
     });
   };
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const posts = [
     {
@@ -43,7 +43,7 @@ const MarketScreen = ({ navigation }) => {
   }, []);
   useEffect(() => {
     console.log("districtId là", districtId ? districtId : districtDefault);
-    fetchAllAreaBySessionId(districtId ? districtId : districtDefault);
+    fetchAllAreaBySessionId(value ? value : districtDefault);
   }, [districtId ? districtId : districtDefault]);
   return (
     <View>
@@ -108,7 +108,7 @@ const MarketScreen = ({ navigation }) => {
             maxHeight={300}
             labelField="districtName"
             valueField="districtId"
-            value={value}
+            value={value || (district.length > 0 ? districtDefault: null)}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {

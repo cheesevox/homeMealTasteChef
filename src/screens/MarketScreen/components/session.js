@@ -75,7 +75,9 @@ const Session = (props) => {
       />
       {/* <View style={{ flex: 1 }}> */}
       <FlatList
-      style={{height:'85%'}}
+      style={{
+        height:'85%'
+      }}
         data={session}
         keyExtractor={(item) => item.sessionId.toString()}
         renderItem={(item) => SessionItem(item)}

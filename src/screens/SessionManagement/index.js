@@ -17,14 +17,18 @@ import dayjs from "dayjs";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MealSession from "../../MealSession";
+import { useSelector } from "react-redux";
 
 const SessionManagement = (props) => {
   const { navigation, route } = props;
   const { session } = route.params;
+  const user = useSelector((state) => state.user.user);
+  const kitchenId = user?.kitchenId
   const [tab, setTab] = useState('PROCESSING');
   const [sessionFilter, setsessionFilter] = useState();
   const [mealInSession, setMealInSession] = useState([]);
   const [activeMenu, setActiveMenu] = useState("PROCESSING");
+  
   const tabs = [
     {
       label: "Processing",
@@ -129,7 +133,6 @@ const SessionManagement = (props) => {
     setDate(formatter.format(jsDate))
   };
 
-
   const showDatePicker = () => {
     setShow(true);
   };
@@ -150,7 +153,6 @@ const SessionManagement = (props) => {
   //     })
   //   )
   // }
-
   // }, [formatter.format(selectedDate), tab.value])
 
   useEffect(() => {
@@ -161,27 +163,60 @@ const SessionManagement = (props) => {
     return unsubscribe;
   }, [navigation]);
 
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     fetchAllMealSession();
+  //     console.log("Data refreshed!");
+  //   };
+  //   const intervalId = setInterval(fetchData, 5000);
+  //   return () => clearInterval(intervalId);
+  // }, [navigation]);
+
+  // useEffect(() => {
+  //   console.log("selected date", formatter.format(selectedDate))
+  //   if (selectedDate !== undefined && tab !== undefined) {
+  //     console.log("default tab la",tab)
+  //     setNewData(
+
+  //       mealInSession.filter((item) => {
+  //         // Assuming item.createDate is a string
+  //         console.log("item", item)
+  //         const formattedDate = formatter.format(selectedDate);
+  //         return item.createDate.includes(formattedDate) && item.status.toUpperCase().includes(tab.toUpperCase());
+
+  //       }))
+  //     // if (tab) {
+  //     //   setNewData(
+  //     //     newData.filter((item) => {
+  //     //       return item.status.toUpperCase().includes(tab.toUpperCase());
+  //     //     })
+  //     //   )
+  //     // }
+  //   }
+  // }, [selectedDate, tab, mealInSession]);
+
   useEffect(() => {
     console.log("selected date", formatter.format(selectedDate))
     if (selectedDate !== undefined && tab !== undefined) {
-      console.log("default tab la",tab)
+      console.log("default tab la",tab);
+      
       setNewData(
         mealInSession.filter((item) => {
-          // Assuming item.createDate is a string
-          console.log("item", item)
           const formattedDate = formatter.format(selectedDate);
-          return item.createDate.includes(formattedDate) && item.status.toUpperCase().includes(tab.toUpperCase());
-        }))
-      // if (tab) {
-      //   setNewData(
-      //     newData.filter((item) => {
-      //       return item.status.toUpperCase().includes(tab.toUpperCase());
-      //     })
-      //   )
-      // }
+  
+          // Check for both date and status
+          const isMatchingDate = item.createDate.includes(formattedDate);
+          const isMatchingStatus = item.status.toUpperCase().includes(tab.toUpperCase());
+  
+          // Check for kitchenId
+          const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
+  
+          // Return true only if all conditions are met
+          return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
+        })
+      );
     }
-
-  }, [selectedDate, tab, mealInSession]);
+  }, [selectedDate, tab, mealInSession, kitchenId]);
 
   const renderItem = ({ item }) => {
     // console.log("itemmmmmmmmmmmmmmm", item?.value)
@@ -346,6 +381,7 @@ const SessionManagement = (props) => {
           <FlatList
             style={{ height: "83%" }}
             data={newData}
+            key={item => item?.mealSessionId.toString()}
             renderItem={renderSessionItem}
           />
         </View>

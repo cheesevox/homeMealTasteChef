@@ -41,7 +41,7 @@ const FromMeal = (props) => {
     description: meal?.data?.description,
     // DishIds: [],
   });
-  const [imageToApi, setImageToApi] = useState();
+  const [imageToApi, setImageToApi] = useState(meal?.data?.image);
   // const [meal, setMeal] = useState([]);
   const [dish, setDish] = useState([]);
   // const [dishInMeal, setDishInMeal] = useState([meal.meal?.dishModel]);
@@ -63,22 +63,29 @@ const FromMeal = (props) => {
     setHasGalleryPermission(galleryStatus.status === "granted");
   };
   const pickImage = async () => {
-    await getPermission();
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaType: ImagePicker.MediaTypeOptions.Images,
-      allowEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    console.log(result.assets[0].uri);
-    if (!result.canceled) {
-      try {
-        const imageUri = result.assets[0].uri;
-        setImageToApi(imageUri);
-      } catch (error) {
-        console.error("Error reading image file:", error);
+    try {
+      await getPermission();
+  
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaType: ImagePicker.MediaTypeOptions.Images,
+        allowEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      // Check if the user canceled the image selection
+      if (result.canceled) { // <-- Use "canceled" instead of "Cancelled"
+        console.log('Image selection canceled by the user');
+        return; // No need to proceed further if the user canceled
       }
-      // setGallery(imageUri);
+  
+      console.log(result.assets[0].uri);
+  
+      // Process the selected image
+      const imageUri = result.assets[0].uri;
+      setImageToApi(imageUri);
+    } catch (error) {
+      console.error("Error picking image:", error);
     }
   };
   useEffect(() => {
@@ -104,8 +111,24 @@ const FromMeal = (props) => {
     if (selectedDish) {
       const { _index, ...objectSelected } = selectedDish;
       setDishInMeal((prevDishInMeal) => {
-        return [...prevDishInMeal, objectSelected];
-      });
+        // Convert the array to a Set to eliminate duplicates
+        const uniqueDishSet = new Set(prevDishInMeal.map(item => JSON.stringify(item)));
+      
+        // Convert the objectSelected to a string for comparison
+        const objectSelectedString = JSON.stringify(objectSelected);
+      
+        // Check if the objectSelected is already in the set
+        if (!uniqueDishSet.has(objectSelectedString)) {
+          // If not, add it to the set
+          uniqueDishSet.add(objectSelectedString);
+      
+          // Convert the set back to an array and update DishInMeal
+          return Array.from(uniqueDishSet).map(item => JSON.parse(item));
+        }
+      
+        // If the objectSelected already exists, return the current state without modification
+        return prevDishInMeal;
+      }); 
       setSelected([]);
     } else {
       console.error("Selected dish not found or undefined.");
@@ -114,22 +137,33 @@ const FromMeal = (props) => {
   const onHandleCreateNewMeal = () => {
     if (meal?.data?.mealId) {
       // console.log("aray meal update la", meal?.data.dishModel);
-       updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI)
-      navigation.navigate(RouteName.MEAL_MANAGEMENT)
-      Toast.show({
-        type: "success",
-        text1: "Home Meal Taste",
-        text2: "Update Meal Successfull",
-      });
+       updateMeal(meal?.data?.mealId, imageToApi, mealObjectToAPI, arrayDishToAPI).then((res)=>{
+        navigation.navigate(RouteName.MEAL_MANAGEMENT)
+        Toast.show({
+          type: "success",
+          text1: "Home Meal Taste",
+          text2: "Update Meal Successfull",
+        });
+       }).catch((err)=>{
+        console.log("in ra loi chu",err)
+        Toast.show({
+          type: "error",
+          text1: "Home Meal Taste",
+          text2: "Update Meal Failed",
+        });
+       })
     } else {
       console.log("aray meal  create la", arrayDishToAPI);
-      createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI);
-      navigation.navigate(RouteName.MEAL_MANAGEMENT)
-      Toast.show({
-        type: "success",
-        text1: "Home Meal Taste",
-        text2: "Update Meal Successfull",
-      });
+      createNewMeal(imageToApi, mealObjectToAPI, arrayDishToAPI).then((res)=>{
+        navigation.navigate(RouteName.MEAL_MANAGEMENT)
+        console.log("RESSSSSSSss", res)
+        Toast.show({
+          type: "success",
+          text1: "Home Meal Taste",
+          text2: "Create Meal Successfull",
+        });
+      })
+
     }
   };
   const renderDishItem = (dish, unSelect = undefined) => {
@@ -264,7 +298,8 @@ const FromMeal = (props) => {
             onPress={() => pickImage()}
           >
             {
-              meal.data?.image ? (
+              // meal.data?.image ? (
+              imageToApi  ? (
                 // Display meal.data.image if it exists
                 <Image
                   style={{
@@ -273,18 +308,9 @@ const FromMeal = (props) => {
                     borderRadius: 10,
                     resizeMode: "cover",
                   }}
-                  source={{ uri: meal.data?.image }}
-                ></Image>
-              ) : 
-              imageToApi ? (
-                // Display imageToApi if it exists
-                <Image
-                  style={{
-                    width: 130,
-                    height: '100%',
-                    borderRadius: 10,
-                  }}
-                  source={{ uri: imageToApi }}
+                  // source={{ uri: meal.data?.image }}
+                  source={ imageToApi ? {uri:imageToApi} : { uri: meal.data?.image }}
+
                 ></Image>
               ) : (
                 // Display default content if neither meal.data.image nor imageToApi exists

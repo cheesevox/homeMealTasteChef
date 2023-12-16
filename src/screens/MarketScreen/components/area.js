@@ -7,7 +7,8 @@ const Area = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../../assets/images/phuc-loc-tho.jpg")} style={{ height: 120, width: 120, resizeMode: "cover", alignItems: "center", borderRadius: 20 }} />
+      <Image source={require("../../../../assets/images/phuc-loc-tho.jpg")} 
+      style={{ height: 120, width: 120, resizeMode: "cover", alignItems: "center", borderRadius: 20 }} />
       <View style={{ padding: 10 }}>
         <Pressable
           onPress={() => {
@@ -15,24 +16,24 @@ const Area = (props) => {
           }}
         >
           <Text
-            style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20 }}
+            style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20, width:'95%' }}
           >
             {data?.areaName}
           </Text>
 
           <View
             style={{
-              justifyContent: "center",
+              // justifyContent: "center",
               flexDirection: "row",
               paddingTop: 20,
-              padding: 20,
+              // padding: 20,
             }}
           >
             <Text
               style={{ ...styles.text, fontSize: 15 }}
             >{`Address: ${data?.address}`}</Text>
           </View>
-          <View style={{ alignItems: "center" }}>
+          {/* <View style={{ alignItems: "center" }}> */}
             {/* <Pressable
           style={({ pressed }) => [
             {
@@ -44,7 +45,7 @@ const Area = (props) => {
             navigation.navigate(RouteName.SESSION);
           }}
         ></Pressable> */}
-          </View>
+          {/* </View> */}
         </Pressable>
       </View>
     </View>
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginHorizontal: 10,
     minWidth: 400,
+    // width:'82%',
     flexDirection: "row",
     alignItems: "center",
     padding: 15
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     // fontFamily: "Poppins",
     fontWeight: "700",
-    textAlign: "center",
+    // textAlign: "center",
   },
   buttonStyle: {
     borderRadius: 20,
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     paddingHorizontal: 30,
     paddingVertical: 10,
-    alignItems: "center",
+    // alignItems: "center",
   },
   buttonText: {
     color: "#FFF",

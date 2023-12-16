@@ -1,38 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text } from "react-native";
+import { Image, Pressable, StyleSheet, Text,Alert } from "react-native";
 import { View } from "react-native";
 import { RouteName } from "../../../Constant";
 import { deleteMealByMealId, getAllMealByKitchen } from "../../../Api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
+import { onHandleRefresh } from "../../../../slices/mealSlice";
 
 const MealItem = (props) => {
+  const dispatch = useDispatch();
   const { data, navigation } = props;
   const [meals, setMeals] = useState([]);
   const user = useSelector((state) => state.user.user);
-  console.log("DATAAAAAAAAAAAAAAAAAAAAAAAAa", data)
-  // const fetchMealsData= () => {
-  //   getAllMealByKitchen(user.kitchenId).then((res) => {
-  //     console.log("Ress meal by kitchen", res);
-  //     setMeal(res);
-  //   });
-  //   // console.log("all meal  meal:", user.kitchenId);
-  // };
-
-  // useEffect(() => {
-  //   fetchMealsData() // Replace with your actual function to fetch meals
-  //     .then((data) => setMeals(data))
-  //     .catch((error) => console.log(error));
-  // }, []); 
-
+  console.log("DATAAAAAAAAAAAAAAAAAAAAAAAAa", data);
+  const refresh = useSelector((state)=>state.meal.refresh)
+  console.log("refresh index.js la",refresh?.refresh)
   const handleDelete = (id) => {
-    deleteMealByMealId(id)
+    deleteMealByMealId(data?.mealId)
       .then((res) => {
-        console.log('Delete meal successfully.');
+        navigation.navigate(RouteName.MEAL_MANAGEMENT)
+        dispatch(onHandleRefresh());
         Toast.show({
           type: 'error',
           text1: 'Meal Remove',
-          text2: 'Your order has been canceled.',
+          text2: 'Your meal has been deleted.',
         });
         navigation.navigate("MealManagement")
       })
@@ -45,6 +36,16 @@ const MealItem = (props) => {
         });
       });
   };
+  const createTwoButtonAlert = () =>
+  Alert.alert('Confirm Delete', 'Are you sure to delete this meal', [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'OK', onPress: () => handleDelete()},
+  ]);
+
 
   console.log("MEALLLLLLLLLLLLLL ", data)
   console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD ", data?.mealId)
@@ -113,7 +114,7 @@ const MealItem = (props) => {
           </Text>
         </Pressable>
         <Pressable
-          onPress={() => handleDelete(data?.mealId)}
+          onPress={() =>     createTwoButtonAlert()}
           style={({ pressed }) => [
             {
               opacity: pressed ? 0.5 : 1,

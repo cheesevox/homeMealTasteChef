@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const MealManagement = ({ navigation }) => {
   const [meal, setMeal] = useState([]);
   const user = useSelector(state => state.user.user)
-
+  const refresh = useSelector((state)=>state.meal.refresh)
   const fetchAllMealByKitchenId = () => {
     getAllMealByKitchen(user.kitchenId)
       .then((res) => {
@@ -38,6 +38,16 @@ const MealManagement = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+
+  useEffect(() => {
+
+      getAllMealByKitchen(user.kitchenId)
+      .then((res) => {
+        setMeal(res);
+      })
+      .catch((error) => console.log(error));
+    
+  }, [refresh]);
   const renderItem = (item) => {
     return <MealItem data={item.item} navigation={navigation} />;
   };
@@ -62,7 +72,7 @@ const MealManagement = ({ navigation }) => {
           }}
         >
           <FlatList
-            data={meal.slice().reverse()}
+            data={meal?.slice().reverse()}
             keyExtractor={(item) => item.mealId}
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}
@@ -156,4 +166,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(MealManagement);
+export default MealManagement;

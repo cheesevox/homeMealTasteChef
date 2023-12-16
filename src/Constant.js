@@ -1,7 +1,6 @@
 
 // <<<<<<< HEAD
 export const imageorder ={
-		image: require("../assets/images/pizza.png"),
 }
 
 export const item = [
@@ -367,7 +366,6 @@ export const recipeList = [
 		id: "01",
 		name: "Mâm Salad",
 		session: "Lunch",
-		image: require("../assets/images/pizza.png"),
 		rating: "4.2",
 		price: "2 point",
 		area: "sky9",
@@ -377,21 +375,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 
@@ -399,7 +394,6 @@ export const recipeList = [
 	{
 		id: "02",
 		name: "Mâm Phô Mai",
-		image: require("../assets/images/pizza.png"),
 		rating: "3.6",
 		price: "2 point",
 		area: "Home Meal",
@@ -410,21 +404,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 	},
@@ -443,21 +434,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 
@@ -477,21 +465,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 
@@ -511,21 +496,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 
@@ -545,21 +527,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 	},
@@ -577,21 +556,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 	},
@@ -609,21 +585,18 @@ export const recipeList = [
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 2,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 			{
 				id: 3,
 				name: 'pizza',
 				description: 'cheezy garlic pizza',
 				price: 10,
-				image: require('../assets/images/pizzaDish.png')
 			},
 		]
 	},

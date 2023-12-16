@@ -30,10 +30,19 @@ const WebScreen = ({ route, navigation }) => {
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
-          // Navigate back to the previous screen when vnp_ResponseCode is 00
           navigation.navigate("UserProfile");
+          Toast.show({
+            type: "success",
+            text1: "Home Meal Taste",
+            text2: "Rechard Tracsaction Successfully.",
+          });
         } else if(responseCode === "24"){
-          navigation.goBack();
+          navigation.navigate("UserProfile");
+          Toast.show({
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "Fail Tracsaction Successfully.",
+          });
         }
       }}
     />

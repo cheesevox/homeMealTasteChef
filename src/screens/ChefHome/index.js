@@ -20,7 +20,8 @@ import { RouteName, item } from "../../Constant";
 const ChefHomeScreen = ({ navigation }) => {
   const [dish, setDish] = useState([]);
   const [meal, setMeal] = useState([]);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.user) || {};
+  console.log("USERRRRRRRRRRRr", user.kitchenId)
   const renderItem = (item) => {
     return <Item navigation={navigation} item={item} />;
   };
