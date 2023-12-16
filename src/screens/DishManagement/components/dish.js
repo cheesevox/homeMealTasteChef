@@ -1,20 +1,32 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View,Alert } from "react-native";
 import { RouteName } from "../../../Constant";
 import { deleteDishByDishId } from "../../../Api";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
+import { onHandleRefresh } from "../../../../slices/mealSlice";
 
 const Dish = (props) => {
   const { data, navigation } = props;
+  console.log("dataaaaaaaaa", data?.dishId)
+  const dispatch = useDispatch();
   console.log("itemmmmmmmmm", data)
+  const refresh = useSelector((state)=>state.meal.refresh)
+  console.log("refresh index.js la",refresh?.refresh)
+
   const handleDelete = (id) => {
-    deleteDishByDishId(id)
-      .then((res) => {console.log("Delete dish successfully.")
+  console.log("IDDDDDDDDDDDD",id)
+    deleteDishByDishId(data?.dishId)
+      .then((res) => {
+        navigation.navigate(RouteName.DISH_MANAGEMENT)
+        dispatch(onHandleRefresh());
+        console.log("Delete dish successfully.")
       Toast.show({
         type: 'error',
         text1: 'Meal Remove',
         text2: 'Your order has been canceled.',
       });
+      navigation.navigate("DishManagement")
     })
       .catch((error) => {
         console.log("ERRROR", error)
@@ -29,6 +41,15 @@ const Dish = (props) => {
       }
       );
   };
+  const createTwoButtonAlert = () =>
+  Alert.alert('Confirm Delete', 'Are you sure to delete this dish', [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'OK', onPress: () => handleDelete()},
+  ]);
   return (
     <View style={styles.container}>
       <View
@@ -88,7 +109,7 @@ const Dish = (props) => {
           </Text>
         </Pressable>
         <Pressable
-          onPress={() => handleDelete(data?.dishId)}
+          onPress={() =>  createTwoButtonAlert()}
           style={({ pressed }) => [
             {
               opacity: pressed ? 0.5 : 1,

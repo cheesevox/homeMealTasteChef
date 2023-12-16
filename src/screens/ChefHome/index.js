@@ -68,7 +68,8 @@ const ChefHomeScreen = ({ navigation }) => {
               fontWeight: 500,
               color: "orange",
               textAlign: "center",
-              padding:20
+              padding:20,
+              top:10
             }}
           >
             <TouchableOpacity>

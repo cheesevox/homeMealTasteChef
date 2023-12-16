@@ -204,7 +204,7 @@ const LoginScreen = ({ navigation, route }) => {
             // onPress={onClickLogin}
             type=""
             style={{
-              backgroundColor: "#f96163",
+              backgroundColor: "#42acc9",
               borderRadius: 18,
               marginTop: 60,
               justifyContent: "center",
@@ -222,7 +222,7 @@ const LoginScreen = ({ navigation, route }) => {
           <Text style={{ marginTop: 60 }}>If You Don't Have An Account ?</Text>
           
           <TouchableOpacity
-            onPress={() => navigation.navigate("Regiter")}
+            // onPress={() => navigation.navigate("Regiter")}
             style={{
               marginTop: 20,
               color: "white",
@@ -231,7 +231,7 @@ const LoginScreen = ({ navigation, route }) => {
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", height:'100%' }}>
-              Regiter Account
+              Regiter Account By Admin
             </Text>
           </TouchableOpacity>
         </View>

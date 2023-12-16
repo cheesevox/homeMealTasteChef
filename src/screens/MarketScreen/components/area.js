@@ -16,7 +16,7 @@ const Area = (props) => {
           }}
         >
           <Text
-            style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20, width:'95%' }}
+            style={{ ...styles.text, fontSize: 20, padding: 4, paddingTop: 20, width:'80%'}}
           >
             {data?.areaName}
           </Text>
@@ -26,11 +26,10 @@ const Area = (props) => {
               // justifyContent: "center",
               flexDirection: "row",
               paddingTop: 20,
-              // padding: 20,
             }}
           >
             <Text
-              style={{ ...styles.text, fontSize: 15 }}
+              style={{ ...styles.text, fontSize: 15, width:'80%' }}
             >{`Address: ${data?.address}`}</Text>
           </View>
           {/* <View style={{ alignItems: "center" }}> */}
@@ -61,11 +60,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginBottom: 30,
     marginHorizontal: 10,
-    minWidth: 400,
-    // width:'82%',
+    minWidth: 300,
+    maxWidth:410,
     flexDirection: "row",
     alignItems: "center",
-    padding: 15
+    padding: 15,
+    width:'90%'
   },
   text: {
     color: "#FFF",

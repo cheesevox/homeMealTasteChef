@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import HeaderComp from "./screens/HeaderComp";
@@ -18,15 +18,28 @@ export default function PrivacyScreen({ navigation }) {
     },
     {
       title:
-        "Chef can order meals from many kitchens in the starting session.",
+        "Chefs have been fined if a confirmed order by this Chef is not completed..",
     },
     {
       title:
-        "Customer late more than 5 minutes from the time the meal is announced ready, chef and the platform will not be responsible.",
+        "When the chef cancels the order, the admin will refund the customer's wallet and the chef will be fined money.",
+    },{
+      title:
+        "Chef will receive money with balance in the wallet system form Admin after 1 month.",
+    },{
+      title:
+        "Chef will post the status of the meal on the day  when the customer orders (Processing, Done, Reject).",
+    },{
+      title:
+        "The chef only can update and delete meals, dishes that do not exist in session.",
+    },
+    {
+      title:
+        "Chefs have been fined if a confirmed order by this Chef is not completed.",
     },
   ];
   return (
-    <View>
+    <ScrollView>
       <HeaderComp label="Privacy" onBack={() => navigation.goBack()} />
       <View
         style={{
@@ -49,11 +62,14 @@ export default function PrivacyScreen({ navigation }) {
                 lineHeight: 40,
               }}
             >
-              {index + 1}.{item.title}
+              <Text style={{fontWeight:"bold"}}>
+              {index + 1}.
+              </Text>
+              {item.title}
             </Text>
           </View>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }

@@ -78,9 +78,7 @@ const FromMeal = (props) => {
         console.log('Image selection canceled by the user');
         return; // No need to proceed further if the user canceled
       }
-  
       console.log(result.assets[0].uri);
-  
       // Process the selected image
       const imageUri = result.assets[0].uri;
       setImageToApi(imageUri);

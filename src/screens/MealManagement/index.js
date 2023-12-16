@@ -40,7 +40,6 @@ const MealManagement = ({ navigation }) => {
 
 
   useEffect(() => {
-
       getAllMealByKitchen(user.kitchenId)
       .then((res) => {
         setMeal(res);
