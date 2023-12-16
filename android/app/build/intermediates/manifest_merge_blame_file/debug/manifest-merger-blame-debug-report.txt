@@ -1,0 +1,281 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.anonymous.homemealtaste"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:3:3-64
+11-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:3:20-62
+12    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+12-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:4:3-77
+12-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:4:20-75
+13    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+13-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:5:3-75
+13-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:5:20-73
+14    <uses-permission android:name="android.permission.VIBRATE" />
+14-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:6:3-63
+14-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:6:20-61
+15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+15-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:7:3-79
+15-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:7:20-76
+16
+17    <queries>
+17-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:8:3-14:13
+18        <intent>
+18-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:9:5-13:14
+19            <action android:name="android.intent.action.VIEW" />
+19-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:10:7-58
+19-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:10:15-56
+20
+21            <category android:name="android.intent.category.BROWSABLE" />
+21-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:11:7-67
+21-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:11:17-65
+22
+23            <data android:scheme="https" />
+23-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:12:7-37
+23-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:12:13-35
+24        </intent>
+25    </queries>
+26
+27    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+27-->[com.facebook.flipper:flipper:0.182.0] C:\Users\Omen\.gradle\caches\transforms-3\b7b17fcc45639e9dab967b4d0c6f33d4\transformed\jetified-flipper-0.182.0\AndroidManifest.xml:16:5-76
+27-->[com.facebook.flipper:flipper:0.182.0] C:\Users\Omen\.gradle\caches\transforms-3\b7b17fcc45639e9dab967b4d0c6f33d4\transformed\jetified-flipper-0.182.0\AndroidManifest.xml:16:22-73
+28    <uses-permission android:name="android.permission.WAKE_LOCK" />
+28-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:8:5-68
+28-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:8:22-65
+29    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+29-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-79
+29-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:22-76
+30
+31    <application
+31-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:3-33:17
+32        android:name="com.anonymous.homemealtaste.MainApplication"
+32-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:16-47
+33        android:allowBackup="true"
+33-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:162-188
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.7.0] C:\Users\Omen\.gradle\caches\transforms-3\c7259aa13ed803790e0f8c2e52c05ece\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+35        android:debuggable="true"
+36        android:icon="@mipmap/ic_launcher"
+36-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:81-115
+37        android:label="@string/app_name"
+37-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:48-80
+38        android:roundIcon="@mipmap/ic_launcher_round"
+38-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:116-161
+39        android:theme="@style/AppTheme" >
+39-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:15:189-220
+40        <meta-data
+40-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:16:5-83
+41            android:name="expo.modules.updates.ENABLED"
+41-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:16:16-59
+42            android:value="false" />
+42-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:16:60-81
+43        <meta-data
+43-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:17:5-93
+44            android:name="expo.modules.updates.EXPO_SDK_VERSION"
+44-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:17:16-68
+45            android:value="49.0.0" />
+45-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:17:69-91
+46        <meta-data
+46-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:18:5-105
+47            android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
+47-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:18:16-80
+48            android:value="ALWAYS" />
+48-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:18:81-103
+49        <meta-data
+49-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:19:5-99
+50            android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
+50-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:19:16-79
+51            android:value="0" />
+51-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:19:80-97
+52
+53        <activity
+53-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:5-31:16
+54            android:name="com.anonymous.homemealtaste.MainActivity"
+54-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:15-43
+55            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+55-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:77-154
+56            android:exported="true"
+56-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:276-299
+57            android:label="@string/app_name"
+57-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:44-76
+58            android:launchMode="singleTask"
+58-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:155-186
+59            android:screenOrientation="portrait"
+59-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:300-336
+60            android:theme="@style/Theme.App.SplashScreen"
+60-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:230-275
+61            android:windowSoftInputMode="adjustResize" >
+61-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:20:187-229
+62            <intent-filter>
+62-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:21:7-24:23
+63                <action android:name="android.intent.action.MAIN" />
+63-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:22:9-60
+63-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:22:17-58
+64
+65                <category android:name="android.intent.category.LAUNCHER" />
+65-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:23:9-68
+65-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:23:19-66
+66            </intent-filter>
+67            <intent-filter>
+67-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:25:7-30:23
+68                <action android:name="android.intent.action.VIEW" />
+68-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:10:7-58
+68-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:10:15-56
+69
+70                <category android:name="android.intent.category.DEFAULT" />
+70-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:27:9-67
+70-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:27:19-65
+71                <category android:name="android.intent.category.BROWSABLE" />
+71-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:11:7-67
+71-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:11:17-65
+72
+73                <data android:scheme="com.anonymous.homemealtaste" />
+73-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:12:7-37
+73-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:12:13-35
+74            </intent-filter>
+75        </activity>
+76        <activity
+76-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:32:5-106
+77            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+77-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:32:15-79
+78            android:exported="false" />
+78-->C:\Users\Omen\Desktop\homeMealTasteChef\android\app\src\main\AndroidManifest.xml:32:80-104
+79
+80        <service
+80-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:9-16:19
+81            android:name="com.google.firebase.components.ComponentDiscoveryService"
+81-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:18-89
+82            android:directBootAware="true"
+82-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-43
+83            android:exported="false" >
+83-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-37
+84            <meta-data
+84-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-15:85
+85                android:name="com.google.firebase.components:io.invertase.firebase.ReactNativeFirebaseAppRegistrar"
+85-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:17-116
+86                android:value="com.google.firebase.components.ComponentRegistrar" />
+86-->[:react-native-firebase] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\react-native-firebase\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:17-82
+87            <meta-data
+87-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:13-20:85
+88                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+88-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:17-120
+89                android:value="com.google.firebase.components.ComponentRegistrar" />
+89-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:17-82
+90            <meta-data
+90-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:35:13-37:85
+91                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+91-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:36:17-109
+92                android:value="com.google.firebase.components.ComponentRegistrar" />
+92-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:37:17-82
+93        </service>
+94
+95        <meta-data
+95-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:9-11:36
+96            android:name="app_data_collection_default_enabled"
+96-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:13-63
+97            android:value="true" />
+97-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-33
+98
+99        <provider
+99-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:9-27:38
+100            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+100-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-88
+101            android:authorities="com.anonymous.homemealtaste.reactnativefirebaseappinitprovider"
+101-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:13-86
+102            android:exported="false"
+102-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-37
+103            android:initOrder="99" />
+103-->[:@react-native-firebase_app] C:\Users\Omen\Desktop\homeMealTasteChef\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-35
+104        <provider
+104-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
+105            android:name="com.google.firebase.provider.FirebaseInitProvider"
+105-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:24:13-77
+106            android:authorities="com.anonymous.homemealtaste.firebaseinitprovider"
+106-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:25:13-72
+107            android:directBootAware="true"
+107-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:26:13-43
+108            android:exported="false"
+108-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:27:13-37
+109            android:initOrder="100" />
+109-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Omen\.gradle\caches\transforms-3\94af6b9bfb9639f5410ab1f55c7ae648\transformed\jetified-firebase-common-20.4.2\AndroidManifest.xml:28:13-36
+110
+111        <activity
+111-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:23:9-27:75
+112            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+112-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:24:13-93
+113            android:excludeFromRecents="true"
+113-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:25:13-46
+114            android:exported="false"
+114-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:26:13-37
+115            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+115-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:27:13-72
+116        <!--
+117            Service handling Google Sign-In user revocation. For apps that do not integrate with
+118            Google Sign-In, this service will never be started.
+119        -->
+120        <service
+120-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:33:9-37:51
+121            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+121-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:34:13-89
+122            android:exported="true"
+122-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:35:13-36
+123            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+123-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:36:13-107
+124            android:visibleToInstantApps="true" />
+124-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\Omen\.gradle\caches\transforms-3\43545f1aeed289347b9093eea15cc88e\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:37:13-48
+125
+126        <activity
+126-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Omen\.gradle\caches\transforms-3\44ebb878f5da00460666ba3778b9766a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+127            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+127-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Omen\.gradle\caches\transforms-3\44ebb878f5da00460666ba3778b9766a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+128            android:exported="false"
+128-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Omen\.gradle\caches\transforms-3\44ebb878f5da00460666ba3778b9766a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+129            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+129-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Omen\.gradle\caches\transforms-3\44ebb878f5da00460666ba3778b9766a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+130
+131        <meta-data
+131-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Omen\.gradle\caches\transforms-3\b69fe32c3fedc432bc772b4c043e3242\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:21:9-23:69
+132            android:name="com.google.android.gms.version"
+132-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Omen\.gradle\caches\transforms-3\b69fe32c3fedc432bc772b4c043e3242\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:22:13-58
+133            android:value="@integer/google_play_services_version" />
+133-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Omen\.gradle\caches\transforms-3\b69fe32c3fedc432bc772b4c043e3242\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:23:13-66
+134
+135        <provider
+135-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+136            android:name="androidx.startup.InitializationProvider"
+136-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+137            android:authorities="com.anonymous.homemealtaste.androidx-startup"
+137-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+138            android:exported="false" >
+138-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+139            <meta-data
+139-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+140                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+140-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+141                android:value="androidx.startup" />
+141-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Omen\.gradle\caches\transforms-3\2ec9cf935894925b80a4396efc98ee44\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+142            <meta-data
+142-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Omen\.gradle\caches\transforms-3\ce6e90c982e141c088dc0680acf2fd50\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+143                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+143-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Omen\.gradle\caches\transforms-3\ce6e90c982e141c088dc0680acf2fd50\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+144                android:value="androidx.startup" />
+144-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Omen\.gradle\caches\transforms-3\ce6e90c982e141c088dc0680acf2fd50\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+145        </provider>
+146
+147        <meta-data
+147-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Omen\.gradle\caches\transforms-3\b38c6f6b055bacb24c1c91fd3834d33a\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:12:9-14:37
+148            android:name="com.facebook.soloader.enabled"
+148-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Omen\.gradle\caches\transforms-3\b38c6f6b055bacb24c1c91fd3834d33a\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:13:13-57
+149            android:value="false" />
+149-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Omen\.gradle\caches\transforms-3\b38c6f6b055bacb24c1c91fd3834d33a\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:14:13-34
+150    </application>
+151
+152</manifest>
