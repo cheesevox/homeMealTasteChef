@@ -125,7 +125,7 @@ export const getAllSessionByAreaId = async (id) => {
     const response = await axios.get(
       // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
       `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
-      // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-and-in-day?areaid=${id}`
+      // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-in-day?areaid=${id}`
     );
     return response.data;
   } catch (error) {
@@ -136,9 +136,11 @@ export const getAllSessionByAreaId = async (id) => {
 export const getAllSessionByAreaIdchef = async (id) => {
   try {
     const response = await axios.get(
-`https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
+// `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
       // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
+      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-in-day?areaid=${id}`
     );
+    console.log("session get ben6 api file la2",response.data)
     return response.data;
   } catch (error) {
     console.log("get all session by area Id", error);

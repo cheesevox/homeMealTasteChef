@@ -86,11 +86,12 @@ const ChefHomeScreen = ({ navigation }) => {
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Text
                 style={{
-                  fontSize: 30,
+                  fontSize: 22,
                   fontWeight: 500,
                   color: "#e06666",
                   textAlign: "center",
                   width: '60%',
+                  fontWeight:'bold'
                 }}
               >
                 Welcome! {user?.name}

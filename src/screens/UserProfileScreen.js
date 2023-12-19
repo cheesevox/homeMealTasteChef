@@ -13,6 +13,7 @@ import { logoutUser } from "../../slices/userSlice";
 
 const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
+  console.log("USERRRRRRRRRRRRRR", user)
   console.log("uwaseeeeeeeeeeeeeeeeee", user)
   const [profile, setProfile] = useState()
   console.log("PROFFFFFFFFFFILE", profile)

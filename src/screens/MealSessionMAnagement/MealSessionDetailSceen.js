@@ -61,6 +61,18 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   }, [item?.mealSessionId])
 
   useEffect(() => {
+    const fetchData = () => {
+      fectSingerMealSessionById();
+      console.log("Data refreshed!");
+    };
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, [navigation]);
+
+
+  console.log("ITEMMMMMMMMMMMMMM", mealsesion)
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fectSingerMealSessionById();
       console.log("Data refreshed!");
@@ -74,6 +86,8 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     fectAllOrderByMealSesssionId()
   }, [item?.mealSessionId])
   console.log("LOGGGGGGGGGGG ALL MEALSESS", mealsesion)
+  console.log("LOGGGGGGGGGGG ALL MEALSESS MEALLLLLLLLLLLLLL ", item)
+
   console.log("LOGGGGGGGGGGG ALL ORder status", order)
   const renderItem = ({ item }) => (
     <View style={{ padding: 30, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor:'white' }}>
@@ -105,15 +119,15 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         margin: 20
       }}>
         <Image
-          source={{ uri: mealsesion?.mealDtoForMealSession?.image }}
+          source={{ uri: mealsesion?.mealDtoForMealSessions?.image }}
           style={{
             width: '100%', height: '30%', resizeMode: 'cover',
             borderTopRightRadius: 30, borderTopLeftRadius: 30,
           }}
         />
-        <Text style={{paddingHorizontal:20, fontSize: 22, fontWeight: 'bold', color: 'white' }}>Name : {mealsesion?.mealDtoForMealSession?.name}</Text>
-        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Description : {mealsesion?.mealDtoForMealSession?.description}</Text>
-        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Address : {mealsesion?.sessionDtoForMealSession?.areaDtoForMealSession?.areaName}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 22, fontWeight: 'bold', color: 'white' }}>Name : {mealsesion?.kitchenDtoForMealSessions?.name}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Description : {mealsesion?.mealDtoForMealSessions?.description}</Text>
+        <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Address : {mealsesion?.kitchenDtoForMealSessions?.address}</Text>
         <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Slot: {mealsesion?.quantity}</Text>
         <Text style={{paddingHorizontal:20, fontSize: 16, fontWeight: 'bold', color: 'white' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
         <View style={{paddingHorizontal:20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 20 }}>

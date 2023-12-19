@@ -163,14 +163,14 @@ const SessionManagement = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  // useEffect(() => {
-  //   const fetchData = () => {
-  //     fetchAllMealSession();
-  //     console.log("Data refreshed!");
-  //   };
-  //   const intervalId = setInterval(fetchData, 5000);
-  //   return () => clearInterval(intervalId);
-  // }, [navigation]);
+  useEffect(() => {
+    const fetchData = () => {
+      fetchAllMealSession();
+      console.log("Data refreshed!");
+    };
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, [navigation]);
 
   // useEffect(() => {
   //   console.log("selected date", formatter.format(selectedDate))
@@ -307,7 +307,6 @@ const SessionManagement = (props) => {
               style={{
                 borderRadius: 20,
                 display: 'flex',
-                flexDirection: 'row',
                 justifyContent: 'space-between'
               }}
             >

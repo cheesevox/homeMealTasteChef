@@ -7,25 +7,37 @@ import { RouteName } from "../../../Constant";
 const Session = (props) => {
   const { data, navigation, route } = props;
   const { areaId } = route.params;
+  const [value, setValue] = useState();
   const [session, setSession] = useState([]);
   const fetchAllSessionByAreaId = () => {
     getAllSessionByAreaIdchef(areaId).then((res) => {
-      console.log("-----------------------", areaId);
+      console.log("-----------------------", res[0]?.sessionId);
       console.log("++++++++++++++++++++++", res);
       setSession(res);
+      setValue(res[0]?.sessionId);
     });
   };
   useEffect(() => {
     fetchAllSessionByAreaId();
   }, [areaId]);
+
   const SessionItem = ({ item }) => {
     return (
       <View style={styles.container}>
+        <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+        <Text
+          style={{ ...styles.text, fontSize: 20, }}
+        >
+          {item?.sessionName}
+        </Text>
+        <Text style={{color:'white', fontWeight:"bold"}}>   -   </Text>
         <Text
           style={{ ...styles.text, fontSize: 20, }}
         >
           {item?.sessionType}
         </Text>
+       
+        </View>
         <View
           style={{
             justifyContent: "center",
@@ -39,10 +51,12 @@ const Session = (props) => {
           <Text
             style={{ ...styles.text, fontSize: 15 }}
           >{`Start time: ${item?.startTime}`}</Text>
+          <Text style={{color:'white', fontWeight:"bold"}}> - </Text>
           <Text
             style={{ ...styles.text, fontSize: 15 }}
           >{`End time: ${item?.endTime}`}</Text>
         </View>
+        <Text style={{alignItems:"center", textAlign:"center", color:'white', padding:5, fontWeight:"bold"}} >{`Date Create: ${item?.createDate}`}</Text>
         <View style={{ alignItems: "center"}}>
           <Pressable
             style={({ pressed }) => [
@@ -78,8 +92,9 @@ const Session = (props) => {
       style={{
         height:'85%'
       }}
-        data={session}
-        keyExtractor={(item) => item.sessionId.toString()}
+        data={session?.slice()
+          ?.reverse()}
+        key={(item) => item.sessionId.toString()}
         renderItem={(item) => SessionItem(item)}
         showsHorizontalScrollIndicator={false}
       />
