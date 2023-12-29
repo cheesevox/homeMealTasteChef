@@ -10,13 +10,15 @@ import React, { useEffect, useState } from "react";
 import * as Icon from "react-native-feather";
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
-import { getAllDistrict, updateProfile } from "../Api";
+import { getAllArea, getAllDistrict, updateProfile } from "../Api";
 import Toast from "react-native-toast-message";
 
 const EditUserProfileScreen = ({ navigation, route }) => {
   const [isFocus, setIsFocus] = useState(false);
   const profile = route.params;
   const [district, setDistrict] = useState([]);
+  const [allArea, setAllArea] = useState([])
+  const [areaId, setAreaId] = useState();
   const [districtId, setDistrcitId] = useState();
   const [value, setValue] = useState(null);
 
@@ -25,18 +27,27 @@ const EditUserProfileScreen = ({ navigation, route }) => {
       setDistrict(res);
     });
   };
+  const fecthAllArea = () => {
+    getAllArea().then((res) => {
+      setAllArea(res);
+    });
+  };
+
   useEffect(() => {
     fetchAllDistrict();
+    fecthAllArea();
   }, []);
   console.log("EDITTTTTTTTTTTTTTTTT PROOOOOOOO", profile);
-
+  const area = allArea.find(item => item?.areaId === profile?.profile?.areaId);
+  console.log("AREEEEEEEEEEEEE", area)
   const [values, setValues] = useState({
-    userId : profile?.profile?.userId,
+    userId: profile?.profile?.userId,
     name: profile?.profile?.name || "",
     username: profile?.profile?.username || "",
     email: profile?.profile?.email || "",
     address: profile?.profile?.address || "",
     districtId: profile?.profile?.districtId || null,
+    areaId: profile?.profile?.areaId || null
   });
 
   const onHandleUpdateProfile = () => {
@@ -105,6 +116,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
+      
         <TextInput
           placeholder={profile?.profile?.username}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
@@ -115,7 +127,8 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-         <TextInput
+
+        <TextInput
           placeholder={profile?.profile?.email}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
           onChangeText={(text) =>
@@ -135,29 +148,56 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <View style={{ marginHorizontal:40, marginVertical:20,borderWidth:1, padding:5 }}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={district}
-          maxHeight={300}
-          labelField="districtName"
-          valueField="districtId"
-          value={values.districtId}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item) => {
-            console.log("Selected district in dropdown:", item);
-            setValues({
-              ...values,
-              districtId: item.districtId,
-            });
-            setIsFocus(false);
-          }}
-        ></Dropdown>
+        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={district}
+            maxHeight={300}
+            labelField="districtName"
+            valueField="districtId"
+            value={values.districtId}
+            placeholder={profile?.profile?.districtDto?.districtName}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              console.log("Selected district in dropdown:", item);
+              setValues({
+                ...values,
+                districtId: item.districtId,
+              });
+              setIsFocus(false);
+            }}
+          ></Dropdown>
+        </View>
+        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: "blue"}]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            placeholder={area?.areaName}
+            data={allArea}
+            dropdownPosition="top"
+            maxHeight={400}
+            labelField="areaName"
+            valueField="areaId"
+            value={values.areaId}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              console.log("Selected area in dropdown:", item);
+              setValues({
+                ...values,
+                areaId: item.areaId,
+              });
+              setIsFocus(false);
+            }}
+          ></Dropdown>
         </View>
       </View>
 
@@ -173,7 +213,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             width: "60%",
             alignItems: "center",
           }}
-          onPress={()=> onHandleUpdateProfile()}
+          onPress={() => onHandleUpdateProfile()}
         >
           <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
             Update Profile

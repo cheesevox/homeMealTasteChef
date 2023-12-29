@@ -595,3 +595,11 @@ export const updateProfile = async (values) => {
     console.error("Full error object:", error);
   }
 };
+export const getAllDishOnSessionByKitchenId = async (id) =>{
+  try {
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Dish/get-all-dish-in-meal-session-by-kitchen-id?kitchenid=${id}`)
+    return response.data
+  } catch (error) {
+    console.log("error get all already dísh in kitchen id", error)
+  }
+}

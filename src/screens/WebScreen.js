@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { WebView } from "react-native-webview";
 import 'react-native-url-polyfill/auto';
+import Toast from "react-native-toast-message";
 
 const WebScreen = ({ route, navigation }) => {
   const { link } = route.params;

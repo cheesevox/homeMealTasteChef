@@ -9,22 +9,24 @@ import * as Icon from "react-native-feather";
 import { useSelector } from "react-redux";
 
 const MarketScreen = ({ navigation }) => {
-  const districtDefault = useSelector((state) => state.user.user?.districtId);
-  console.log("district defaulttttttttttttttttt", districtDefault);
+  const area = useSelector((state) => state.user.user?.areaId);
+  const user = useSelector(state => state.user.user)
+  console.log("ARErrrrrrrrrrrrrrrrr", area)
+  console.log("ARErrrrrrrrrrrrrrrrr", user)
   const [district, setDistrict] = useState([]);
   const [districtId, setDistrcitId] = useState();
-  const [area, setArea] = useState([]);
+  // const [area, setArea] = useState([]);
   const fetchAllDistrict = () => {
     getAllDistrict().then((res) => {
       setDistrict(res);
     });
   };
-  const fetchAllAreaBySessionId = (id) => {
-    getAreaByDistrictId(id).then((res) => {
-      console.log("all area", res);
-      setArea(res);
-    });
-  };
+  // const fetchAllAreaBySessionId = (id) => {
+  //   getAreaByDistrictId(id).then((res) => {
+  //     console.log("all area", res);
+  //     setArea(res);
+  //   });
+  // };
   const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const posts = [
@@ -41,10 +43,10 @@ const MarketScreen = ({ navigation }) => {
   useEffect(() => {
     fetchAllDistrict();
   }, []);
-  useEffect(() => {
-    console.log("districtId là", districtId ? districtId : districtDefault);
-    fetchAllAreaBySessionId(value ? value : districtDefault);
-  }, [districtId ? districtId : districtDefault]);
+  // useEffect(() => {
+  //   console.log("districtId là", districtId ? districtId : districtDefault);
+  //   fetchAllAreaBySessionId(value ? value : districtDefault);
+  // }, [districtId ? districtId : districtDefault]);
   return (
     <View>
       {/* <HeaderComp label={"Area"} isHasBackIcon={false} /> */}
@@ -58,14 +60,6 @@ const MarketScreen = ({ navigation }) => {
           <View style={{
             flexDirection: 'row', justifyContent: 'space-around',
           }}>
-            {/* <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ justifyContent: "center", alignItems: "center", 
-              width: 40, height: 40, backgroundColor: 'orange', 
-              borderRadius: 28, marginVertical: 20 }}
-            >
-              <Icon.ArrowLeft style={{ color: 'white' }} strokeWidth={3} />
-            </TouchableOpacity> */}
             <Text style={{
               fontWeight: '600',
               fontSize: 24,
@@ -83,21 +77,9 @@ const MarketScreen = ({ navigation }) => {
             }}>
               Maket
             </Text>
-            {/* <TouchableOpacity
-              style={{ justifyContent: "center", alignItems: "center", width: 40, height: 40, borderRadius: 28, marginTop: 42 }}
-            >
-              <Icon.CreditCard style={{}} strokeWidth={3} />
-            </TouchableOpacity> */}
           </View>
         </View>
-        {/* <View style={{ width: "100%" }}>
-        <Image
-          style={{ width: "100%" }}
-          source={require("../../../assets/images/post-banner.png")}
-          resizeMode="cover"
-        />
-      </View> */}
-        <View style={{ flex: 8, justifyContent: "center", alignItems: "center", elevation: 2 }}>
+        {/* <View style={{ flex: 8, justifyContent: "center", alignItems: "center", elevation: 2 }}>
           <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
             placeholderStyle={styles.placeholderStyle}
@@ -124,6 +106,10 @@ const MarketScreen = ({ navigation }) => {
             renderItem={(item) => renderItem(item)}
             showsHorizontalScrollIndicator={false}
           />
+        </View> */}
+        <View
+            renderItem={(area) => renderItem(area)}
+        >
         </View>
       </View>
     </View>

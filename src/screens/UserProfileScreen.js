@@ -6,18 +6,24 @@ import UserCard from '../components/UserCard'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons/build/Icons';
 import { useSelector,useDispatch } from 'react-redux';
-import { getUserByID } from '../Api';
+import { getAllArea, getUserByID } from '../Api';
 import TabViewSession from '../components/TabViewSession';
 import Toast from "react-native-toast-message";
 import { logoutUser } from "../../slices/userSlice";
 
 const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
-  console.log("USERRRRRRRRRRRRRR", user)
+  const [allArea, setAllArea]= useState([])
+  // console.log("USERRRRRRRRRRRRRR", user)
   console.log("uwaseeeeeeeeeeeeeeeeee", user)
   const [profile, setProfile] = useState()
   console.log("PROFFFFFFFFFFILE", profile)
   const dispatch = useDispatch();
+  const fecthAllAreaId = () =>{
+    getAllArea().then((res)=>{
+      setAllArea(res)
+    })
+  }
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
       setProfile(res)
@@ -25,8 +31,12 @@ const UserProfileScreen = ({ navigation, route }) => {
   }
   useEffect(() => {
     fectProfileByCustomerId()
+    fecthAllAreaId()
   }, [])
 
+  // console.log("areeeeeeeeeeeeeeeee", allArea)
+  const area = allArea.find( item => item?.areaId === profile?.areaId);
+  console.log("areaaaaaaaaaaaaaaaaaaaaaaaa", area)
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fectProfileByCustomerId();
@@ -112,7 +122,7 @@ const UserProfileScreen = ({ navigation, route }) => {
       </View>
       {/* <TabViewSession/> */}
       <ScrollView>
-        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
           <View style={styles.cartcard}>
             <View style={{
               paddingVertical: 25,
@@ -127,7 +137,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <Ionicons name='location-outline' size={20} paddingVertical={20}> My Adress : {profile?.address}</Ionicons>
               </View>
               <Ionicons name='call-outline' size={20} paddingVertical={20}> Phone : {profile?.phone} </Ionicons>
-              <Ionicons name='mail-outline' size={20} paddingVertical={20}> Email : {profile?.email}</Ionicons>
+              <Ionicons name='beaker-outline' size={22} paddingVertical={20}> Area : {area?.areaName}</Ionicons>
               <TouchableOpacity
                 onPress={() => navigation.navigate("Wallet", { user })}
               >
@@ -182,69 +192,12 @@ const UserProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
       </ScrollView>
-      {/* <FlatList
-        data={profile}
-        renderItem={({ item }) =>
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20, marginHorizontal: 30 }}>
-            <Image
-              source={item.image}
-              style={{ borderRadius: 50, width: 200, height: 200, resizeMode: "cover" }}
-            />
-            <Text style={{ marginTop: 10, fontWeight: 'bold', fontSize: 26, color: 'orange' }}>{item.name}</Text>
-            <View style={styles.cartcard}>
-              <View style={{
-                height: 250,
-                marginLeft: 10,
-                paddingVertical: 20,
-                marginHorizontal: 50,
-                justifyContent: 'space-between',
-                fontWeight: "",
-                flex: 1
-              }}>
-                <TouchableOpacity>
-                  <Ionicons name='wallet-outline' size={25} paddingHorizontal={5}> Name {item.name} </Ionicons>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Ionicons name='wallet-outline' size={25} paddingHorizontal={5}> Help {item.email} </Ionicons>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Ionicons name='wallet-outline' size={25} paddingHorizontal={5}> Term & Policy {item.phone}</Ionicons>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Wallet")}
-                >
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-                  >
-                    <Ionicons
-                      name='wallet-outline' size={25} paddingHorizontal={5}> Wallet
-                    </Ionicons>
-                    <Text style={{ fontSize: 20 }}>{item.walletDto}</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        }
-      >
-      </FlatList> */}
+    
       <View style={{
         justifyContent: 'center',
         alignItems: "center",
       }}>
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate("Login")}
-          style={{
-            backgroundColor: "#f96163",
-            borderRadius: 29,
-            paddingVertical: 18,
-            width: "60%",
-            marginBottom: 20
-          }}
-        >
-          <Text style={{ textAlign: 'center', fontSize: 18, color: "#fff", fontWeight: "700", }}>
-            Logout
-          </Text>
-        </TouchableOpacity> */}
+
       </View>
     </SafeAreaView>
   )

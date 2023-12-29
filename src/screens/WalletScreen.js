@@ -19,6 +19,7 @@ import { rows } from "deprecated-react-native-prop-types/DeprecatedTextInputProp
 import { WebView } from "react-native-webview";
 import HeaderComp from "./HeaderComp";
 import { useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 
 const WalletScreen = ({ navigation, route }) => {
   const { item } = route.params;

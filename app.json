@@ -2,7 +2,7 @@
   "expo": {
     "name": "homemealtaste",
     "slug": "homemealtastechef",
-    "displayName": "Home Meal Taste",
+    "displayName": "Home M1eal Taste",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,9 +16,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
