@@ -27,25 +27,27 @@ const HeaderComp = (props) => {
         style={{
           alignItems: "center",
           flex: 1,
-          padding:10
+          padding: 10
         }}
       >
-        <Pressable
-          style={({ pressed }) => [
-            {
-              backgroundColor: 'orange',
-              padding: 8,
-              borderBottomLeftRadius:17,
-              borderBottomRightRadius:17,
-              borderTopLeftRadius:17,
-              borderTopRightRadius:17,
-              width:'60%'
-            },
-          ]}
-          onPress={onBack}
-        >
-          {isHasBackIcon && <BackIcon />}
-        </Pressable>
+        {isHasBackIcon && (
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: 'orange',
+                padding: 20,
+                borderRadius: 50, // Set the border radius to make it a circle
+                width: 40,
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            ]}
+            onPress={onBack}
+          >
+            {isHasBackIcon && <BackIcon />}
+          </Pressable>
+        )}
         <Pressable
           style={({ pressed }) => [
             {
@@ -76,7 +78,6 @@ const HeaderComp = (props) => {
           alignItems: 'center',
           fontWeight: 'bold',
           width: '50%',
-          margin: 25,
           borderRadius: 20,
           borderWidth: 2
         }}

@@ -77,7 +77,6 @@ export const getOrderByID = (id) => {
     console.log("error by id get order");
   }
 };
-// <<<<<<< HEAD
 
 export const getAllMealInSessionID = async (id) => {
   try {
@@ -97,8 +96,6 @@ export const getAllArea = async () => {
     );
     return repose.data;
   } catch (error) {}}
-// =======
-// distrct,area
 export const getAllDistrict = async () => {
   try {
     const response = await axios.get(
@@ -118,7 +115,6 @@ export const getAreaByDistrictId = async (id) => {
   } catch (error) {
     console.log("Get area by district id", error);
   }
-// >>>>>>> CaoVanTruong/chef
 };
 export const getAllSessionByAreaId = async (id) => {
   try {
@@ -603,3 +599,13 @@ export const getAllDishOnSessionByKitchenId = async (id) =>{
     console.log("error get all already dísh in kitchen id", error)
   }
 }
+export const getAllSessionRegisterTrue = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-register-for-meal-true-and-status-on`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Get all session with true", error);
+  }
+};

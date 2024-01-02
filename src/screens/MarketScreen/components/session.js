@@ -6,21 +6,8 @@ import { RouteName } from "../../../Constant";
 
 const Session = (props) => {
   const { data, navigation, route } = props;
-  const { areaId } = route.params;
+  const { session } = route.params;
   const [value, setValue] = useState();
-  const [session, setSession] = useState([]);
-  const fetchAllSessionByAreaId = () => {
-    getAllSessionByAreaIdchef(areaId).then((res) => {
-      console.log("-----------------------", res[0]?.sessionId);
-      console.log("++++++++++++++++++++++", res);
-      setSession(res);
-      setValue(res[0]?.sessionId);
-    });
-  };
-  useEffect(() => {
-    fetchAllSessionByAreaId();
-  }, [areaId]);
-
   const SessionItem = ({ item }) => {
     return (
       <View style={styles.container}>
