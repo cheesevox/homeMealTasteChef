@@ -63,6 +63,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = () => {
       fectSingerMealSessionById();
+    fectAllOrderByMealSesssionId()
       console.log("Data refreshed!");
     };
     const intervalId = setInterval(fetchData, 5000);
@@ -87,7 +88,6 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   }, [item?.mealSessionId])
   console.log("LOGGGGGGGGGGG ALL MEALSESS", mealsesion)
   console.log("LOGGGGGGGGGGG ALL MEALSESS MEALLLLLLLLLLLLLL ", item)
-
   console.log("LOGGGGGGGGGGG ALL ORder status", order)
   const renderItem = ({ item }) => (
     <View style={{ padding: 30, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor:'white' }}>
@@ -136,31 +136,32 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             <View style={{flexDirection:'row'}}>
               <TouchableOpacity
                 style={{ elevation:5,
-                  padding: 5, borderRadius: 10, 
+                  padding: 10, borderRadius: 10, 
                   marginHorizontal:20, 
-                  backgroundColor:'#0fd196', 
+                  backgroundColor:'green', 
                   flexDirection:"row",
                   justifyContent:'space-between',
-                  width:70
+                  width:100,
                  }}
-                onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'DONE')}
+                onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'COMPLETED')}
               >   
-                <Text>DONE</Text> 
-                <Ionicons  size={18} name='checkmark-circle-outline'/>
+                <Text style={{color:'white'}}>Complete </Text> 
+                <Ionicons  size={20} color='white' name='checkmark-circle-outline'/>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={{ elevation:5,
                   flexDirection:"row",
                   marginHorizontal:20, 
-                  justifyContent:'space-between',
-                  width:75,
+                  justifyContent:'center',
+                  width:100,
                   padding: 5, borderRadius: 10,
+                  alignItems:'center',
                   backgroundColor:'#f0491f' }}
                 onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'CANCELLED')}
               >
-                <Text>Cancel</Text>
-                <Ionicons size={18} name='close-circle-outline' />
+                <Text style={{color:'white'}}>Cancel </Text>
+                <Ionicons  color='white' size={20} name='close-circle-outline' />
               </TouchableOpacity>
             </View>
           )}

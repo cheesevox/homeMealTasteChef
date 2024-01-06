@@ -11,38 +11,30 @@ import {
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
 import Item from "./components/Item";
-import { getAllDishByKitchenId, getAllMealByKitchen } from "../../Api";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllOrderByMealSessionId } from "../../Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DishItem from "./components/DishItem";
 import { Touchable } from "react-native";
 import { RouteName, item } from "../../Constant";
 const ChefHomeScreen = ({ navigation }) => {
-  const [dish, setDish] = useState([]);
-  const [meal, setMeal] = useState([]);
+  const [order, setOrder] = useState()
   const user = useSelector((state) => state.user.user) || {};
-  console.log("USERRRRRRRRRRRr", user.kitchenId)
   const renderItem = (item) => {
-    return <Item navigation={navigation} item={item} />;
+    return <Item naviga123123tion={navigation} item={item} />;
   };
   const renderDishItem = (item) => {
     return <DishItem navigation={navigation} item={item} />;
   };
-  const fetchAllDishByKitchenId = () => {
-    getAllDishByKitchenId(user?.kitchenId).then((res) => {
-      setDish(res);
-    });
-  };
-  const fetchAllMealByKitchenId = () => {
-    getAllMealByKitchen(user?.kitchenId).then((res) => {
-      setMeal(res);
-    });
-  };
+  // const fetchAllOrderByMealsession = () => {
+  //   getAllOrderByMealSessionId(mealsessionId).then((res) => {
+  //     setOrder(res);
+  //   });
+  // };
 
-  useEffect(() => {
-    fetchAllDishByKitchenId();
-    fetchAllMealByKitchenId();
-  }, [user?.kitchenId]);
+  // useEffect(() => {
+  //   fetchAllOrderByMealsession()
+  // }, [user?.kitchenId]);
 
   return (
     <ScrollView
@@ -51,72 +43,86 @@ const ChefHomeScreen = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.header}>
-        <ImageBackground
-          source={require('../../../assets/images/background.jpg')}
+        <View
           style={{
-            flex: 1,
-            resizeMode: 'cover'
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            fontSize: 30,
+            fontWeight: 500,
+            textAlign: "center",
+            padding: 20,
+            top: 10
           }}
-          imageStyle={{ borderRadius: 40}}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              fontSize: 30,
-              fontWeight: 500,
-              color: "orange",
-              textAlign: "center",
-              padding:20,
-              top:10
-            }}
-          >
-            <TouchableOpacity>
-              <BellIcon color={"orange"} />
-            </TouchableOpacity>
-            <MessageIcon color={"orange"} />
+          <TouchableOpacity>
+            <BellIcon color={"orange"} />
+          </TouchableOpacity>
+          <MessageIcon color={"orange"} />
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+            bottom: 40
+          }}
+        >
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text
+              style={{
+                fontSize: 22,
+                fontWeight: 500,
+                color: "#e06666",
+                textAlign: "center",
+                width: '60%',
+                fontWeight: 'bold'
+              }}
+            >
+              Home Welcome! {user?.name}
+            </Text>
           </View>
-          <View
-            style={{
-              alignItems: "center",
-              bottom:40
-            }}
-          >
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: 500,
-                  color: "#e06666",
-                  textAlign: "center",
-                  width: '60%',
-                  fontWeight:'bold'
-                }}
-              >
-                Welcome! {user?.name}
-              </Text>
-            </View>
-            <Image source={require("../../../assets/images/open.png")} style={{ height: 50, width: 50, 
-              padding: 40, position: "absolute", top: 200, right: 50 }} />
+
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+          <View style={{ padding: 20, borderWidth: 0.5, paddingHorizontal: 30, borderBottomLeftRadius:30 }}>
+            <Text style={{ textAlign: "center",color:'green', fontSize:20 }}>
+              56
+            </Text>
+            <Text>
+              New Order
+            </Text>
           </View>
-        </ImageBackground>
+          <View style={{ padding: 20, borderWidth: 0.4, borderBlockColor:'grey' }}>
+            <Text style={{ textAlign: "center", color:'orange', fontSize:20 }}>
+              57
+            </Text>
+            <Text>
+              Inprocess Order
+            </Text>
+          </View>
+          <View style={{ padding: 20, borderWidth: 0.5,borderBottomRightRadius:30 }}>
+            <Text style={{ textAlign: "center", color:'red', fontSize:20 ,}}>
+              58
+            </Text>
+            <Text>
+              Complete Order
+            </Text>
+          </View>
+        </View>
+        <View style={{ alignItems: "center", margin: 5, }}>
+          <Text style={{ fontSize: 25 }} >
+            $3000000
+          </Text>
+          <Text style={{ fontWeight: 100, color: 'grey' }}>
+            Total Earning
+          </Text>
+        </View>
       </View>
       <View style={{ padding: 20 }}>
-        <Text style={styles.titleStyle}>{"Dish of Kitchen"}</Text>
+        <Text style={styles.titleStyle}>{"New Booking Order"}</Text>
+        {/* <Text style={styles.titleStyle}>{"Booking"}</Text> */}
         <View style={styles.listDishStyle}>
           <FlatList
-            data={dish}
-            keyExtractor={(item) => item.dishId}
-            renderItem={(item) => renderDishItem(item)}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-        <Text style={styles.titleStyle}>{"Meal of Kitchen"}</Text>
-        <View style={styles.listDishStyle}>
-          <FlatList
-            data={meal}
+            data={order}
             keyExtractor={(item) => item.mealId}
             renderItem={(item) => renderItem(item)}
             horizontal
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
   header: {
     display: "flex",
     flexDirection: "column",
-    height: 250,
+    height: 260,
     backgroundColor: "#ffe6bc",
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,

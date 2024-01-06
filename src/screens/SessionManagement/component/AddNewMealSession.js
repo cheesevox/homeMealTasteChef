@@ -19,6 +19,7 @@ import {
   export default function AddNewMealSession({ navigation, route }) {
     const { session } = route.params;
     const user = useSelector((state) => state.user.user);
+    console.log("KTichennnnnnn area",user?.areaId)
     const [selected, setSelected] = useState();
     const [data, setData] = useState([]);
     const [meal, setMeal] = useState([]);

@@ -85,7 +85,7 @@ export const getAllMealInSessionID = async (id) => {
     );
     return repose.data;
   } catch (error) {
-    console.log("err in get all meal in sesion id",error);
+    console.log("err in get all meal sesison in sesion id",error);
   }
 };
 
@@ -602,10 +602,19 @@ export const getAllDishOnSessionByKitchenId = async (id) =>{
 export const getAllSessionRegisterTrue = async (id) => {
   try {
     const response = await axios.get(
-      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-register-for-meal-true-and-status-on`
+      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-status-on`
     );
     return response.data;
   } catch (error) {
     console.log("Get all session with true", error);
   }
 };
+
+export const getAllOrderWithPaid = async (id) =>{
+  try {
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-with-status-paid-by-meal-session-id?mealsessionId=${id}`)
+    return response.data
+  } catch (error) {
+    console.log("error get all order b y mealsession id", error)
+  }
+}

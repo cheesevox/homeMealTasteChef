@@ -18,6 +18,8 @@ import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MealSession from "../../MealSession";
 import { useSelector } from "react-redux";
+import DropDownPicker from "react-native-dropdown-picker";
+import { Dropdown } from "react-native-element-dropdown";
 
 const SessionManagement = (props) => {
   const { navigation, route } = props;
@@ -28,7 +30,8 @@ const SessionManagement = (props) => {
   const [sessionFilter, setsessionFilter] = useState();
   const [mealInSession, setMealInSession] = useState([]);
   const [activeMenu, setActiveMenu] = useState("PROCESSING");
-  
+  const [isFocus, setIsFocus] = useState(false);
+
   const tabs = [
     {
       label: "Processing",
@@ -42,6 +45,14 @@ const SessionManagement = (props) => {
       label: "Rejected",
       value: "REJECTED",
     },
+    {
+      label: "Complete",
+      value: "COMPLETE"
+    },
+    {
+      label: "Cancel",
+      value: "CANCEL"
+    }
   ];
 
   const data = [
@@ -125,7 +136,7 @@ const SessionManagement = (props) => {
   const onChange = (event, selectedDate) => {
     setShow(false);
     if (selectedDate) {
-      // Convert dayjs to Date
+
       const jsDate = selectedDate instanceof Date ? selectedDate : selectedDate.toDate();
       setSelectedDate(selectedDate);
       console.log(formatter.format(selectedDate));
@@ -136,24 +147,6 @@ const SessionManagement = (props) => {
   const showDatePicker = () => {
     setShow(true);
   };
-  // useEffect(() => {
-  // 
-  // if (selectedDate) {
-  //   setNewData(
-  //     newData.filter((item) => {
-  //       // const orderFind = formatter.format(item.time).includes(formatter.format(selectedDate))
-  //       // const formattedTime = dayjs(item.createDate).format("DD-MM-YYYY")
-  //       console.log("formated time", [item.createDate.includes(formatter.format(selectedDate))])
-  //       return item.createDate.includes(formatter.format(selectedDate))
-  //     }
-  //     ))
-  //   setNewData(
-  //     newData.filter((item)=>{
-  //       crossOriginIsolated
-  //     })
-  //   )
-  // }
-  // }, [formatter.format(selectedDate), tab.value])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -164,59 +157,35 @@ const SessionManagement = (props) => {
   }, [navigation]);
 
   useEffect(() => {
-    const fetchData = () => {
-      fetchAllMealSession();
-      console.log("Data refreshed!");
-    };
-    const intervalId = setInterval(fetchData, 5000);
-    return () => clearInterval(intervalId);
-  }, [navigation]);
-
-  // useEffect(() => {
-  //   console.log("selected date", formatter.format(selectedDate))
-  //   if (selectedDate !== undefined && tab !== undefined) {
-  //     console.log("default tab la",tab)
-  //     setNewData(
-
-  //       mealInSession.filter((item) => {
-  //         // Assuming item.createDate is a string
-  //         console.log("item", item)
-  //         const formattedDate = formatter.format(selectedDate);
-  //         return item.createDate.includes(formattedDate) && item.status.toUpperCase().includes(tab.toUpperCase());
-
-  //       }))
-  //     // if (tab) {
-  //     //   setNewData(
-  //     //     newData.filter((item) => {
-  //     //       return item.status.toUpperCase().includes(tab.toUpperCase());
-  //     //     })
-  //     //   )
-  //     // }
-  //   }
-  // }, [selectedDate, tab, mealInSession]);
-
-  useEffect(() => {
     console.log("selected date", formatter.format(selectedDate))
     if (selectedDate !== undefined && tab !== undefined) {
-      console.log("default tab la",tab);
-      
+      console.log("default tab la", tab);
+
       setNewData(
         mealInSession.filter((item) => {
           const formattedDate = formatter.format(selectedDate);
-  
+
           // Check for both date and status
           const isMatchingDate = item.createDate.includes(formattedDate);
-          const isMatchingStatus = item.status.toUpperCase().includes(tab.toUpperCase());
-  
+          const isMatchingStatus = item.status.toUpperCase().includes(tab);
+
           // Check for kitchenId
           const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
-  
+
           // Return true only if all conditions are met
           return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
         })
       );
     }
   }, [selectedDate, tab, mealInSession, kitchenId]);
+
+  const [selectedTab, setSelectedTab] = useState(tabs[0].id);
+
+  const handleChangeTab = (itemValue) => {
+    setSelectedTab(itemValue);
+    // Additional logic to handle tab change
+  };
+
 
   const renderItem = ({ item }) => {
     // console.log("itemmmmmmmmmmmmmmm", item?.value)
@@ -250,7 +219,7 @@ const SessionManagement = (props) => {
       </View>
     );
   };
-
+console.log("NEWWWWWWWWWWWWWWWWWDATTTTTTTT", newData)
   const renderSessionItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -329,10 +298,12 @@ const SessionManagement = (props) => {
         onBack={() => navigation.goBack()}
       />
 
-      <View style={{ alignItems: "center", 
-      marginVertical:10,
-      elevation:5, borderRadius: 30, 
-      flexDirection: "row", justifyContent: "center" }}>
+      <View style={{
+        alignItems: "center",
+        marginVertical: 10,
+        elevation: 5, borderRadius: 30,
+        flexDirection: "row", justifyContent: "center"
+      }}>
         <TouchableOpacity onPress={showDatePicker}>
           <Ionicons name="calendar-outline" size={22} />
         </TouchableOpacity>
@@ -367,14 +338,46 @@ const SessionManagement = (props) => {
             justifyContent: "space-between",
           }}
         >
-          <VirtualizedList
-            data={tabs}
-            renderItem={renderItem}
-            getItemCount={(data) => data.length}
-            getItem={(data, index) => data[index]}
-            keyExtractor={(item) => item.id}
-            horizontal
-          />
+          <View
+            style={{
+              display: "flex",
+              backgroundColor: "white",
+              borderRadius: 20,
+              width: "100%",
+              height: 70,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 20,
+              // bottom: -40,
+            }}
+          >
+            <View
+              style={{
+                width: "100%",
+                borderRadius: 20,
+              }}
+            >
+              <Dropdown
+                containerStyle={{
+                  borderRadius: 20,
+                  width: "100%",
+                  overflow: "hidden",
+                  top: 15,
+                }}
+                data={tabs}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={tab}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(value) => {
+                  setTab(value?.value);
+                  // router.refesh
+                }}
+              />
+            </View>
+          </View>
         </View>
         <View>
           <FlatList

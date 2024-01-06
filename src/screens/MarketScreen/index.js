@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { FlatList, Image, StyleSheet, View, TouchableOpacity, Text, Pressable, ScrollView } from "react-native";
 import Session from "./components/session";
 import { Dropdown } from "react-native-element-dropdown";
 import HeaderComp from "../HeaderComp";
@@ -27,8 +27,6 @@ const MarketScreen = ({ navigation }) => {
       setSession(res);
     });
   };
-  const [show, setShow] = useState(false);
-
   useEffect(() => {
     fetchAllSessionByAreaId(area);
   }, []);
@@ -43,24 +41,70 @@ const MarketScreen = ({ navigation }) => {
       endTime: "",
     },
   ];
-  const renderItem = ({ item }) => {
-    return <Session data={item} navigation={navigation} />;
-  };
+  const SessionItem = ({ item }) => {
+    console.log("itemmmmmmmmneeeeeeeeeeeeee", item)
+    return (
+      <View style={styles.container}>
+        <View style={{ alignItems: "center" }}>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.5 : 1,
+              },
+              styles.buttonStyle,
+            ]}
+            onPress={() => {
+              navigation.navigate("SessionManagement", { session: item });
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+              <Text
+                style={{ ...styles.text, fontSize: 20, }}
+              >
+                {item?.sessionName}
+              </Text>
+              <Text style={{ color: 'white', fontWeight: "bold" }}>   -   </Text>
 
-  // useEffect(() => {
-  //   if (selectedDate) {
-  //     setNewData(
-  //       session.filter((item) => {
-  //         const formattedTime = dayjs(item.endDate).format("DD-MM-YYYY")
-  //         console.log("formated time", [item.endDate.includes(formatter.format(selectedDate))])
-  //         return item.createDate.includes(formatter.format(selectedDate))
-  //       }
-  //       ))
-  //   }
-  // }, [formatter.format(selectedDate), session])
+            </View>
+            <View style={{ alignItems: "center", justifyContent: "center", padding: 5 }}>
+              <Text
+                style={{ ...styles.text, fontSize: 20, }}
+              >
+                {item?.sessionType}
+              </Text>
+            </View>
+            <View
+              style={{
+                justifyContent: "center",
+                flexDirection: "column",
+                paddingTop: 20,
+                padding: 20,
+                display: 'flex',
+                flexDirection: 'row'
+              }}
+            >
+              <Text
+                style={{ ...styles.text, fontSize: 15 }}
+              >{`Start time: ${item?.startTime}`}</Text>
+              <Text style={{ color: 'white', fontWeight: "bold" }}> - </Text>
+              <Text
+                style={{ ...styles.text, fontSize: 15 }}
+              >{`End time: ${item?.endTime}`}</Text>
+            </View>
+            <Text style={{ alignItems: "center", textAlign: "center", color: 'white', padding: 5, fontWeight: "bold" }} >{`Date Create: ${item?.createDate}`}</Text>
+          </Pressable>
+        </View>
+
+
+      </View>
+    );
+  };
+  const renderItem = ({ item }) => {
+    return <SessionItem item={item} />;
+  };
   return (
     <View>
-      <HeaderComp label={"Area"} isHasBackIcon={false} />
+      <HeaderComp label={"Session"} isHasBackIcon={false} />
       <View style={styles.container}>
         <View style={{
           backgroundColor: "#FFF",
@@ -74,17 +118,16 @@ const MarketScreen = ({ navigation }) => {
       }}>
       </View>
       <View style={{
-        backgroundColor: "blue", flex: 9,
         margin: 15,
         borderRadius: 20,
-        backgroundColor: "#FFD580",
         elevation: 5,
+        height: '100%'
       }}>
-      <FlatList
-      data={session}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-    />
+        <ScrollView>
+          {session?.slice().reverse().map((item, index) => (
+            <SessionItem key={index} item={item} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -95,8 +138,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     paddingTop: 25,
     backgroundColor: "#FFF",
-    height: '100%',
-    flex: 3
+    height: '80%',
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 1,
+    marginVertical: 20,
+    marginHorizontal: 10
   },
   header: {
     display: "flex",
