@@ -233,6 +233,7 @@ const ChefOrderScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           data={newData ? newData.slice().reverse() : []}
           // keyExtractor={(item) => item?.time || item?.time.toString()}
+          // renderItem={({ item }) => <CartCard item={item} />}
           renderItem={({ item }) => <CartCard item={item} />}
         // data={orders}
         // contentContainerStyle={{

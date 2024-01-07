@@ -618,3 +618,27 @@ export const getAllOrderWithPaid = async (id) =>{
     console.log("error get all order b y mealsession id", error)
   }
 }
+export const getAllOrderCompleteHomePage = async (id) =>{
+  try {
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-with-status-completed`)
+    return response.data
+  } catch (error) {
+    console.log("error get all order comleted by mealsession id", error)
+  }
+}
+export const getAllOrderProcessingHomePage = async (id) =>{
+  try {
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-status-processing`)
+    return response.data
+  } catch (error) {
+    console.log("error get all order comleted by mealsession id", error)
+  }
+}
+export const getAllNewOrderHomePage = async (id) =>{
+  try {
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order`)
+    return response.data
+  } catch (error) {
+    console.log("error get all order comleted by mealsession id", error)
+  }
+}

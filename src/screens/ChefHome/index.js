@@ -11,17 +11,21 @@ import {
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
 import Item from "./components/Item";
-import { getAllDishByKitchenId, getAllMealByKitchen, getAllOrderByMealSessionId } from "../../Api";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage } from "../../Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DishItem from "./components/DishItem";
 import { Touchable } from "react-native";
 import { RouteName, item } from "../../Constant";
+import dayjs from "dayjs";
+
 const ChefHomeScreen = ({ navigation }) => {
   const [order, setOrder] = useState()
   const user = useSelector((state) => state.user.user) || {};
+  const [orderComplete, setOrderComplete] = useState()
+  const [orderProcessing, setOrderProcessing] = useState()
   const renderItem = (item) => {
-    return <Item naviga123123tion={navigation} item={item} />;
+    return <Item navigation={navigation} item={item} />;
   };
   const renderDishItem = (item) => {
     return <DishItem navigation={navigation} item={item} />;
@@ -31,10 +35,95 @@ const ChefHomeScreen = ({ navigation }) => {
   //     setOrder(res);
   //   });
   // };
-
   // useEffect(() => {
   //   fetchAllOrderByMealsession()
   // }, [user?.kitchenId]);
+  const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  // const filteredItems = order && order.filter(item => {
+  //   const itemDate = item?.mealSessionDto1?.createDate;
+  //   const currentDateFormatted = formatter.format(dayjs());
+  
+  //   return itemDate === currentDateFormatted;
+  // });
+  
+  // console.log("Filtered Items:", filteredItems);
+
+  const fectchAllOrderComplete = () => {
+    getAllOrderCompleteHomePage().then((res) => {
+      // console.log("RESSSSS Complete", res)/
+      setOrderComplete(res)
+    })
+  }
+  const fectchAllOrderProcessing = () => {
+    getAllOrderProcessingHomePage().then((res) => {
+      // console.log("RESSSSS Processsingsssssss", res)
+      setOrderProcessing(res)
+    })
+  }
+  const fectchAllNewOrder = () => {
+    getAllNewOrderHomePage().then((res) => {
+      // console.log("RESSSSS Processsingsssssss newwwwwwww order", res)
+      setOrder(res)
+    })
+  }
+  useEffect(() => {
+    fectchAllOrderComplete()
+    fectchAllOrderProcessing()
+    fectchAllNewOrder()
+  }, [])
+  const countComplete = orderComplete ? orderComplete.filter(item => item.status === 'COMPLETED').length : 0;
+  // console.log(":COUNTTTTTTTTTTTTT", countComplete)
+  const countProcessing = orderProcessing ? orderProcessing.filter(item => item.status === 'PROCESSING').length : 0;
+  // console.log(":COUNTTTTTTTTTTTTTprocesss", countProcessing)
+  const count = order ? order.filter(item => item.status === 'PAID').length : 0;
+  // console.log(":COUNTTTTTTTTTTTTTprocesss", count)
+
+  const CartCard = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={styles.cartcard}
+        onPress={() => navigation.navigate("ChefOrderDetail", { item })}
+      >
+        <View
+          style={{
+            paddingVertical: 10,
+            flex: 1,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: 1,
+              padding: 5,
+            }}
+          >
+            <Image
+              source={require('../../../assets/images/avatar.jpg')}
+              style={{ width: 100, height: 100, resizeMode: "cover" }}
+            />
+            <View
+              style={{
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <Text style={styles.textItem}>Order ID : {item.orderId}</Text>
+              <Text style={styles.textItem}>Quantity: {item?.quantity}</Text>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>
+                Total: {item.totalPrice}
+              </Text>
+              <Text>Area : {item?.mealSession?.sessionDto?.areaDtoOrderResponse?.areaName}</Text>
+              <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <Text>Customer: {item?.customer?.name}</Text>
+              </View>
+              <Text>Time: {item.time}</Text>
+            </View>
+          </View>
+          <Text style={{ color: 'orange' }}>Status: {item.status}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <ScrollView
@@ -80,28 +169,29 @@ const ChefHomeScreen = ({ navigation }) => {
               Home Welcome! {user?.name}
             </Text>
           </View>
-
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-          <View style={{ padding: 20, borderWidth: 0.5, paddingHorizontal: 30, borderBottomLeftRadius:30 }}>
-            <Text style={{ textAlign: "center",color:'green', fontSize:20 }}>
-              56
+          <View style={{ padding: 20, borderWidth: 0.5, paddingHorizontal: 30, borderBottomLeftRadius: 30 }}>
+            <Text style={{ textAlign: "center", color: 'green', fontSize: 20 }}>
+              <Text>
+                {count}
+              </Text>
             </Text>
             <Text>
               New Order
             </Text>
           </View>
-          <View style={{ padding: 20, borderWidth: 0.4, borderBlockColor:'grey' }}>
-            <Text style={{ textAlign: "center", color:'orange', fontSize:20 }}>
-              57
+          <View style={{ padding: 20, borderWidth: 0.4, borderBlockColor: 'grey' }}>
+            <Text style={{ textAlign: "center", color: 'orange', fontSize: 20 }}>
+              <Text>{countProcessing}</Text>
             </Text>
             <Text>
               Inprocess Order
             </Text>
           </View>
-          <View style={{ padding: 20, borderWidth: 0.5,borderBottomRightRadius:30 }}>
-            <Text style={{ textAlign: "center", color:'red', fontSize:20 ,}}>
-              58
+          <View style={{ padding: 20, borderWidth: 0.5, borderBottomRightRadius: 30 }}>
+            <Text style={{ textAlign: "center", color: 'red', fontSize: 20, }}>
+              <Text>{countComplete}</Text>
             </Text>
             <Text>
               Complete Order
@@ -111,8 +201,9 @@ const ChefHomeScreen = ({ navigation }) => {
         <View style={{ alignItems: "center", margin: 5, }}>
           <Text style={{ fontSize: 25 }} >
             $3000000
+            { }
           </Text>
-          <Text style={{ fontWeight: 100, color: 'grey' }}>
+          <Text style={{ fontWeight: 100, color: 'black' }}>
             Total Earning
           </Text>
         </View>
@@ -122,11 +213,12 @@ const ChefHomeScreen = ({ navigation }) => {
         {/* <Text style={styles.titleStyle}>{"Booking"}</Text> */}
         <View style={styles.listDishStyle}>
           <FlatList
-            data={order}
-            keyExtractor={(item) => item.mealId}
-            renderItem={(item) => renderItem(item)}
-            horizontal
-            showsHorizontalScrollIndicator={false}
+            data={order && order.filter(item => item.status === 'PAID')}
+            keyExtractor={(item) => item?.orderId.toString()} // Corrected keyExtractor typo
+            renderItem={({ item }) => (
+              <CartCard item={item} />
+            )}
+          // showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
@@ -164,7 +256,6 @@ const styles = StyleSheet.create({
   },
   listDishStyle: {
     width: "100%",
-    height: "auto",
   },
 });
 
