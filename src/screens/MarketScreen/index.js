@@ -11,6 +11,8 @@ import session from "./components/session";
 import dayjs from "dayjs";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from "moment";
+import { item } from "../../Constant";
 
 const MarketScreen = ({ navigation }) => {
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -20,27 +22,40 @@ const MarketScreen = ({ navigation }) => {
   const [newData, setNewData] = useState([])
   const [session, setSession] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate())
-
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   const fetchAllSessionByAreaId = (area) => {
     getAllSessionRegisterTrue().then((res) => {
-      console.log("all session", res);
+      // console.log("all session", res);
       setSession(res);
     });
   };
+
   useEffect(() => {
     fetchAllSessionByAreaId(area);
   }, []);
 
   const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
-  const posts = [
-    {
-      id: 1,
-      name: "Binh Tan Area",
-      startTime: " Address 258 TOn Duc Thnag",
-      endTime: "",
-    },
-  ];
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     name: "Binh Tan Area",
+  //     startTime: " Address 258 TOn Duc Thnag",
+  //     endTime: "",
+  //   },
+  // ];
+
+  const futureSessions = session.filter(item => {
+    const sessionEndDate = moment(item.endDate, 'DD-MM-YYYY');
+    return sessionEndDate.isSameOrAfter(currentDate, 'day');
+  });
+
+  futureSessions.forEach(item => {
+    console.log(`Create Date: ${item.createDate}, End Date: ${item.endDate}`);
+  });
+  const currentDate = moment();
+
   const SessionItem = ({ item }) => {
     console.log("itemmmmmmmmneeeeeeeeeeeeee", item)
     return (
@@ -57,22 +72,6 @@ const MarketScreen = ({ navigation }) => {
               navigation.navigate("SessionManagement", { session: item });
             }}
           >
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <Text
-                style={{ ...styles.text, fontSize: 20, }}
-              >
-                {item?.sessionName}
-              </Text>
-              <Text style={{ color: 'white', fontWeight: "bold" }}>   -   </Text>
-
-            </View>
-            <View style={{ alignItems: "center", justifyContent: "center", padding: 5 }}>
-              <Text
-                style={{ ...styles.text, fontSize: 20, }}
-              >
-                {item?.sessionType}
-              </Text>
-            </View>
             <View
               style={{
                 justifyContent: "center",
@@ -85,49 +84,41 @@ const MarketScreen = ({ navigation }) => {
             >
               <Text
                 style={{ ...styles.text, fontSize: 15 }}
-              >{`Start time: ${item?.startTime}`}</Text>
+              >{`Create Date: ${item?.createDate}`}</Text>
               <Text style={{ color: 'white', fontWeight: "bold" }}> - </Text>
               <Text
                 style={{ ...styles.text, fontSize: 15 }}
-              >{`End time: ${item?.endTime}`}</Text>
+              >{`End Date: ${item?.endDate}`}</Text>
             </View>
             <Text style={{ alignItems: "center", textAlign: "center", color: 'white', padding: 5, fontWeight: "bold" }} >{`Date Create: ${item?.createDate}`}</Text>
           </Pressable>
         </View>
-
-
       </View>
     );
   };
   const renderItem = ({ item }) => {
     return <SessionItem item={item} />;
   };
+  
   return (
     <View>
-      <HeaderComp label={"Session"} isHasBackIcon={false} />
-      <View style={styles.container}>
-        <View style={{
-          backgroundColor: "#FFF",
-        }}>
-        </View>
-      </View>
-      <View style={{
-        flexDirection: "row", alignItems: "center",
-        marginHorizontal: 40, justifyContent: "center",
-        borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
-      }}>
+      <HeaderComp label={"Maket Session"} isHasBackIcon={false} />
+      <View style={{alignItems:"center"}}>
+        <Text style={{fontSize:20, fontWeight:"bold"}}> Choosing Session Date</Text>
       </View>
       <View style={{
         margin: 15,
         borderRadius: 20,
         elevation: 5,
-        height: '100%'
+        height: '86%',
       }}>
+        <View style={{paddingTop:10}}>
         <ScrollView>
-          {session?.slice().reverse().map((item, index) => (
+          {futureSessions?.slice().reverse().map((item, index) => (
             <SessionItem key={index} item={item} />
           ))}
         </ScrollView>
+        </View>
       </View>
     </View>
   );

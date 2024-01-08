@@ -11,13 +11,14 @@ import {
   import { SelectList } from "react-native-dropdown-select-list";
   import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
   import { ChevronDown, Search } from "react-native-feather";
-  import { createMealSession, getAllMealByKitchen } from "../../../Api";
+  import { createMealSession, getAllMealByKitchen, getAllSessionRegisterTrue } from "../../../Api";
   import { useSelector } from "react-redux";
   import { Input } from "react-native-elements";
 
   import Toast from "react-native-toast-message";
   export default function AddNewMealSession({ navigation, route }) {
     const { session } = route.params;
+    console.log("sesssion areaaaa", session)
     const user = useSelector((state) => state.user.user);
     console.log("KTichennnnnnn area",user?.areaId)
     const [selected, setSelected] = useState();
@@ -31,9 +32,10 @@ import {
       quantity: 1,
       kitchenId: user.kitchenId,
     });
+
     const fetchAllMealByKitchenId = () => {
       getAllMealByKitchen(user.kitchenId).then((res) => {
-        console.log(res);
+        console.log("all meal",res);
         let newArray = res.map((item) => {
           return { key: item.mealId, value: item.name };
         });

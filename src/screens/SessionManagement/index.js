@@ -24,6 +24,7 @@ import { Dropdown } from "react-native-element-dropdown";
 const SessionManagement = (props) => {
   const { navigation, route } = props;
   const { session } = route.params;
+  console.log("SESSSIONNNNNNNNitemmmmmmmmm", session)
   const user = useSelector((state) => state.user.user);
   const kitchenId = user?.kitchenId
   const [tab, setTab] = useState('PROCESSING');
@@ -96,7 +97,7 @@ const SessionManagement = (props) => {
 
   const fetchAllMealSession = () => {
     getAllMealInSessionID(session.sessionId).then((res) => {
-      console.log(session.sessionId);
+      console.log("sessionid",session.sessionId);
       console.log("in ra meall in sesssison", res);
       setMealInSession(res);
     });
@@ -132,11 +133,10 @@ const SessionManagement = (props) => {
   const [show, setShow] = useState(false);
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate())
-  const [newData, setNewData] = useState([])
+  // const [newData, setNewData] = useState([])
   const onChange = (event, selectedDate) => {
     setShow(false);
     if (selectedDate) {
-
       const jsDate = selectedDate instanceof Date ? selectedDate : selectedDate.toDate();
       setSelectedDate(selectedDate);
       console.log(formatter.format(selectedDate));
@@ -156,28 +156,28 @@ const SessionManagement = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  useEffect(() => {
-    console.log("selected date", formatter.format(selectedDate))
-    if (selectedDate !== undefined && tab !== undefined) {
-      console.log("default tab la", tab);
+  // useEffect(() => {
+  //   console.log("selected date", formatter.format(selectedDate))
+  //   if (selectedDate !== undefined && tab !== undefined) {
+  //     console.log("default tab la", tab);
 
-      setNewData(
-        mealInSession.filter((item) => {
-          const formattedDate = formatter.format(selectedDate);
+  //     setNewData(
+  //       mealInSession.filter((item) => {
+  //         const formattedDate = formatter.format(selectedDate);
 
-          // Check for both date and status
-          const isMatchingDate = item.createDate.includes(formattedDate);
-          const isMatchingStatus = item.status.toUpperCase().includes(tab);
+  //         // Check for both date and status
+  //         const isMatchingDate = item.createDate.includes(formattedDate);
+  //         const isMatchingStatus = item.status.toUpperCase().includes(tab);
 
-          // Check for kitchenId
-          const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
+  //         // Check for kitchenId
+  //         const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
 
-          // Return true only if all conditions are met
-          return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
-        })
-      );
-    }
-  }, [selectedDate, tab, mealInSession, kitchenId]);
+  //         // Return true only if all conditions are met
+  //         return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
+  //       })
+  //     );
+  //   }
+  // }, [selectedDate, tab, mealInSession, kitchenId]);
 
   const [selectedTab, setSelectedTab] = useState(tabs[0].id);
 
@@ -219,7 +219,7 @@ const SessionManagement = (props) => {
       </View>
     );
   };
-console.log("NEWWWWWWWWWWWWWWWWWDATTTTTTTT", newData)
+// console.log("NEWWWWWWWWWWWWWWWWWDATTTTTTTT", newData)
   const renderSessionItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -379,14 +379,14 @@ console.log("NEWWWWWWWWWWWWWWWWWDATTTTTTTT", newData)
             </View>
           </View>
         </View>
-        <View>
+        {/* <View>
           <FlatList
             style={{ height: "83%" }}
             data={newData}
             key={item => item?.mealSessionId.toString()}
             renderItem={renderSessionItem}
           />
-        </View>
+        </View> */}
       </View>
       <View
         style={{

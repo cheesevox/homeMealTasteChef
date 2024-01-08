@@ -29,6 +29,7 @@
     "expo-linking": "~5.0.2",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "moment": "^2.30.1",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-check-box": "^2.1.7",

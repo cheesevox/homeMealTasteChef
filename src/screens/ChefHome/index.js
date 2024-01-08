@@ -126,7 +126,7 @@ const ChefHomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView
+    <View
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       style={styles.container}
@@ -212,7 +212,7 @@ const ChefHomeScreen = ({ navigation }) => {
         <Text style={styles.titleStyle}>{"New Booking Order"}</Text>
         {/* <Text style={styles.titleStyle}>{"Booking"}</Text> */}
         <View style={styles.listDishStyle}>
-          <FlatList
+        <FlatList
             data={order && order.filter(item => item.status === 'PAID')}
             keyExtractor={(item) => item?.orderId.toString()} // Corrected keyExtractor typo
             renderItem={({ item }) => (
@@ -222,7 +222,8 @@ const ChefHomeScreen = ({ navigation }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
+    
   );
 };
 
