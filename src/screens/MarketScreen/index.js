@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import { item } from "../../Constant";
+import SessionList from "./SessionList";
 
 const MarketScreen = ({ navigation }) => {
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -31,6 +32,7 @@ const MarketScreen = ({ navigation }) => {
     });
   };
 
+  // console.log("SESSSSSSSSSION", session)
   useEffect(() => {
     fetchAllSessionByAreaId(area);
   }, []);
@@ -55,69 +57,30 @@ const MarketScreen = ({ navigation }) => {
     console.log(`Create Date: ${item.createDate}, End Date: ${item.endDate}`);
   });
   const currentDate = moment();
+  // console.log("NEWWDATE Moment", currentDate.date()); 
 
-  const SessionItem = ({ item }) => {
-    console.log("itemmmmmmmmneeeeeeeeeeeeee", item)
-    return (
-      <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1,
-              },
-              styles.buttonStyle,
-            ]}
-            onPress={() => {
-              navigation.navigate("SessionManagement", { session: item });
-            }}
-          >
-            <View
-              style={{
-                justifyContent: "center",
-                flexDirection: "column",
-                paddingTop: 20,
-                padding: 20,
-                display: 'flex',
-                flexDirection: 'row'
-              }}
-            >
-              <Text
-                style={{ ...styles.text, fontSize: 15 }}
-              >{`Create Date: ${item?.createDate}`}</Text>
-              <Text style={{ color: 'white', fontWeight: "bold" }}> - </Text>
-              <Text
-                style={{ ...styles.text, fontSize: 15 }}
-              >{`End Date: ${item?.endDate}`}</Text>
-            </View>
-            <Text style={{ alignItems: "center", textAlign: "center", color: 'white', padding: 5, fontWeight: "bold" }} >{`Date Create: ${item?.createDate}`}</Text>
-          </Pressable>
-        </View>
-      </View>
-    );
-  };
-  const renderItem = ({ item }) => {
-    return <SessionItem item={item} />;
-  };
+  console.log("LISTTTTTTTTTTTTTTTt", futureSessions)
+
   
   return (
     <View>
       <HeaderComp label={"Maket Session"} isHasBackIcon={false} />
       <View style={{alignItems:"center"}}>
-        <Text style={{fontSize:20, fontWeight:"bold"}}> Choosing Session Date</Text>
+        <Text style={{fontSize:20, fontWeight:"bold"}}> Choossing Session Date</Text>
       </View>
       <View style={{
         margin: 15,
         borderRadius: 20,
         elevation: 5,
-        height: '86%',
+        // height: '86%',
       }}>
         <View style={{paddingTop:10}}>
-        <ScrollView>
+        {/* <ScrollView>
           {futureSessions?.slice().reverse().map((item, index) => (
             <SessionItem key={index} item={item} />
           ))}
-        </ScrollView>
+        </ScrollView> */}
+          <SessionList navigation={navigation} sessions={futureSessions} />
         </View>
       </View>
     </View>
