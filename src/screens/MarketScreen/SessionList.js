@@ -1,23 +1,23 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ScrollView, Text, View, StyleSheet, Pressable } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Pressable, FlatList } from 'react-native';
 
-
-const SessionList = ({ navigation, sessions }) => {
+const SessionList = ({ sessions }) => {
     console.log("SESSSSSSSSSSTYPE", sessions?.sessionType)
     const groupedSessions = groupSessionsByDates(sessions);
     console.log("Gourpppsession ", groupedSessions)
     return (
-        <ScrollView style={{ height: '92%' }}>
+        <ScrollView style={{ height: '92%'}}>
             {groupedSessions.slice().reverse().map((group, index) => (
-                <SessionItemGroup key={index} group={group} />
+                <SessionItemGroup key={index} group={group} groupedSessions={groupedSessions} />
             ))}
         </ScrollView>
     );
 };
-const SessionItem = ({ session }) => {
-    // console.log("itemmmmmmmmneeeeeeeeeeeeee", item)
+const SessionItem = ({ session, groupedSessions  }) => {
+    const navigation = useNavigation();
     return (
-        <View style={styles.container}>
+        <View style={{borderWidth:2, borderRadius:20, margin:5, alignItems:'center', justifyContent:'center', backgroundColor:'orange'}}>
             <View style={{ alignItems: "center" }}>
                 <Pressable
                     style={({ pressed }) => [
@@ -26,9 +26,10 @@ const SessionItem = ({ session }) => {
                         },
                         styles.buttonStyle,
                     ]}
-                    onPress={() => {
-                        navigation.navigate("SessionManagement", { session: session });
-                    }}
+                    onPress={() => 
+                    //   navigation.navigate("SessionManagement", { session, groupedSessions  })
+                    navigation.navigate("SessionManagement", { session, group: groupedSessions.find(group => group.sessions.includes(session)) })
+                    }
                 >
                     <View
                         style={{
@@ -42,7 +43,7 @@ const SessionItem = ({ session }) => {
                     >
                         <View>
                             <View>
-                                <Text style={{alignItems:'center', justifyContent:'center', fontSize:17}}>
+                                <Text style={{alignItems:'center', justifyContent:'center', fontSize:16.5}}>
                                     Session Type {session.sessionType}
                                 </Text>
                             </View>
@@ -68,13 +69,23 @@ const SessionItem = ({ session }) => {
     );
 };
 
-const SessionItemGroup = ({ group }) => {
+const SessionItemGroup = ({ group ,groupedSessions }) => {
+    const navigation = useNavigation();
     return (
-        <View style={{ justifyContent: 'center' }}>
-            <Text style={{ textAlign: 'center' }}>{`Create Date: ${group.createDate}, End Date: ${group.endDate}`}</Text>
-            {group.sessions.map((session, index) => (
-                <SessionItem key={index} session={session} />
-            ))}
+        <View style={{ justifyContent: 'center', borderWidth:1, borderRadius:10, margin:20 }}>
+            <Text style={{ textAlign: 'center',fontSize:17 }}>{`Create Date: ${group.createDate}`}</Text>
+            <Text style={{ textAlign: 'center',fontSize:17 }}>{` End Date: ${group.endDate}`}</Text>
+            {/* {group.sessions.map((session, index) => (
+                <SessionItem key={index} session={session} groupedSessions={groupedSessions} />
+            ))} */}
+            <FlatList
+                data={group.sessions}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <SessionItem session={item} groupedSessions={groupedSessions} />
+                )}
+                horizontal={true}
+            />
         </View>
     );
 };
@@ -86,22 +97,23 @@ const groupSessionsByDates = (sessions) => {
     sessions.forEach((session) => {
         const existingGroup = groupedSessions.find(
             (group) =>
-                // group.createDate === session.createDate 
-                // && 
                 group.endDate === session.endDate
         );
-
         if (existingGroup) {
             existingGroup.sessions.push(session);
+            existingGroup.sessionIds.push(session?.sessionId);
+            existingGroup.sessionType.push(session?.sessionType);
+
         } else {
             groupedSessions.push({
                 createDate: session.createDate,
                 endDate: session.endDate,
                 sessions: [session],
+                sessionIds: [session?.sessionId],
+                sessionType:[session?.sessionType]
             });
         }
     });
-
     return groupedSessions;
 };
 

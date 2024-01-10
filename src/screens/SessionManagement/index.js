@@ -24,7 +24,9 @@ import { Dropdown } from "react-native-element-dropdown";
 const SessionManagement = (props) => {
   const { navigation, route } = props;
   const { session } = route.params;
-  console.log("SESSSIONNNNNNNNitemmmmmmmmm", session)
+  const {group} = route.params;
+  console.log("GROUPPPPPPPPPP", group)
+  // console.log("SESSSIONNNNNNNNitemmmmmmmmm", session)
   const user = useSelector((state) => state.user.user);
   const kitchenId = user?.kitchenId
   const [tab, setTab] = useState('PROCESSING');
@@ -401,6 +403,7 @@ const SessionManagement = (props) => {
           onPress={() => {
             navigation.navigate("AddMealSession", {
               session: session,
+              group: group
             });
           }}
           style={({ pressed }) => [
