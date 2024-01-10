@@ -12,7 +12,7 @@ import { EnumSessionStatus, RouteName, item, mealinsession } from "../../Constan
 import HeaderComp from "../HeaderComp";
 import { Image } from "react-native";
 import AddIcon from "../../components/Icons/AddIcon";
-import { getAllMealInSessionID } from "../../Api";
+import { getAllMealInSessionID, getAllMealSessionByKitchen } from "../../Api";
 import dayjs from "dayjs";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -34,6 +34,7 @@ const SessionManagement = (props) => {
   const [mealInSession, setMealInSession] = useState([]);
   const [activeMenu, setActiveMenu] = useState("PROCESSING");
   const [isFocus, setIsFocus] = useState(false);
+  const [mealSession, setMealSession] = useState();
 
   const tabs = [
     {
@@ -104,12 +105,23 @@ const SessionManagement = (props) => {
       setMealInSession(res);
     });
   };
-
   useEffect(() => {
-    const sessions = data.filter((session) => session.status.includes(tab));
-    console.log("TABBBBBBBBBBBB", tab)
-    setsessionFilter(sessions);
-  }, [tab]);
+    fectAllMealSessionByKitchenId()
+  }, [])
+  
+  const fectAllMealSessionByKitchenId = () => {
+    getAllMealSessionByKitchen(user.kitchenId).then((res) => {
+      // console.log("Ress allmealsession by kitchen", res);
+      setMealSession(res);
+    });
+    console.log("all meal session:", user.kitchenId);
+  };
+
+  // useEffect(() => {
+  //   const sessions = data.filter((session) => session.status.includes(tab));
+  //   console.log("TABBBBBBBBBBBB", tab)
+  //   setsessionFilter(sessions);
+  // }, [tab]);
 
   useEffect(() => {
     fetchAllMealSession();
@@ -130,7 +142,7 @@ const SessionManagement = (props) => {
   //   console.log("NEWWWWWWWWWWWWWWWWWwwww", item?.status?.toUpperCase().includes(tabs.value?.toUpperCase()))
   //   return  item?.status?.toUpperCase().includes(tabs.value?.toUpperCase())
   // })
-
+  const [newData, setNewData] = useState([])
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -149,7 +161,12 @@ const SessionManagement = (props) => {
   const showDatePicker = () => {
     setShow(true);
   };
-
+  // useEffect(() => {
+  //   console.log("hehehehe", formatter.format(selectedDate))
+  //   console.log("mealsession", mealSession)
+  //   // console.log("mealsessionnnnnnnnnnnnnn", mealSession?.mealSessionId)
+  //   setNewData(mealSession.filter((item) => item.createDate.includes(formatter.format(selectedDate))));
+  // }, []);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fetchAllMealSession();
@@ -381,14 +398,14 @@ const SessionManagement = (props) => {
             </View>
           </View>
         </View>
-        {/* <View>
+        <View>
           <FlatList
             style={{ height: "83%" }}
-            data={newData}
+            data={mealSession}
             key={item => item?.mealSessionId.toString()}
             renderItem={renderSessionItem}
           />
-        </View> */}
+        </View>
       </View>
       <View
         style={{

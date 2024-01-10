@@ -53,9 +53,9 @@ const MarketScreen = ({ navigation }) => {
     return sessionEndDate.isSameOrAfter(currentDate, 'day');
   });
 
-  futureSessions.forEach(item => {
-    console.log(`Create Date: ${item.createDate}, End Date: ${item.endDate}`);
-  });
+  // futureSessions.forEach(item => {
+  //   console.log(`Create Date: ${item.createDate}, End Date: ${item.endDate}`);
+  // });
   const currentDate = moment();
   // console.log("NEWWDATE Moment", currentDate.date()); 
 

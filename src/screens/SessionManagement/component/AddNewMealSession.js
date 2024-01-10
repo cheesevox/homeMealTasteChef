@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   FlatList,
+  TouchableOpacity
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderComp from "../../HeaderComp";
@@ -21,16 +22,15 @@ import { useNavigation } from "@react-navigation/native";
 export default function AddNewMealSession({ navigation, route }) {
   const { session } = route.params;
   const { group } = route.params;
-  console.log("sesssion areaaaa", group)
   const user = useSelector((state) => state.user.user);
-  console.log("KTichennnnnnn area", user?.areaId)
   const [selected, setSelected] = useState();
   const [data, setData] = useState([]);
   const [meal, setMeal] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const [selectedSession, setSelectedSession] = useState(null);
   const [values, setValues] = useState({
     mealId: selected,
-    sessionId: session.sessionId,
+    sessionId: [],
     price: 0,
     quantity: 1,
     kitchenId: user.kitchenId,
@@ -110,20 +110,41 @@ export default function AddNewMealSession({ navigation, route }) {
     // Here, you can implement the logic to send selectedSessionTypes to your API
     console.log('Selected Session Types:', selectedSessionTypes);
     // Add your API call logic here
-};
-const [selectedSessionTypes, setSelectedSessionTypes] = useState([]);
+  };
+  const [isSelected, setSelection] = useState(false);
+  const [isSelected1, setSelection1] = useState(false);
 
-const handleCheckboxChange = (sessionType) => {
-  // Toggle the selected session type
-  setSelectedSessionTypes((prevSelected) => {
-      const isSelected = prevSelected.includes(sessionType);
-      if (isSelected) {
-          return prevSelected.filter((type) => type !== sessionType);
+  const [selectedSessions, setSelectedSessions] = useState([]);
+
+  // const handlePress = (sessionId) => {
+  //   setValues((prevValues) => ({
+  //     ...prevValues,
+  //     currentSessionId: sessionId,
+  //     sessionId: [...prevValues.sessionId, sessionId],
+  //   }));
+  //   setSelection(!isSelected);
+  //   setSelection1(!isSelected1);
+  // };
+
+  const handlePress = (sessionId) => {
+    setSelectedSessions((prevSelected) => {
+      if (prevSelected.includes(sessionId)) {
+        setValues((prevValues) => ({
+          ...prevValues,
+          currentSessionId: sessionId,
+          sessionId: [...prevValues.sessionId, sessionId],
+        }));
+        return prevSelected.filter((id) => id !== sessionId);
       } else {
-          return [...prevSelected, sessionType];
+        setValues((prevValues) => ({
+          ...prevValues,
+          currentSessionId: sessionId,
+          sessionId: [...prevValues.sessionId, sessionId],
+        }));
+        return [...prevSelected, sessionId];
       }
-  });
-};
+    });
+  };
 
   return (
     <SafeAreaView>
@@ -200,25 +221,46 @@ const handleCheckboxChange = (sessionType) => {
               onChangeText={(text) => setValues({ ...values, quantity: text })}
             />
             <View style={{ justifyContent: 'center' }}>
-            {group.sessions.map((session, index) => (
-                <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CheckBox
-                        value={selectedSessionTypes.includes(session.sessionType)}
-                        onValueChange={() => handleCheckboxChange(session.sessionType)}
-                    />
-                    <Text>{`Session Type: ${session.sessionType}`}</Text>
-                </View>
-            ))}
-            <FlatList
+              {group.sessions.map((session, index) => {
+                if (session.sessionType === "Lunch") {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                      onPress={() => handlePress(session.sessionId)}
+                    >
+                      <CheckBox
+                        checked={selectedSessions.includes(session.sessionId)}
+                        onPress={() => handlePress(session.sessionId)}
+                      />
+                      <Text>{`Session Type: ${session.sessionType}`}</Text>
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                      onPress={() => handlePress(session.sessionId)}
+                    >
+                      <CheckBox
+                        checked={selectedSessions.includes(session.sessionId)}
+                        onPress={() => handlePress(session.sessionId)}
+                      />
+                      <Text>{`Session Type: ${session.sessionType}`}</Text>
+                    </TouchableOpacity>
+                  );
+                }
+              })}
+              <FlatList
                 data={group.sessions}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    <View style={{ margin: 5}}>
-
-                    </View>
+                  <View style={{ margin: 5 }}>
+                  </View>
                 )}
                 horizontal={true}
-            />
+              />
             </View>
             <View
               style={{
