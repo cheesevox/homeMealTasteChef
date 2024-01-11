@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import * as Icon from "react-native-feather";
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
-import { getAllArea, getAllDistrict, updateProfile } from "../Api";
+import { getAllArea, getAllAreaByDistrictId, getAllDistrict, updateProfile } from "../Api";
 import Toast from "react-native-toast-message";
 
 const EditUserProfileScreen = ({ navigation, route }) => {
@@ -18,7 +18,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
   const profile = route.params;
   const [district, setDistrict] = useState([]);
   const [allArea, setAllArea] = useState([])
-  const [areaId, setAreaId] = useState();
+  const [areaByDistrict, setAreaByDistrict] = useState();
   const [districtId, setDistrcitId] = useState();
   const [value, setValue] = useState(null);
 
@@ -27,6 +27,12 @@ const EditUserProfileScreen = ({ navigation, route }) => {
       setDistrict(res);
     });
   };
+  const fecthAllAreaByDistrictId = (districtId) => {
+    getAllAreaByDistrictId(districtId).then((res) => {
+      setAreaByDistrict(res);
+    });
+  };
+
   const fecthAllArea = () => {
     getAllArea().then((res) => {
       setAllArea(res);
@@ -36,6 +42,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     fetchAllDistrict();
     fecthAllArea();
+    fecthAllAreaByDistrictId(districtId)
   }, []);
   console.log("EDITTTTTTTTTTTTTTTTT PROOOOOOOO", profile);
   const area = allArea.find(item => item?.areaId === profile?.profile?.areaId);
@@ -138,16 +145,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <TextInput
-          placeholder={profile?.profile?.address}
-          style={{ marginVertical: 20, marginHorizontal: 40 }}
-          onChangeText={(text) =>
-            setValues({
-              ...values,
-              address: text,
-            })
-          }
-        ></TextInput>
         <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
           <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -169,6 +166,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
                 ...values,
                 districtId: item.districtId,
               });
+              setDistrcitId(item?.districtId)
               setIsFocus(false);
             }}
           ></Dropdown>
@@ -181,6 +179,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             placeholder={area?.areaName}
+            // data={area}
             data={allArea}
             dropdownPosition="top"
             maxHeight={400}

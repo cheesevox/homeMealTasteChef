@@ -3,8 +3,8 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import Dish from "./components/dish";
 import AddIcon from "../../components/Icons/AddIcon";
 import HeaderComp from "../HeaderComp";
-import { RouteName } from "../../Constant";
-import { getAllDishByKitchenId } from "../../Api";
+import { RouteName, item } from "../../Constant";
+import { getAllDishByKitchenId, getAllDishType } from "../../Api";
 import { useFocusEffect } from "@react-navigation/core";
 import { Bold } from "react-native-feather";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,8 +12,10 @@ import { useSelector } from "react-redux";
 
 const DishManagement = ({ navigation }) => {
   const [dish, setDish] = useState([]);
+  const [typeOfDishes, setTypeOfDishes] = useState([]);
   const user = useSelector(state => state.user.user)
   const refresh = useSelector((state)=>state.meal.refresh)
+
   const fetchAllMealByKitchenId = () => {
     getAllDishByKitchenId(user.kitchenId)
       .then((res) => {
@@ -35,13 +37,22 @@ const DishManagement = ({ navigation }) => {
     fetchAllMealByKitchenId();
   }, []);
 
-
+  const fetchAllTypeOfDish = () => {
+    getAllDishType()
+      .then((res) => {
+        setTypeOfDishes(res);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(()=>{
+    fetchAllTypeOfDish()
+  })
   const renderItem = (item, index) => {
     return <Dish data={item.item} key={index} navigation={navigation} />;
   };
 
   const handleClickAdd = () => {
-    navigation.navigate(RouteName.FORM_DISH);
+    navigation.navigate(RouteName.FORM_DISH, { item: typeOfDishes });
   };
  useEffect(() => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++")
@@ -63,8 +74,8 @@ const DishManagement = ({ navigation }) => {
       setDish(res);
     })
     .catch((error) => console.log(error));
-  
 }, [refresh]);
+
   return (
     <View>
       <HeaderComp

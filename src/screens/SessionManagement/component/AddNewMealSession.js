@@ -30,9 +30,10 @@ export default function AddNewMealSession({ navigation, route }) {
   const [selectedSession, setSelectedSession] = useState(null);
   const [values, setValues] = useState({
     mealId: selected,
-    sessionId: [],
+    sessionIds: [],
     price: 0,
     quantity: 1,
+    areaId: user?.areaId,
     kitchenId: user.kitchenId,
   });
 
@@ -131,15 +132,15 @@ export default function AddNewMealSession({ navigation, route }) {
       if (prevSelected.includes(sessionId)) {
         setValues((prevValues) => ({
           ...prevValues,
-          currentSessionId: sessionId,
-          sessionId: [...prevValues.sessionId, sessionId],
+          // currentSessionId: sessionId,
+          sessionIds: [...prevValues.sessionId, sessionId],
         }));
         return prevSelected.filter((id) => id !== sessionId);
       } else {
         setValues((prevValues) => ({
           ...prevValues,
-          currentSessionId: sessionId,
-          sessionId: [...prevValues.sessionId, sessionId],
+          // currentSessionId: sessionId,
+          sessionIds: [...prevValues.sessionId, sessionId],
         }));
         return [...prevSelected, sessionId];
       }

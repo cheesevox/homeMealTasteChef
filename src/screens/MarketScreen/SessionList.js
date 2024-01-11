@@ -3,9 +3,9 @@ import React from 'react';
 import { ScrollView, Text, View, StyleSheet, Pressable, FlatList } from 'react-native';
 
 const SessionList = ({ sessions }) => {
-    console.log("SESSSSSSSSSSTYPE", sessions?.sessionType)
+    // console.log("SESSSSSSSSSSTYPE", sessions?.sessionType)
     const groupedSessions = groupSessionsByDates(sessions);
-    console.log("Gourpppsession ", groupedSessions)
+    // console.log("Gourpppsession ", groupedSessions)
     return (
         <ScrollView style={{ height: '92%'}}>
             {groupedSessions.slice().reverse().map((group, index) => (

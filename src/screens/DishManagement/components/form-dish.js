@@ -28,7 +28,6 @@ import { placeholder, value } from "deprecated-react-native-prop-types/Deprecate
 import Toast from "react-native-toast-message";
 
 const FormDish = (props) => {
-
   let options = {
     saveToPhotos: true,
     mediaType: "photo",
@@ -40,6 +39,7 @@ const FormDish = (props) => {
   const [cameraPhoto, setCameraPhoto] = useState();
   const { navigation, route } = props;
   const item = route.params
+  console.log("ITEMMMMMMMMMMMm", item)
   const id = item?.id?.dishId || {}
   const [gallery, setGallery] = useState(item?.id?.image);
   console.log("FormDish id", id);
@@ -54,16 +54,23 @@ const FormDish = (props) => {
   });
   const [imageToApi, setImageToApi] = useState();
   console.log("IAMGEMMMMMMMMMMM", item?.id?.image)
+ useEffect(()=>{
+  getAllDishType()
+  .then((res) => {
+    console.log("ALLLL TYYYYYYYYYYPEEEEEEEE", res)
+    setTypeOfDishes(res);
+  })
+  .catch((error) => console.log(error));
+ },[]);
+
   useEffect(() => {
-    async () => {
-      const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+     async () => {
+      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(galleryStatus.status === "granted");
     };
   }, []);
 
   const pickImage = async () => {
-
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
       allowEditing: true,
@@ -87,6 +94,7 @@ const FormDish = (props) => {
   const fetchAllTypeOfDish = () => {
     getAllDishType()
       .then((res) => {
+        console.log("ALLLL TYYYYYYYYYYPEEEEEEEE", res)
         setTypeOfDishes(res);
       })
       .catch((error) => console.log(error));
@@ -183,9 +191,6 @@ const FormDish = (props) => {
       }
     );
   };
-  useEffect(() => {
-    fetchAllTypeOfDish();
-  }, []);
 
   return (
     <View style={{ backgroundColor: colors.COLOR_LIGHT, height: "100%" }}>

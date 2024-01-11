@@ -119,7 +119,6 @@ export const getAreaByDistrictId = async (id) => {
 export const getAllSessionByAreaId = async (id) => {
   try {
     const response = await axios.get(
-      // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
       `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
       // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-in-day?areaid=${id}`
     );
@@ -128,12 +127,10 @@ export const getAllSessionByAreaId = async (id) => {
     console.log("get all session by area Id", error);
   }
 };
-// <<<<<<< HEAD
 export const getAllSessionByAreaIdchef = async (id) => {
   try {
     const response = await axios.get(
-// `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
-      // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
+    // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
       `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-in-day?areaid=${id}`
     );
     console.log("session get ben6 api file la2",response.data)
@@ -321,7 +318,7 @@ export const getAllDishType = async () => {
     const response = await axios.get(
       "https://homemealtaste.azurewebsites.net/api/DishType/get-all-dish-type"
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.log("get all dishtype error", error);
   }
@@ -642,3 +639,14 @@ export const getAllNewOrderHomePage = async (id) =>{
     console.log("error get all order comleted by mealsession id", error)
   }
 }
+
+export const getAllSessionByAreaIdWithStatusOPEN   = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-open?areaid=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("get all session by area Id", error);
+  }
+};

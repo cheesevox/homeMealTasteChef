@@ -132,6 +132,7 @@ const ChefOrderScreen = ({ navigation }) => {
   useEffect(() => {
     fetchAllOrder()
   }, [user.kitchenId])
+  
   useEffect(() => {
     if (selectedDate) {
       setNewData(

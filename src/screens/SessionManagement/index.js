@@ -25,7 +25,7 @@ const SessionManagement = (props) => {
   const { navigation, route } = props;
   const { session } = route.params;
   const {group} = route.params;
-  console.log("GROUPPPPPPPPPP", group)
+  // console.log("GROUPPPPPPPPPP", group)
   // console.log("SESSSIONNNNNNNNitemmmmmmmmm", session)
   const user = useSelector((state) => state.user.user);
   const kitchenId = user?.kitchenId
@@ -35,7 +35,6 @@ const SessionManagement = (props) => {
   const [activeMenu, setActiveMenu] = useState("PROCESSING");
   const [isFocus, setIsFocus] = useState(false);
   const [mealSession, setMealSession] = useState();
-
   const tabs = [
     {
       label: "Processing",
@@ -161,12 +160,12 @@ const SessionManagement = (props) => {
   const showDatePicker = () => {
     setShow(true);
   };
-  // useEffect(() => {
-  //   console.log("hehehehe", formatter.format(selectedDate))
-  //   console.log("mealsession", mealSession)
-  //   // console.log("mealsessionnnnnnnnnnnnnn", mealSession?.mealSessionId)
-  //   setNewData(mealSession.filter((item) => item.createDate.includes(formatter.format(selectedDate))));
-  // }, []);
+  useEffect(() => {
+    console.log("hehehehe", formatter.format(selectedDate))
+    console.log("mealsession", mealInSession)
+    // console.log("mealsessionnnnnnnnnnnnnn", mealSession?.mealSessionId)
+    setNewData(mealInSession.filter((item) => item.createDate.includes(formatter.format(selectedDate))));
+  }, []);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fetchAllMealSession();
@@ -175,28 +174,28 @@ const SessionManagement = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  // useEffect(() => {
-  //   console.log("selected date", formatter.format(selectedDate))
-  //   if (selectedDate !== undefined && tab !== undefined) {
-  //     console.log("default tab la", tab);
+  useEffect(() => {
+    console.log("selected date", formatter.format(selectedDate))
+    if (selectedDate !== undefined && tab !== undefined) {
+      console.log("default tab la", tab);
 
-  //     setNewData(
-  //       mealInSession.filter((item) => {
-  //         const formattedDate = formatter.format(selectedDate);
+      setNewData(
+        mealInSession.filter((item) => {
+          const formattedDate = formatter.format(selectedDate);
 
-  //         // Check for both date and status
-  //         const isMatchingDate = item.createDate.includes(formattedDate);
-  //         const isMatchingStatus = item.status.toUpperCase().includes(tab);
+          // Check for both date and status
+          const isMatchingDate = item.createDate.includes(formattedDate);
+          const isMatchingStatus = item.status.toUpperCase().includes(tab);
 
-  //         // Check for kitchenId
-  //         const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
+          // Check for kitchenId
+          const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
 
-  //         // Return true only if all conditions are met
-  //         return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
-  //       })
-  //     );
-  //   }
-  // }, [selectedDate, tab, mealInSession, kitchenId]);
+          // Return true only if all conditions are met
+          return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
+        })
+      );
+    }
+  }, [selectedDate, tab, mealInSession, kitchenId]);
 
   const [selectedTab, setSelectedTab] = useState(tabs[0].id);
 
@@ -401,7 +400,7 @@ const SessionManagement = (props) => {
         <View>
           <FlatList
             style={{ height: "83%" }}
-            data={mealSession}
+            data={newData}
             key={item => item?.mealSessionId.toString()}
             renderItem={renderSessionItem}
           />

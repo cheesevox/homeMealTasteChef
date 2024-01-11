@@ -144,7 +144,7 @@ const MealSessionScreen = ({ navigation }) => {
                 justifyContent: 'space-between'
               }}>
                 <Text>Session :{item.sessionDtoForMealSession.sessionType}</Text>
-                <Text>Area :{item.sessionDtoForMealSession.areaDtoForMealSession.areaName}</Text>
+                {/* <Text>Area :{item.sessionDtoForMealSession.areaDtoForMealSession.areaName}</Text> */}
               </View>
 
             </View>

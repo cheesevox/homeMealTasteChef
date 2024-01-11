@@ -133,9 +133,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                   <Ionicons name='chevron-forward-outline' size={20} />
                 </View>
               </TouchableOpacity>
-              <View>
-                <Ionicons name='location-outline' size={20} paddingVertical={20}> My Adress : {profile?.address}</Ionicons>
-              </View>
               <Ionicons name='call-outline' size={20} paddingVertical={20}> Phone : {profile?.phone} </Ionicons>
               <Ionicons name='beaker-outline' size={22} paddingVertical={20}> Area : {area?.areaName}</Ionicons>
               <TouchableOpacity
