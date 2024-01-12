@@ -61,16 +61,10 @@ export const loginUser = () => {
     console.log("login error in here");
   }
 };
-// <<<<<<< HEAD
-// export const getOrderByID = async (id) => {
-//   try {
-//     const repose = await axios.get(
-// =======
+
 export const getOrderByID = (id) => {
   try {
     const repose = axios.get(
-// >>>>>>> CaoVanTruong/chef
-//       `https://homemealtaste.azurewebsites.net/api/Order/get-order-by-order-id?id=${id}`
     );
     return repose.data;
   } catch (error) {
@@ -648,5 +642,16 @@ export const getAllSessionByAreaIdWithStatusOPEN   = async (id) => {
     return response.data;
   } catch (error) {
     console.log("get all session by area Id", error);
+  }
+};
+
+export const getAllMealSEssionWithStatusBeforeUpdateArea   = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-not-status-completed-and-cancelled${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("get all meal session by fot update area ", error);
   }
 };

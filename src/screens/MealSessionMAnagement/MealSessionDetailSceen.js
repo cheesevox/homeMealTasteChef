@@ -146,7 +146,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
                  onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'ACCEPT')}
                 // onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'ACCEPT'), navigation.navigate("MEALSESSIONORDER", item?.mealsessionid) }
               >   
-                <Text style={{color:'white'}}>Complete </Text> 
+                <Text style={{color:'white'}}>Accept</Text> 
                 <Ionicons  size={20} color='white' name='checkmark-circle-outline'/>
               </TouchableOpacity>
               <TouchableOpacity

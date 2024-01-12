@@ -186,7 +186,7 @@ const ChefHomeScreen = ({ navigation }) => {
               <Text>{countProcessing}</Text>
             </Text>
             <Text>
-              Inprocess Order
+              Inprocess Meal 
             </Text>
           </View>
           <View style={{ padding: 20, borderWidth: 0.5, borderBottomRightRadius: 30 }}>
@@ -194,7 +194,7 @@ const ChefHomeScreen = ({ navigation }) => {
               <Text>{countComplete}</Text>
             </Text>
             <Text>
-              Complete Order
+              Complete Meal 
             </Text>
           </View>
         </View>

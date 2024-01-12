@@ -14,6 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import { item } from "../../Constant";
 import SessionList from "./SessionList";
+import { current } from "@reduxjs/toolkit";
 
 const MarketScreen = ({ navigation }) => {
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -32,7 +33,6 @@ const MarketScreen = ({ navigation }) => {
     });
   };
 
-  console.log("SESSSSSSSSSION", session)
   useEffect(() => {
     fetchAllSessionByAreaId(area);
   }, []);
@@ -40,34 +40,37 @@ const MarketScreen = ({ navigation }) => {
   const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
 
-  useEffect(() => {
-    if (session) {
-      const filteredSessions = session.filter(item => {
-        const sessionEndDate = moment(item.createDate, 'DD-MM-YYYY');
-        return sessionEndDate.isSameOrAfter(currentDate, 'day');
-      });
-      setFutureSessions(filteredSessions);
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     const filteredSessions = session.filter(item => {
+  //       // Assuming item.endDate is a Date object
+  //       const sessionEndDate = item?.endDate;
+  //       // Check if sessionEndDate is a valid date
+  //       if (sessionEndDate instanceof Date && !isNaN(sessionEndDate.getTime())) {
+  //         // Compare sessionEndDate with selectedDate
+  //         return sessionEndDate >= selectedDate;
+  //       }
+  //     });
+  //     console.log("NEWWWWWWWWWWWSESIIIIIIIIIONFUUTE ", filteredSessions);
+  //     setFutureSessions(filteredSessions);
+  //   }
+  // }, [session, selectedDate]);
 
   useEffect(() => {
     if (selectedDate) {
-      setNewData(
-        futureSessions.filter((item) => {
-          // const orderFind = formatter.format(item.time).includes(formatter.format(selectedDate))
-          console.log("formated time", [item.endDate.includes(formatter.format(selectedDate))])
-          return item.endDate.includes(formatter.format(selectedDate))
-        }
-        ))
+      // Filter sessions based on selected date
+      const filteredSessions = session.filter(item => {
+        return item.endDate.includes(formatter.format(selectedDate));
+      });
+      setNewData(filteredSessions);
+    } else {
+      // If selectedDate is not set, show all future sessions
+      setNewData([...session]);
     }
-  }, [formatter.format(selectedDate), futureSessions])
+  }, [selectedDate, session]);
 
+  // console.log("SESSOPSSSSSSSSSS", session)
   const [futureSessions, setFutureSessions] = useState([]);
-  const currentDate = formatter.format(moment());
-  console.log("NEWWDATE Moment", currentDate);
-
-  console.log("LISTTTTTTTTTTTTTTTt futureeeeeeeee", futureSessions)
-
   const onChange = (event, selectedDate) => {
     setShow(false);
     if (selectedDate) {
@@ -82,8 +85,7 @@ const MarketScreen = ({ navigation }) => {
   const showDatePicker = () => {
     setShow(true);
   };
-
-
+  // console.log("DATEEEEEEEEEEEe", formatter.format(selectedDate))
   return (
     <View>
       <HeaderComp label={"Maket Session"} isHasBackIcon={false} />
@@ -98,7 +100,6 @@ const MarketScreen = ({ navigation }) => {
         <TouchableOpacity onPress={showDatePicker}>
           <Ionicons name="calendar-outline" size={22} />
         </TouchableOpacity>
-
         {show &&
           <DateTimePicker
             value={selectedDate}
@@ -111,7 +112,6 @@ const MarketScreen = ({ navigation }) => {
             }}
           />
         }
-        {/* <Text style={{ marginTop: 20 }}>Selected Date and Time: {date.toString()}</Text> */}
         <View
           style={{
             alignItems: "center", justifyContent: "center",
@@ -127,12 +127,7 @@ const MarketScreen = ({ navigation }) => {
         // height: '86%',
       }}>
         <View style={{ paddingTop: 10 }}>
-          {/* <ScrollView>
-          {futureSessions?.slice().reverse().map((item, index) => (
-            <SessionItem key={index} item={item} />
-          ))}
-        </ScrollView> */}
-          <SessionList navigation={navigation} sessions={newData ? futureSessions : futureSessions} />
+          <SessionList navigation={navigation} sessions={newData}/>
         </View>
       </View>
     </View>

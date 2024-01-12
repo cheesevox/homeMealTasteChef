@@ -30,7 +30,7 @@ export default function AddNewMealSession({ navigation, route }) {
   const [selectedSession, setSelectedSession] = useState(null);
   const [values, setValues] = useState({
     mealId: selected,
-    sessionIds: [],
+    sessionIds:[session?.sessionId],
     price: 0,
     quantity: 1,
     areaId: user?.areaId,
@@ -134,7 +134,6 @@ export default function AddNewMealSession({ navigation, route }) {
       }
     });
   };
-  
 
   return (
     <SafeAreaView>
@@ -211,7 +210,7 @@ export default function AddNewMealSession({ navigation, route }) {
               onChangeText={(text) => setValues({ ...values, quantity: text })}
             />
             <View style={{ justifyContent: 'center' }}>
-              {group?.sessions && group?.sessions?.map((session, index) => (
+              {/* {group?.sessions && group?.sessions?.map((session, index) => (
                 <TouchableOpacity
                   key={index}
                   style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -223,16 +222,7 @@ export default function AddNewMealSession({ navigation, route }) {
                   />
                   <Text>{`Session Type: ${session?.sessionType}`}</Text>
                 </TouchableOpacity>
-              ))}
-              {/* <FlatList
-                data={group?.sessions}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                  <View style={{ margin: 5 }}>
-                  </View>
-                )}
-                horizontal={true}
-              /> */}
+              ))} */}
             </View>
             <View
               style={{

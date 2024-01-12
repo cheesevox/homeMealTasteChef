@@ -64,49 +64,7 @@ export const area = [
 	}
 ]
 
-export const mealinsession = [
-	{
-		"mealSessionId": 9,
-		"mealDtoForMealSession": {
-			"mealId": 20,
-			"name": "dori-hihi",
-			"image": "https://homemealtaste.blob.core.windows.net/meal-image/ff3c7e7b-3739-4a9b-9791-35a33c2a99e2_meal-image",
-			"kitchenId": 1,
-			"createDate": "11/17/2023 12:00:00 AM",
-			"description": "ngon qua"
-		},
-		"sessionDtoForMealSession": {
-			"sessionId": 11,
-			"createDate": "10/31/2023 12:00:00 AM",
-			"startTime": "10/31/2023 5:00:00 PM",
-			"endTime": "10/31/2023 5:00:00 PM",
-			"endDate": "10/31/2023 12:00:00 AM",
-			"userId": 1,
-			"status": true,
-			"sessionType": "Lunch",
-			"areaDtoForMealSession": {
-				"areaId": 1,
-				"address": "Quận Bình Tân Thái Văn Cơ",
-				"areaName": "Quận 12",
-				"districtDtoForMealSession": {
-					"districtId": 13,
-					"districtName": "Quận Tân Bình"
-				}
-			}
-		},
-		"price": 95000.0,
-		"quantity": 15,
-		"remainQuantity": 8,
-		"status": "REJECTED",
-		"createDate": "11/17/2023 12:00:00 AM",
-		"kitchenDtoForMealSession": {
-			"kitchenId": 1,
-			"userId": 1,
-			"name": "TriKitchen",
-			"address": "TPHCM"
-		}
-	}
-]
+
 export const RouteName = {
   CHEF_HOME: "ChefHome",
   DISH_MANAGEMENT: "DishManagement",

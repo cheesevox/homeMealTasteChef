@@ -110,7 +110,6 @@ const SessionManagement = (props) => {
   
   const fectAllMealSessionByKitchenId = () => {
     getAllMealSessionByKitchen(user.kitchenId).then((res) => {
-      // console.log("Ress allmealsession by kitchen", res);
       setMealSession(res);
     });
     console.log("all meal session:", user.kitchenId);
@@ -147,25 +146,7 @@ const SessionManagement = (props) => {
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate())
   // const [newData, setNewData] = useState([])
-  const onChange = (event, selectedDate) => {
-    setShow(false);
-    if (selectedDate) {
-      const jsDate = selectedDate instanceof Date ? selectedDate : selectedDate.toDate();
-      setSelectedDate(selectedDate);
-      console.log(formatter.format(selectedDate));
-    }
-    setDate(formatter.format(jsDate))
-  };
 
-  const showDatePicker = () => {
-    setShow(true);
-  };
-  useEffect(() => {
-    console.log("hehehehe", formatter.format(selectedDate))
-    console.log("mealsession", mealInSession)
-    // console.log("mealsessionnnnnnnnnnnnnn", mealSession?.mealSessionId)
-    setNewData(mealInSession.filter((item) => item.createDate.includes(formatter.format(selectedDate))));
-  }, []);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fetchAllMealSession();
@@ -175,27 +156,22 @@ const SessionManagement = (props) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log("selected date", formatter.format(selectedDate))
-    if (selectedDate !== undefined && tab !== undefined) {
+    if (tab !== undefined) {
       console.log("default tab la", tab);
-
       setNewData(
         mealInSession.filter((item) => {
-          const formattedDate = formatter.format(selectedDate);
-
           // Check for both date and status
-          const isMatchingDate = item.createDate.includes(formattedDate);
           const isMatchingStatus = item.status.toUpperCase().includes(tab);
 
           // Check for kitchenId
           const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
 
           // Return true only if all conditions are met
-          return isMatchingDate && isMatchingStatus && isMatchingKitchenId;
+          return isMatchingStatus && isMatchingKitchenId;
         })
       );
     }
-  }, [selectedDate, tab, mealInSession, kitchenId]);
+  }, [tab, mealInSession, kitchenId]);
 
   const [selectedTab, setSelectedTab] = useState(tabs[0].id);
 
@@ -315,34 +291,12 @@ const SessionManagement = (props) => {
         label={session.sessionType}
         onBack={() => navigation.goBack()}
       />
-
       <View style={{
         alignItems: "center",
         marginVertical: 10,
         elevation: 5, borderRadius: 30,
         flexDirection: "row", justifyContent: "center"
       }}>
-        <TouchableOpacity onPress={showDatePicker}>
-          <Ionicons name="calendar-outline" size={22} />
-        </TouchableOpacity>
-        {show &&
-          <DateTimePicker
-            value={selectedDate}
-            // Change to "time" for time picker
-            display="default"
-            onChange={onChange}
-            style={{
-              minWidth: 50,
-              backgroundColor: 'black',
-            }}
-          />
-        }<View
-          style={{
-            alignItems: "center", justifyContent: "center",
-            width: '50%', height: 60, borderRadius: 20,
-          }}>
-          {formatter.format(selectedDate) && <Text style={{ fontSize: 22 }}>{formatter.format(selectedDate)}</Text>}
-        </View>
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <View
@@ -366,7 +320,6 @@ const SessionManagement = (props) => {
               justifyContent: "center",
               alignItems: "center",
               padding: 20,
-              // bottom: -40,
             }}
           >
             <View
