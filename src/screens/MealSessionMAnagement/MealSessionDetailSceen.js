@@ -143,12 +143,12 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
                   justifyContent:'space-between',
                   width:100,
                  }}
-                onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'COMPLETED')}
+                 onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'ACCEPT')}
+                // onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'ACCEPT'), navigation.navigate("MEALSESSIONORDER", item?.mealsessionid) }
               >   
                 <Text style={{color:'white'}}>Complete </Text> 
                 <Ionicons  size={20} color='white' name='checkmark-circle-outline'/>
               </TouchableOpacity>
-
               <TouchableOpacity
                 style={{ elevation:5,
                   flexDirection:"row",

@@ -36,7 +36,7 @@ export default function AddNewMealSession({ navigation, route }) {
     areaId: user?.areaId,
     kitchenId: user.kitchenId,
   });
-
+  console.log("GROUP", group)
   const fetchAllMealByKitchenId = () => {
     getAllMealByKitchen(user.kitchenId).then((res) => {
       console.log("all meal", res);
@@ -117,35 +117,24 @@ export default function AddNewMealSession({ navigation, route }) {
 
   const [selectedSessions, setSelectedSessions] = useState([]);
 
-  // const handlePress = (sessionId) => {
-  //   setValues((prevValues) => ({
-  //     ...prevValues,
-  //     currentSessionId: sessionId,
-  //     sessionId: [...prevValues.sessionId, sessionId],
-  //   }));
-  //   setSelection(!isSelected);
-  //   setSelection1(!isSelected1);
-  // };
-
   const handlePress = (sessionId) => {
     setSelectedSessions((prevSelected) => {
       if (prevSelected.includes(sessionId)) {
         setValues((prevValues) => ({
           ...prevValues,
-          // currentSessionId: sessionId,
-          sessionIds: [...prevValues.sessionId, sessionId],
+          sessionIds: [...prevValues.sessionIds, sessionId],
         }));
         return prevSelected.filter((id) => id !== sessionId);
       } else {
         setValues((prevValues) => ({
           ...prevValues,
-          // currentSessionId: sessionId,
-          sessionIds: [...prevValues.sessionId, sessionId],
+          sessionIds: [...prevValues.sessionIds, sessionId],
         }));
         return [...prevSelected, sessionId];
       }
     });
   };
+  
 
   return (
     <SafeAreaView>
@@ -222,46 +211,28 @@ export default function AddNewMealSession({ navigation, route }) {
               onChangeText={(text) => setValues({ ...values, quantity: text })}
             />
             <View style={{ justifyContent: 'center' }}>
-              {group.sessions.map((session, index) => {
-                if (session.sessionType === "Lunch") {
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                      onPress={() => handlePress(session.sessionId)}
-                    >
-                      <CheckBox
-                        checked={selectedSessions.includes(session.sessionId)}
-                        onPress={() => handlePress(session.sessionId)}
-                      />
-                      <Text>{`Session Type: ${session.sessionType}`}</Text>
-                    </TouchableOpacity>
-                  );
-                } else {
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                      onPress={() => handlePress(session.sessionId)}
-                    >
-                      <CheckBox
-                        checked={selectedSessions.includes(session.sessionId)}
-                        onPress={() => handlePress(session.sessionId)}
-                      />
-                      <Text>{`Session Type: ${session.sessionType}`}</Text>
-                    </TouchableOpacity>
-                  );
-                }
-              })}
-              <FlatList
-                data={group.sessions}
+              {group?.sessions && group?.sessions?.map((session, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                  onPress={() => handlePress(session?.sessionId)}
+                >
+                  <CheckBox
+                    checked={session?.sessionId && selectedSessions.includes(session.sessionId)}
+                    onPress={() => session?.sessionId && handlePress(session.sessionId)}
+                  />
+                  <Text>{`Session Type: ${session?.sessionType}`}</Text>
+                </TouchableOpacity>
+              ))}
+              {/* <FlatList
+                data={group?.sessions}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={{ margin: 5 }}>
                   </View>
                 )}
                 horizontal={true}
-              />
+              /> */}
             </View>
             <View
               style={{
