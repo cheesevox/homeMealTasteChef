@@ -11,7 +11,7 @@ import {
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
 import Item from "./components/Item";
-import { getAllDishByKitchenId, getAllMealByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage } from "../../Api";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage, getAllPriceMealSessionByKitchenId } from "../../Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DishItem from "./components/DishItem";
@@ -21,7 +21,9 @@ import dayjs from "dayjs";
 
 const ChefHomeScreen = ({ navigation }) => {
   const [order, setOrder] = useState()
+  const [priceMeal, setPriceMeal] = useState()
   const user = useSelector((state) => state.user.user) || {};
+  const id = user?.kitchenId
   const [orderComplete, setOrderComplete] = useState()
   const [orderProcessing, setOrderProcessing] = useState()
   const renderItem = (item) => {
@@ -47,6 +49,12 @@ const ChefHomeScreen = ({ navigation }) => {
   // });
   
   // console.log("Filtered Items:", filteredItems);
+  const fectchAllPriceMealsession = (id) => {
+    getAllPriceMealSessionByKitchenId(id).then((res) => {
+      // console.log("RESSSSS Complete", res)/
+      setPriceMeal(res)
+    })
+  }
 
   const fectchAllOrderComplete = () => {
     getAllOrderCompleteHomePage().then((res) => {
@@ -62,7 +70,6 @@ const ChefHomeScreen = ({ navigation }) => {
   }
   const fectchAllNewOrder = () => {
     getAllNewOrderHomePage().then((res) => {
-      // console.log("RESSSSS Processsingsssssss newwwwwwww order", res)
       setOrder(res)
     })
   }
@@ -70,6 +77,7 @@ const ChefHomeScreen = ({ navigation }) => {
     fectchAllOrderComplete()
     fectchAllOrderProcessing()
     fectchAllNewOrder()
+    fectchAllPriceMealsession(id)
   }, [])
   const countComplete = orderComplete ? orderComplete.filter(item => item.status === 'COMPLETED').length : 0;
   // console.log(":COUNTTTTTTTTTTTTT", countComplete)
@@ -200,8 +208,7 @@ const ChefHomeScreen = ({ navigation }) => {
         </View>
         <View style={{ alignItems: "center", margin: 5, }}>
           <Text style={{ fontSize: 25 }} >
-            $3000000
-            { }
+            {priceMeal}
           </Text>
           <Text style={{ fontWeight: 100, color: 'black' }}>
             Total Earning
@@ -213,7 +220,7 @@ const ChefHomeScreen = ({ navigation }) => {
         {/* <Text style={styles.titleStyle}>{"Booking"}</Text> */}
         <View style={styles.listDishStyle}>
         <FlatList
-            data={order && order.filter(item => item.status === 'PAID')}
+            data={order?.reverse().slice() && order.filter(item => item.status === 'PAID')}
             keyExtractor={(item) => item?.orderId.toString()} // Corrected keyExtractor typo
             renderItem={({ item }) => (
               <CartCard item={item} />
@@ -257,6 +264,7 @@ const styles = StyleSheet.create({
   },
   listDishStyle: {
     width: "100%",
+    height:'70%'
   },
 });
 

@@ -160,15 +160,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             placeholder={profile?.profile?.districtDto?.districtName}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              console.log("Selected district in dropdown:", item);
-              setValues({
-                ...values,
-                districtId: item.districtId,
-              });
-              setDistrcitId(item?.districtId)
-              setIsFocus(false);
-            }}
           ></Dropdown>
         </View>
         <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
@@ -179,7 +170,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             placeholder={area?.areaName}
-            // data={area}
             data={allArea}
             dropdownPosition="top"
             maxHeight={400}
@@ -188,14 +178,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             value={values.areaId}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              console.log("Selected area in dropdown:", item);
-              setValues({
-                ...values,
-                areaId: item.areaId,
-              });
-              setIsFocus(false);
-            }}
           ></Dropdown>
         </View>
       </View>

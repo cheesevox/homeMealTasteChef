@@ -645,13 +645,31 @@ export const getAllSessionByAreaIdWithStatusOPEN   = async (id) => {
   }
 };
 
-export const getAllMealSEssionWithStatusBeforeUpdateArea   = async (id) => {
+export const getAllMealSEssionWithStatusBeforeUpdateArea  = async (id) => {
   try {
     const response = await axios.get(
-      `https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-not-status-completed-and-cancelled${id}`
+      `https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-not-status-completed-and-cancelled-by-kitchen-id?kitchenId=${id}`
     );
     return response.data;
   } catch (error) {
     console.log("get all meal session by fot update area ", error);
+  }
+};
+export const UpdateAllMealSessionToCancel = async (value)=>{
+  try {
+     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-area-and-all-meal-session-with-status-processing`)
+  } catch (error) {
+    console.log("post status paid to complete errror", error)
+  }
+}
+
+export const getAllPriceMealSessionByKitchenId  = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Kitchen/get-total-price-all-meal-session-by-kitchen-id?kitchenId=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("get all meal session have price compelete kitchenid ", error);
   }
 };

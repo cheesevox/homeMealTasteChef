@@ -5,7 +5,7 @@ import * as Icon from "react-native-feather";
 import UserCard from '../components/UserCard'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons/build/Icons';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getAllArea, getUserByID } from '../Api';
 import TabViewSession from '../components/TabViewSession';
 import Toast from "react-native-toast-message";
@@ -13,14 +13,14 @@ import { logoutUser } from "../../slices/userSlice";
 
 const UserProfileScreen = ({ navigation, route }) => {
   const user = useSelector(state => state.user.user)
-  const [allArea, setAllArea]= useState([])
+  const [allArea, setAllArea] = useState([])
   // console.log("USERRRRRRRRRRRRRR", user)
   console.log("uwaseeeeeeeeeeeeeeeeee", user)
   const [profile, setProfile] = useState()
   console.log("PROFFFFFFFFFFILE", profile)
   const dispatch = useDispatch();
-  const fecthAllAreaId = () =>{
-    getAllArea().then((res)=>{
+  const fecthAllAreaId = () => {
+    getAllArea().then((res) => {
       setAllArea(res)
     })
   }
@@ -35,7 +35,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   }, [])
 
   // console.log("areeeeeeeeeeeeeeeee", allArea)
-  const area = allArea.find( item => item?.areaId === profile?.areaId);
+  const area = allArea.find(item => item?.areaId === profile?.areaId);
   console.log("areaaaaaaaaaaaaaaaaaaaaaaaa", area)
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -48,7 +48,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   const handleLogout = () => {
-    navigation.navigate("Login",{ logout: true })
+    navigation.navigate("Login", { logout: true })
     dispatch(logoutUser());
     Toast.show({
       type: "success",
@@ -58,13 +58,13 @@ const UserProfileScreen = ({ navigation, route }) => {
     setTimeout(() => {
       Toast.hide();
     }, 5000);
-  
+
     // Navigate back after hiding the toast
     setTimeout(() => {
       navigation.goBack();
     }, 5100);
   }
- 
+
   const clearUser = () => ({
     type: 'CLEAR_USER',
   });
@@ -122,7 +122,7 @@ const UserProfileScreen = ({ navigation, route }) => {
       </View>
       {/* <TabViewSession/> */}
       <ScrollView>
-        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <View style={styles.cartcard}>
             <View style={{
               paddingVertical: 25,
@@ -134,7 +134,14 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </View>
               </TouchableOpacity>
               <Ionicons name='call-outline' size={20} paddingVertical={20}> Phone : {profile?.phone} </Ionicons>
-              <Ionicons name='beaker-outline' size={22} paddingVertical={20}> Area : {area?.areaName}</Ionicons>
+              <TouchableOpacity onPress={() => navigation.navigate("UpdateArea", {user})}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems:'center'}}>
+                <Ionicons name='beaker-outline' size={22} paddingVertical={20}>
+                <Text> Area : {area?.areaName} </Text>
+                  </Ionicons>
+                <Ionicons name='chevron-forward-outline' size={20} />
+                </View>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate("Wallet", { user })}
               >
@@ -189,7 +196,7 @@ const UserProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
       </ScrollView>
-    
+
       <View style={{
         justifyContent: 'center',
         alignItems: "center",

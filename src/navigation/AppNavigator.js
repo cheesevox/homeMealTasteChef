@@ -26,6 +26,7 @@ import MealSessionDetailSceen from "../screens/MealSessionMAnagement/MealSession
 import SessionManagement from "../screens/SessionManagement";
 import DownloadFileExample from "../screens/DownloadFileExample ";
 import PrivacyScreen from "../PrivacyScreen";
+import UpdateAreaScreen from "../UpdateAreaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="MealSessionDetail" component={MealSessionDetailSceen} />
                 <Stack.Screen name="DownloadFileExample" component={DownloadFileExample} />
                 <Stack.Screen name="Privacy" component={PrivacyScreen} />
+                <Stack.Screen name="UpdateArea" component={UpdateAreaScreen} />
 
         {/*Chef role*/}
         <Stack.Screen
