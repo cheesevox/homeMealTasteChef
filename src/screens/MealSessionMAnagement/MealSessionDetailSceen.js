@@ -26,7 +26,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   const [value, setValue] = useState({
     status: status
   })
-  
+
   const [newStatus, setNewStatus] = useState([])
 
   const onHandleCompletedOrder = (mealSessionId, newStatus) => {
@@ -205,7 +205,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         ) : null}
-        <Text style={{ fontSize: 16, fontWeight: 'bold', display: order[0]?.status === 'ACCEPTED' ? 'flex' : 'none' }}>Confirm :</Text>
+        {/* <Text style={{ fontSize: 16, fontWeight: 'bold', display: order[0]?.status === 'ACCEPTED' ? 'flex' : 'none' }}>Confirm :</Text>
         {order[0]?.status === 'ACCEPTED' ? (
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
@@ -225,7 +225,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
               <Ionicons size={20} color='white' name='checkmark-circle-outline' />
             </TouchableOpacity>
           </View>
-        ) : null}
+        ) : null} */}
       </View>
       <FlatList
         data={order}
@@ -241,17 +241,59 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   });
 
   const renderItem = ({ item }) => (
-    <View style={{ padding: 30, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor: 'white' }}>
-      <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20 }} source={require("../../../assets/images/avatar.jpg")}></Image>
-      <View style={{ marginHorizontal: 20 }}>
-        <Text>Order ID: {item.orderId}</Text>
-        <Text>Status: {item.status}</Text>
-        <Text>Name Cusotmer: {item?.cutomerDtoGetAllOrderByMealSessionId?.name}</Text>
-        <Text>Slot: {item.quantity}</Text>
-        <Text>Total Price: {item.totalPrice}</Text>
+    <View style={{ padding: 40, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor: 'white' }}>
+      <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20, padding: 40 }} source={require("../../../assets/images/avatar.jpg")}></Image>
+      <View style={{ marginHorizontal: 5, }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View>
+            <Text>Order ID: {item.orderId}</Text>
+            <Text>Status: {item.status}</Text>
+            <Text>Cusotmer: {item?.cutomerDtoGetAllOrderByMealSessionId?.name}</Text>
+            <Text>Slot: {item.quantity}</Text>
+            <Text>Total Price: {item.totalPrice}</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              style={{
+                elevation: 5,
+                padding: 10,
+                borderRadius: 10,
+                marginHorizontal: 20,
+                backgroundColor: 'green',
+                flexDirection: "row",
+                justifyContent: 'space-between',
+                width: 115,
+                margin:10
+              }}
+              onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'COMPELETE')}
+            >
+              <Text style={{ color: 'white' }}>COMPELETE </Text>
+              <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                elevation: 5,
+                padding: 10,
+                borderRadius: 10,
+                marginHorizontal: 20,
+                backgroundColor: 'red',
+                flexDirection: "row",
+                justifyContent: 'space-between',
+                width: 90,
+              }}
+              onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'NOT EAT')}
+            >
+              <Text style={{ color: 'white' }}>NOTEAT </Text>
+              <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+
       </View>
       <View style={{ width: "100%" }}>
-        <Dropdown
+        {/* <Dropdown
           containerStyle={{
             borderRadius: 20,
             width: '100%',
@@ -267,8 +309,10 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             setTab(value?.value)
 
           } }
-        />
+        /> */}
+
       </View>
+
     </View>
   );
   return (
