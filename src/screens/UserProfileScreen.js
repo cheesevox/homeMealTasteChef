@@ -134,7 +134,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </View>
               </TouchableOpacity>
               <Ionicons name='call-outline' size={20} paddingVertical={20}> Phone : {profile?.phone} </Ionicons>
-              <TouchableOpacity onPress={() => navigation.navigate("UpdateArea", {user})}>
+              <TouchableOpacity onPress={() => navigation.navigate("UpdateArea", { profile })}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems:'center'}}>
                 <Ionicons name='beaker-outline' size={22} paddingVertical={20}>
                 <Text> Area : {area?.areaName} </Text>

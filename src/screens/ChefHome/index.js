@@ -11,7 +11,7 @@ import {
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
 import Item from "./components/Item";
-import { getAllDishByKitchenId, getAllMealByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage, getAllPriceMealSessionByKitchenId } from "../../Api";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllMealSessionByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage, getAllPriceMealSessionByKitchenId } from "../../Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DishItem from "./components/DishItem";
@@ -21,10 +21,10 @@ import dayjs from "dayjs";
 
 const ChefHomeScreen = ({ navigation }) => {
   const [order, setOrder] = useState()
+  const [meal, setMeal] = useState()
   const [priceMeal, setPriceMeal] = useState()
   const user = useSelector((state) => state.user.user) || {};
   const id = user?.kitchenId
-  console.log("KItchen IDDDDDDDDDdd", id)
   const [orderComplete, setOrderComplete] = useState()
   const [orderProcessing, setOrderProcessing] = useState()
   //   });
@@ -33,12 +33,6 @@ const ChefHomeScreen = ({ navigation }) => {
   //   fetchAllOrderByMealsession()
   // }, [user?.kitchenId]);
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  // const filteredItems = order && order.filter(item => {
-  //   const itemDate = item?.mealSessionDto1?.createDate;
-  //   const currentDateFormatted = formatter.format(dayjs());
-  
-  //   return itemDate === currentDateFormatted;
-  // });
   
   const fectchAllPriceMealsession = (id) => {
     getAllPriceMealSessionByKitchenId(id).then((res) => {
@@ -47,32 +41,26 @@ const ChefHomeScreen = ({ navigation }) => {
     })
   }
 
-  const fectchAllOrderComplete = () => {
-    getAllOrderCompleteHomePage().then((res) => {
+  const fectchAllOrderComplete = (id) => {
+    getAllMealSessionByKitchen(id).then((res) => {
       // console.log("RESSSSS Complete", res)/
-      setOrderComplete(res)
+      setMeal(res)
     })
   }
-  const fectchAllOrderProcessing = () => {
-    getAllOrderProcessingHomePage().then((res) => {
-      // console.log("RESSSSS Processsingsssssss", res)
-      setOrderProcessing(res)
-    })
-  }
+ 
   const fectchAllNewOrder = () => {
     getAllNewOrderHomePage().then((res) => {
       setOrder(res)
     })
   }
   useEffect(() => {
-    fectchAllOrderComplete()
-    fectchAllOrderProcessing()
+    fectchAllOrderComplete(id)
     fectchAllNewOrder()
     fectchAllPriceMealsession(id)
   }, [id])
-  const countComplete = orderComplete ? orderComplete.filter(item => item.status === 'COMPLETED').length : 0;
+  const countComplete = meal ? meal.filter(item => item.status === 'COMPLETED').length : 0;
   // console.log(":COUNTTTTTTTTTTTTT", countComplete)
-  const countProcessing = orderProcessing ? orderProcessing.filter(item => item.status === 'PROCESSING').length : 0;
+  const countProcessing = meal ? meal.filter(item => item.status === 'PROCESSING').length : 0;
   // console.log(":COUNTTTTTTTTTTTTTprocesss", countProcessing)
   const count = order ? order.filter(item => item.status === 'PAID').length : 0;
   // console.log(":COUNTTTTTTTTTTTTTprocesss", count)
@@ -235,7 +223,7 @@ const styles = StyleSheet.create({
   header: {
     display: "flex",
     flexDirection: "column",
-    height: 260,
+    height: 300,
     backgroundColor: "#ffe6bc",
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,

@@ -2,6 +2,7 @@ import axios from "axios";
 // <<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import { RouteName } from "./Constant";
+import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 
 export const login = async (values, navigation,Toast) =>{
   console.log(values);
@@ -412,7 +413,6 @@ export const postStatusOrderForCustomer = async (id, value)=>{
   try {
     console.log("posrtttttttttt id",id)
     console.log("valuuuuuuuuu post",value)
-    //  await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-DONE?mealsessionid=${id}&status=${value}`)
      await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order?mealsessionid=${id}&status=${value}`)
   } catch (error) {
     console.log("post status for order customer", error)
@@ -676,6 +676,39 @@ export const getAllPriceMealSessionByKitchenId  = async (id) => {
 export const UpdateMealSesionStatus = async (value)=>{
   try {
      await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`)
+  } catch (error) {
+    console.log("post status paid to complete errror", error)
+  }
+}
+
+export const updateMealSessionWhenUpdateArea = async (values) => {
+  console.log("values for mealsesion updating area:", values);
+  try {
+    const response = await axios.put(
+      "https://homemealtaste.azurewebsites.net/api/MealSession/update-area-and-all-meal-session-with-status-processing",
+      values
+    );
+
+    // Log the response data for debugging
+    console.log("Update Profile Response:", response.data);
+
+    if (response.status === 200) {
+      console.log("Update successful.");
+    } else {
+      console.error("Update failed. Unexpected status code:", response.status);
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    console.error("Error details:", error.response);
+
+    // Log the entire error object for more information
+    console.error("Full error object:", error);
+  }
+};
+export const postStatusOrder = async (id, value)=>{
+  try {
+    console.log(id)
+     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-single-status-order?orderId=${id}&status=${value}`)
   } catch (error) {
     console.log("post status paid to complete errror", error)
   }
