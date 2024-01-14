@@ -197,7 +197,6 @@ const MealSessionScreen = ({ navigation }) => {
           keyExtractor={(item) => item.mealSessionId.toString()}
           renderItem={(item) => renderSessionItem(item)}
           showsHorizontalScrollIndicator={false}
-
         />
       </View>
     </View>

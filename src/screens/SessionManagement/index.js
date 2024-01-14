@@ -45,10 +45,6 @@ const SessionManagement = (props) => {
       value: "APPROVED",
     },
     {
-      label: "Rejected",
-      value: "REJECTED",
-    },
-    {
       label: "Complete",
       value: "COMPLETE"
     },

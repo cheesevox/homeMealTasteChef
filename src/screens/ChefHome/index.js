@@ -24,17 +24,9 @@ const ChefHomeScreen = ({ navigation }) => {
   const [priceMeal, setPriceMeal] = useState()
   const user = useSelector((state) => state.user.user) || {};
   const id = user?.kitchenId
+  console.log("KItchen IDDDDDDDDDdd", id)
   const [orderComplete, setOrderComplete] = useState()
   const [orderProcessing, setOrderProcessing] = useState()
-  const renderItem = (item) => {
-    return <Item navigation={navigation} item={item} />;
-  };
-  const renderDishItem = (item) => {
-    return <DishItem navigation={navigation} item={item} />;
-  };
-  // const fetchAllOrderByMealsession = () => {
-  //   getAllOrderByMealSessionId(mealsessionId).then((res) => {
-  //     setOrder(res);
   //   });
   // };
   // useEffect(() => {
@@ -48,10 +40,9 @@ const ChefHomeScreen = ({ navigation }) => {
   //   return itemDate === currentDateFormatted;
   // });
   
-  // console.log("Filtered Items:", filteredItems);
   const fectchAllPriceMealsession = (id) => {
     getAllPriceMealSessionByKitchenId(id).then((res) => {
-      // console.log("RESSSSS Complete", res)/
+      console.log("RESSSSS Complete", res)
       setPriceMeal(res)
     })
   }
@@ -78,7 +69,7 @@ const ChefHomeScreen = ({ navigation }) => {
     fectchAllOrderProcessing()
     fectchAllNewOrder()
     fectchAllPriceMealsession(id)
-  }, [])
+  }, [id])
   const countComplete = orderComplete ? orderComplete.filter(item => item.status === 'COMPLETED').length : 0;
   // console.log(":COUNTTTTTTTTTTTTT", countComplete)
   const countProcessing = orderProcessing ? orderProcessing.filter(item => item.status === 'PROCESSING').length : 0;

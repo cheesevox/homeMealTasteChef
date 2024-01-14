@@ -348,7 +348,7 @@ export const getMealById = async (id) => {
 
 export const getOrderByKitchenId = async (id)=>{
   try {
-    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-order-by-kitchen-id?kitchenid=${id}`)
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-by-kitchen-id?kitchenid=${id}`)
     return response.data
   } catch (error) {
     console.log("get order by kitchen id",error)
@@ -673,3 +673,10 @@ export const getAllPriceMealSessionByKitchenId  = async (id) => {
     console.log("get all meal session have price compelete kitchenid ", error);
   }
 };
+export const UpdateMealSesionStatus = async (value)=>{
+  try {
+     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`)
+  } catch (error) {
+    console.log("post status paid to complete errror", error)
+  }
+}

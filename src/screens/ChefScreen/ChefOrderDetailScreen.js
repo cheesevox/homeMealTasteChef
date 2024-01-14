@@ -222,7 +222,6 @@ const ChefOrderDetailScreen = ({ navigation, route }) => {
                             <TouchableOpacity style={{ elevation: 5, width: '60%', padding: 10, borderRadius: 30, backgroundColor: '#FFD580' }}
                                 onPress={() => onHandleCompletedOrder(item?.orderId)}
                             >
-                                <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "bold" }}>Post</Text>
                             </TouchableOpacity>
                         )
                         : ""
