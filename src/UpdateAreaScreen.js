@@ -220,32 +220,32 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                     ></Dropdown>
                 </View>
             </View>
-            <View style={{ height: '40%' }}>
+            <View style={{ height: '52%' }}>
                 <FlatList
                     data={mealInSession}
                     keyExtractor={(item) => item.mealSessionId.toString()}
                     renderItem={(item) => renderSessionItem(item)}
                     showsHorizontalScrollIndicator={false}
                 />
-            </View>
-            <View
-                style={{ justifyContent: "center", alignItems: "center", margin: 20 }}
-            >
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: "#f96163",
-                        borderRadius: 18,
-                        justifyContent: "center",
-                        paddingVertical: 18,
-                        width: "60%",
-                        alignItems: "center",
-                    }}
-                    onPress={() => onHandleUpdateArea()}
-                >
-                    <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
-                        Update Profile
-                    </Text>
-                </TouchableOpacity>
+                <View style={{ justifyContent: "center", alignItems: "center", margin: 20 }}>
+                    {mealInSession.every(meal => meal.status === 'processing') && (
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: "#f96163",
+                                borderRadius: 18,
+                                justifyContent: "center",
+                                paddingVertical: 18,
+                                width: "60%",
+                                alignItems: "center",
+                            }}
+                            onPress={() => onHandleUpdateArea()}
+                        >
+                            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
+                                Update Profile
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
         </View>
     )

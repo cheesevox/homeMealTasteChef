@@ -153,7 +153,7 @@ const SessionManagement = (props) => {
 
   useEffect(() => {
     if (tab !== undefined) {
-      console.log("default tab la", tab);
+      // console.log("default tab la", tab);
       setNewData(
         mealInSession.filter((item) => {
           // Check for both date and status

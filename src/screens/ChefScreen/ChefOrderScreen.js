@@ -63,26 +63,14 @@ const ChefOrderScreen = ({ navigation }) => {
   const [orders, setOrders] = useState([])
   const fetchAllOrder = () => {
     getOrderByKitchenId(user.kitchenId).then((res) => {
-      console.log("ORDEEEEEEEEEEr", res)
+      // console.log("ORDEEEEEEEEEEr", res)
       setOrders(res)
     })
   }
-  // const onHandleCompletedOrder = (orderId) => {
-  //   postStatusPaidToCompleted(orderId).then(() => {
-  //     fetchAllOrder()
-  //     return Toast.show({
-  //       type: 'success',
-  //       text1: 'Home Meal Taste',
-  //       text2: `Order ${orderId} is post completed.`
-  //     });
-  //   })
-  // }
-
   const filteredData = orders.filter(item => {
     // return item.time === formattedDate;
   });
   // console.log("ORRRRRRRRRRRRRRRRRRRRRRR", order)
-
   const CartCard = ({ item }) => {
     return (
       <TouchableOpacity
@@ -130,8 +118,13 @@ const ChefOrderScreen = ({ navigation }) => {
     );
   };
   useEffect(() => {
-    fetchAllOrder()
-  }, [user.kitchenId])
+    const fetchData = () =>{
+      fetchAllOrder()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return() =>clearInterval(intervalId) 
+  }, [])
   
   useEffect(() => {
     if (selectedDate) {
@@ -139,7 +132,7 @@ const ChefOrderScreen = ({ navigation }) => {
         orders.filter((item) => {
           // const orderFind = formatter.format(item.time).includes(formatter.format(selectedDate))
           const formattedTime = dayjs(item.time).format("DD-MM-YYYY")
-          console.log("formated time",[item.time.includes(formatter.format(selectedDate))])
+          // console.log("formated time",[item.time.includes(formatter.format(selectedDate))])
           return item.time.includes(formatter.format(selectedDate))
 
         }

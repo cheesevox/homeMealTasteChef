@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-nativ
 import React from 'react'
 import HeaderComp from '../HeaderComp';
 import { useState, useEffect } from 'react';
-import { getAllOrderByMealSessionId, getMealSessionById, login, postStatusOrderForCustomer } from '../../Api';
+import { UpdateMealSessionStatus, getAllOrderByMealSessionId, getMealSessionById, login, postStatusOrder, postStatusOrderForCustomer } from '../../Api';
 import { color } from 'react-native-elements/dist/helpers';
 import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
@@ -23,14 +23,21 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
 
   const item = route.params
   const [status, setStatus] = useState('');
+  const [statusOrder, setStatusOrder] = useState('');
   const [value, setValue] = useState({
     status: status
   })
-
+  const [valueOrder, setValueOrder] = useState({
+    status: status
+  });
+  const [mealValue, setMealValue] = useState({
+    mealSessionIds: [], 
+    status: "CANCELLED",
+  });
   const [newStatus, setNewStatus] = useState([])
 
   const onHandleCompletedOrder = (mealSessionId, newStatus) => {
-    setStatus(newStatus);  // Assuming setValue is a state update function
+    setStatus(newStatus);  
     setValue({
       status: newStatus,
     });
@@ -38,8 +45,8 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     if (newStatus === 'CANCELLED') {
       Toast.show({
         type: 'error',
-        text1: 'Order Canceled',
-        text2: 'Your order has been canceled.',
+        text1: 'Order Cancelled',
+        text2: 'Your order has been cancelled.',
       });
     } else {
       Toast.show({
@@ -51,6 +58,43 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     postStatusOrderForCustomer(mealSessionId, newStatus);
     fectSingerMealSessionById()
   };
+  const onHandleCancelMealSession = (mealSessionId) => {
+    setMealValue(mealSessionId => ({
+      mealSessionIds: [mealSessionId],
+      status: "CANCELLED"
+    }));
+    if (newStatus === 'CANCELLED') {
+      Toast.show({
+        type: 'error',
+        text1: 'Order Cancelled',
+        text2: 'Your order has been cancelled.',
+      });
+    }
+    UpdateMealSessionStatus(mealValue);
+    fectSingerMealSessionById()
+  };
+  const onHandleOrderStatus = (orderId, newStatus) => {
+    setStatusOrder(newStatus);  // Assuming setValue is a state update function
+    setValueOrder({
+      status: newStatus,
+    });
+    console.log("valueeeeeeeeeeeeeeee", newStatus);
+    if (newStatus === 'NOTEAT') {
+      Toast.show({
+        type: 'error',
+        text1: 'Order Cancelled',
+        text2: 'Your order has been cancelled.',
+      });
+    } else {
+      Toast.show({
+        type: 'success',
+        text1: 'Order Success',
+        text2: 'Your order has been done.',
+      });
+    }
+    postStatusOrder(orderId, newStatus);
+    fectAllOrderByMealSesssionId()
+  };
   const [order, setOrder] = useState([])
   const [mealsesion, setMealSession] = useState([])
   const fectAllOrderByMealSesssionId = () => {
@@ -60,6 +104,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   };
   const fectSingerMealSessionById = () => {
     getMealSessionById(item?.mealSessionId).then((res) => {
+      // console.log("MNEALLLLLLLLLLLLLLLLLL", res)
       setMealSession(res);
     });
   };
@@ -70,7 +115,6 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fectSingerMealSessionById();
-      // console.log("Data refreshed!");
     });
 
     return unsubscribe;
@@ -80,12 +124,12 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     fectAllOrderByMealSesssionId()
   }, [item?.mealSessionId])
 
-  console.log("MMEALLLLLLLLLLLl", mealsesion)
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "Meal Session" },
     { key: "second", title: "Order Meal" },
   ]);
+
   const FirstRoute = () => (
     <View
       style={{
@@ -109,33 +153,56 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         >
           Meal Session Detail
         </Text>
-        <Text style={{ paddingHorizontal: 20, fontSize: 22, fontWeight: 'bold' }}>Name : {mealsesion?.kitchenDtoForMealSessions?.name}</Text>
-        <Text style={{ paddingHorizontal: 20, fontSize: 16, fontWeight: 'bold' }}>Description : {mealsesion?.mealDtoForMealSessions?.description}</Text>
-        <Text style={{ paddingHorizontal: 20, fontSize: 16, fontWeight: 'bold' }}>Slot: {mealsesion?.quantity}</Text>
-        <Text style={{ paddingHorizontal: 20, fontSize: 16, fontWeight: 'bold' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
+        <Text style={{ paddingHorizontal: 20, fontSize: 22, fontWeight: 'bold' }}>Kitchen Name : {mealsesion?.kitchenDtoForMealSessions?.name}</Text>
+        <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Description : {mealsesion?.mealDtoForMealSessions?.description}</Text>
+        <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Slot: {mealsesion?.quantity}</Text>
+        <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Remain Slot: {mealsesion?.remainQuantity}</Text>
+        <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Price: {mealsesion?.price} vnd</Text>
         <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Session: {mealsesion?.sessionDtoForMealSessions?.sessionName}</Text>
         <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Meal: {mealsesion?.mealDtoForMealSessions?.name}</Text>
         <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Status: {mealsesion?.status}</Text>
         <Text style={{ paddingHorizontal: 20, fontSize: 18, fontWeight: 'bold' }}>Create Date: {mealsesion?.createDate}</Text>
       </View>
+
       <View
-        style={{ justifyContent: "center", alignItems: "center", margin: 20 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }}
       >
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#30be25",
+            borderRadius: 18,
+            justifyContent: "center",
+            paddingVertical: 18,
+            width: "40%",
+            top: 100,
+            alignItems: "center",
+            display: mealsesion?.status === 'PROCESSING' ? 'flex' : 'none'
+          }}
+        >
+          <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
+            Update Meal
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={{
             backgroundColor: "#f96163",
             borderRadius: 18,
             justifyContent: "center",
             paddingVertical: 18,
-            width: "60%",
-            top: 150,
+            width: "40%",
+            top: 100,
             alignItems: "center",
-            display: mealsesion?.status === 'PROCESSING' ? 'flex' : 'none'
+            display: mealsesion?.status !== 'CANCELLED' ? 'flex' : 'none',
           }}
-          onPress={() => onHandleUpdateArea()}
+          onPress={() => onHandleCancelMealSession(item?.mealSessionId)}
         >
           <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
-            Update Meal
+            Cancel Meal
           </Text>
         </TouchableOpacity>
       </View>
@@ -166,10 +233,10 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
           Order Of Meal Session
         </Text>
       </View>
-      <View style={{ paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 10, backgroundColor: 'white', borderRadius: 20, display: order[0]?.status === 'ACCEPTED' ? 'flex' : 'none' }}>
+      <View style={{ paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 10, backgroundColor: 'white', borderRadius: 20, display: order[0]?.status === 'PAID' ? 'flex' : 'none' }}>
         {order[0]?.status === 'PAID' ? (
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', display: order[0]?.status === 'ACCEPTED' ? 'flex' : 'none' }}>Order:</Text>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', alignItems: 'center', top: 10 }}>Order:</Text>
             <TouchableOpacity
               style={{
                 elevation: 5,
@@ -205,9 +272,15 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         ) : null}
-        {/* <Text style={{ fontSize: 16, fontWeight: 'bold', display: order[0]?.status === 'ACCEPTED' ? 'flex' : 'none' }}>Confirm :</Text>
+      </View>
+      <View style={{
+        paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
+        paddingVertical: 10, backgroundColor: 'white', borderRadius: 20,
+        display: mealsesion?.status === 'MAKING' ? 'flex' : 'none'
+      }}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Confirm :</Text>
         {order[0]?.status === 'ACCEPTED' ? (
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', right: 50 }}>
             <TouchableOpacity
               style={{
                 elevation: 5,
@@ -225,14 +298,13 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
               <Ionicons size={20} color='white' name='checkmark-circle-outline' />
             </TouchableOpacity>
           </View>
-        ) : null} */}
+        ) : null}
       </View>
       <FlatList
         data={order}
         keyExtractor={(item) => item.orderId.toString()}
         renderItem={renderItem}
       />
-
     </View>
   );
   const renderScene = SceneMap({
@@ -242,7 +314,8 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
 
   const renderItem = ({ item }) => (
     <View style={{ padding: 40, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor: 'white' }}>
-      <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20, padding: 40 }} source={require("../../../assets/images/avatar.jpg")}></Image>
+      <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20, padding: 40 }}
+        source={require("../../../assets/images/avatar.jpg")}></Image>
       <View style={{ marginHorizontal: 5, }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
@@ -253,44 +326,45 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             <Text>Total Price: {item.totalPrice}</Text>
           </View>
           <View>
-            <TouchableOpacity
-              style={{
-                elevation: 5,
-                padding: 10,
-                borderRadius: 10,
-                marginHorizontal: 20,
-                backgroundColor: 'green',
-                flexDirection: "row",
-                justifyContent: 'space-between',
-                width: 115,
-                margin:10
-              }}
-              onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'COMPELETE')}
-            >
-              <Text style={{ color: 'white' }}>COMPELETE </Text>
-              <Ionicons size={20} color='white' name='checkmark-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                elevation: 5,
-                padding: 10,
-                borderRadius: 10,
-                marginHorizontal: 20,
-                backgroundColor: 'red',
-                flexDirection: "row",
-                justifyContent: 'space-between',
-                width: 90,
-              }}
-              onPress={() => onHandleCompletedOrder(item?.mealSessionId, 'NOT EAT')}
-            >
-              <Text style={{ color: 'white' }}>NOTEAT </Text>
-              <Ionicons size={20} color='white' name='checkmark-circle-outline' />
-            </TouchableOpacity>
+            {item.status === 'READY' && (
+              <>
+                <TouchableOpacity
+                  style={{
+                    elevation: 5,
+                    padding: 10,
+                    borderRadius: 10,
+                    marginHorizontal: 20,
+                    backgroundColor: 'green',
+                    flexDirection: "row",
+                    justifyContent: 'space-between',
+                    width: 115,
+                    margin: 10
+                  }}
+                  onPress={() => onHandleOrderStatus(item?.orderId, 'COMPLETED')}
+                >
+                  <Text style={{ color: 'white' }}>COMPLETE </Text>
+                  <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    elevation: 5,
+                    padding: 10,
+                    borderRadius: 10,
+                    marginHorizontal: 20,
+                    backgroundColor: 'red',
+                    flexDirection: "row",
+                    justifyContent: 'space-between',
+                    width: 90,
+                  }}
+                  onPress={() => onHandleOrderStatus(item?.orderId, 'NOTEAT')}
+                >
+                  <Text style={{ color: 'white' }}>NOT EAT </Text>
+                  <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+                </TouchableOpacity>
+              </>
+            )}
           </View>
-
         </View>
-
-
       </View>
       <View style={{ width: "100%" }}>
         {/* <Dropdown

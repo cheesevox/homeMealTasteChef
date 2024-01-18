@@ -710,6 +710,15 @@ export const postStatusOrder = async (id, value)=>{
     console.log(id)
      await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-single-status-order?orderId=${id}&status=${value}`)
   } catch (error) {
-    console.log("post status paid to complete errror", error)
+    console.log("post status paid to complete or noteat errror", error)
+  }
+}
+
+export const UpdateMealSessionStatus = async (value)=>{
+  try {
+     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`, value)
+     console.log("patch    UPDATE IDD ", value)
+  } catch (error) {
+    console.log("post status mealsesion cancel", error)
   }
 }

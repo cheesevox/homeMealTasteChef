@@ -28,7 +28,7 @@ const ChefHomeScreen = ({ navigation }) => {
   const [orderComplete, setOrderComplete] = useState()
   const [orderProcessing, setOrderProcessing] = useState()
   //   });
-  // };
+  // };user
   // useEffect(() => {
   //   fetchAllOrderByMealsession()
   // }, [user?.kitchenId]);
@@ -36,7 +36,7 @@ const ChefHomeScreen = ({ navigation }) => {
   
   const fectchAllPriceMealsession = (id) => {
     getAllPriceMealSessionByKitchenId(id).then((res) => {
-      console.log("RESSSSS Complete", res)
+      // console.log("RESSSSS Complete", res)
       setPriceMeal(res)
     })
   }
@@ -54,10 +54,16 @@ const ChefHomeScreen = ({ navigation }) => {
     })
   }
   useEffect(() => {
-    fectchAllOrderComplete(id)
-    fectchAllNewOrder()
-    fectchAllPriceMealsession(id)
-  }, [id])
+    const fetchData = () => {
+      fectchAllOrderComplete(id);
+      fectchAllNewOrder();
+      fectchAllPriceMealsession(id);
+    };
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, [id]);
+
   const countComplete = meal ? meal.filter(item => item.status === 'COMPLETED').length : 0;
   // console.log(":COUNTTTTTTTTTTTTT", countComplete)
   const countProcessing = meal ? meal.filter(item => item.status === 'PROCESSING').length : 0;
@@ -187,7 +193,7 @@ const ChefHomeScreen = ({ navigation }) => {
         </View>
         <View style={{ alignItems: "center", margin: 5, }}>
           <Text style={{ fontSize: 25 }} >
-            {priceMeal}
+            {/* {priceMeal} */}
           </Text>
           <Text style={{ fontWeight: 100, color: 'black' }}>
             Total Earning

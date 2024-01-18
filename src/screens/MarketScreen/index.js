@@ -34,7 +34,12 @@ const MarketScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetchAllSessionByAreaId(area);
+    const fetchData = ()=>{
+      fetchAllSessionByAreaId(area);
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return()=> clearInterval(intervalId)
   }, []);
 
   const [value, setValue] = useState();
