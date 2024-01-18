@@ -228,7 +228,7 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                     showsHorizontalScrollIndicator={false}
                 />
                 <View style={{ justifyContent: "center", alignItems: "center", margin: 20 }}>
-                    {mealInSession.every(meal => meal.status === 'processing') && (
+                {mealInSession && mealInSession.length > 0 && mealInSession.every(meal => meal.status === 'processing') && (
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "#f96163",

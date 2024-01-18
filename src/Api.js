@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { RouteName } from "./Constant";
 import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 
-export const login = async (values, navigation,Toast) =>{
+export const login = async (values, navigation, Toast) => {
   console.log(values);
   try {
     const response = await axios.post(
@@ -14,20 +14,20 @@ export const login = async (values, navigation,Toast) =>{
 
     if (response.data) {
       console.log("REPSSSSSSSSSSssss", response.data)
-      console.log("role",response.data.roleId)
+      console.log("role", response.data.roleId)
       const roleId = response.data.roleId;
       const userId = response.data.userId
       const status = response.data.status
       if (roleId === 2) {
         navigation.navigate("Login", { loginFailure: true });
       } else if (roleId === 3) {
-        if(status == true){
-        navigation.navigate(`${RouteName.KITCHEN}`, {user:response.data});
-        } else{
+        if (status == true) {
+          navigation.navigate(`${RouteName.KITCHEN}`, { user: response.data });
+        } else {
           Toast.show({
-            type:"error",
-            text1:"Home Meal Taste",
-            text2:"Your account is ban!"
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "Your account is ban!"
           })
         }
       } else {
@@ -80,7 +80,7 @@ export const getAllMealInSessionID = async (id) => {
     );
     return repose.data;
   } catch (error) {
-    console.log("err in get all meal sesison in sesion id",error);
+    console.log("err in get all meal sesison in sesion id", error);
   }
 };
 
@@ -90,7 +90,8 @@ export const getAllArea = async () => {
       `https://homemealtaste.azurewebsites.net/api/Area/get-all-area`
     );
     return repose.data;
-  } catch (error) {}}
+  } catch (error) { }
+}
 export const getAllDistrict = async () => {
   try {
     const response = await axios.get(
@@ -125,10 +126,10 @@ export const getAllSessionByAreaId = async (id) => {
 export const getAllSessionByAreaIdchef = async (id) => {
   try {
     const response = await axios.get(
-    // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
+      // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
       `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true-in-day?areaid=${id}`
     );
-    console.log("session get ben6 api file la2",response.data)
+    console.log("session get ben6 api file la2", response.data)
     return response.data;
   } catch (error) {
     console.log("get all session by area Id", error);
@@ -154,36 +155,36 @@ export const getAllMealSession = async () => {
     console.log("get all meal ss", error);
   }
 };
-export const getDishByMealId = async (id)=>{
+export const getDishByMealId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Meal/get-single-meal-by-meal-id?mealid=${id}`)
     return response.data
   } catch (error) {
-      console.log("get dish by mela id", error)
+    console.log("get dish by mela id", error)
   }
 }
-export const createOrderUser = async(values)=>{
-  console.log("values creaorder ///////////////",values)
+export const createOrderUser = async (values) => {
+  console.log("values creaorder ///////////////", values)
   try {
-    const response =await axios.post("https://homemealtaste.azurewebsites.net/api/Order/create-order",values)
+    const response = await axios.post("https://homemealtaste.azurewebsites.net/api/Order/create-order", values)
   } catch (error) {
-    console.log("create order",error)
+    console.log("create order", error)
   }
 }
 
-export const getAllOrderByCutomerId = async(id)=>{
+export const getAllOrderByCutomerId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-order-by-customer-id?id=${id}`)
     return response.data
   } catch (error) {
-    console.log("erroe all order by cutomer id" ,error)
+    console.log("erroe all order by cutomer id", error)
   }
 }
 
-export const getAllAreaByDistrictId = async(id) =>{
+export const getAllAreaByDistrictId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Area/get-area-by-district-id?districtid=${id}`)
-    console.log("tra ve area cho kaooooooooooo",response.data)
+    console.log("tra ve area cho kaooooooooooo", response.data)
     return response.data
   } catch (error) {
     console.log("error in getall area by district")
@@ -198,25 +199,25 @@ export const getAllAreaByDistrictId = async(id) =>{
 //   } catch (error) {}
 // };
 
-export const getUserByID = async (id)=>{
+export const getUserByID = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/User/get-user-by-id?id=${id}`)
     return response.data
   } catch (error) {
-    console.log("error user by id " ,error)
+    console.log("error user by id ", error)
   }
 }
 
-export const createFeedBackOrder = async(values)=>{
-  console.log("values create feedback///////////////",values)
+export const createFeedBackOrder = async (values) => {
+  console.log("values create feedback///////////////", values)
   try {
-    const response = await axios.post("https://homemealtaste.azurewebsites.net/api/Feedback/create-feedback",values)
+    const response = await axios.post("https://homemealtaste.azurewebsites.net/api/Feedback/create-feedback", values)
   } catch (error) {
-    console.log("create feedback",error)
+    console.log("create feedback", error)
   }
 }
 
-export const getAllFeedbackByKitchenId = async (id) =>{
+export const getAllFeedbackByKitchenId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Feedback/get-feedback-by-kitchen-id?kitchenid=${id}`)
     return response.data
@@ -225,22 +226,22 @@ export const getAllFeedbackByKitchenId = async (id) =>{
   }
 }
 
-export const createPayment = async (values)=>{
-  console.log("values create Payemnet$$$$$",values)
+export const createPayment = async (values) => {
+  console.log("values create Payemnet$$$$$", values)
   try {
-    const response = await axios.post("https://homemealtaste.azurewebsites.net/api/Payment",values)
+    const response = await axios.post("https://homemealtaste.azurewebsites.net/api/Payment", values)
     return response.data
   } catch (error) {
-    console.log("create payment $$$$",error)
+    console.log("create payment $$$$", error)
   }
 }
-export const getMoneyExportFile = async (id,value) => {
+export const getMoneyExportFile = async (id, value) => {
   try {
     const response = await axios.get(
       `https://homemealtaste.azurewebsites.net/api/Kitchen/withdraw-money-from-chef-wallet-export-file-PDF?kitchenid=${id}&moneyWithdraw=${value}`
     );
     return response.data;
-  } catch (error) {console.log("REPOSSSSSSSSSSSSSSsss link" , error)}
+  } catch (error) { console.log("REPOSSSSSSSSSSSSSSsss link", error) }
 };
 // =======
 // chef dish
@@ -250,7 +251,7 @@ export const getAllDishByKitchenId = async (id) => {
       `https://homemealtaste.azurewebsites.net/api/Dish/get-dish-by-kitchen-id?kitchenid=${id}`
     );
     return response.data;
-  } catch (error) {}
+  } catch (error) { }
 };
 export const deleteDishByDishId = async (id) => {
   try {
@@ -263,9 +264,9 @@ export const deleteDishByDishId = async (id) => {
   }
 };
 export const deleteMealByMealId = async (id) => {
-    await axios.delete(
-      `https://homemealtaste.azurewebsites.net/api/Meal/delete-meal-id-not-exist-in-session?mealid=${id}`
-    );
+  await axios.delete(
+    `https://homemealtaste.azurewebsites.net/api/Meal/delete-meal-id-not-exist-in-session?mealid=${id}`
+  );
 
 };
 export const createNewDish = async (image, attribute) => {
@@ -347,18 +348,18 @@ export const getMealById = async (id) => {
   }
 };
 
-export const getOrderByKitchenId = async (id)=>{
+export const getOrderByKitchenId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-by-kitchen-id?kitchenid=${id}`)
     return response.data
   } catch (error) {
-    console.log("get order by kitchen id",error)
+    console.log("get order by kitchen id", error)
   }
 }
-export const postStatusPaidToCompleted = async (id)=>{
+export const postStatusPaidToCompleted = async (id) => {
   try {
     console.log(id)
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-COMPLETED?orderid=${id}`)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-COMPLETED?orderid=${id}`)
   } catch (error) {
     console.log("post status paid to complete errror", error)
   }
@@ -409,11 +410,11 @@ export const getAllOrderByMealSessionId = async (id) => {
   }
 };
 
-export const postStatusOrderForCustomer = async (id, value)=>{
+export const postStatusOrderForCustomer = async (id, value) => {
   try {
-    console.log("posrtttttttttt id",id)
-    console.log("valuuuuuuuuu post",value)
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order?mealsessionid=${id}&status=${value}`)
+    console.log("posrtttttttttt id", id)
+    console.log("valuuuuuuuuu post", value)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-status-order?mealsessionid=${id}&status=${value}`)
   } catch (error) {
     console.log("post status for order customer", error)
   }
@@ -484,7 +485,7 @@ export const createNewMeal = async (image, attribute, dishes) => {
 };
 
 export const updateDish = async (id, image, attribute) => {
-  console.log("ben api update dish",id,image,attribute)
+  console.log("ben api update dish", id, image, attribute)
   const formData = new FormData();
   // Append image with correct file name and type
   formData.append("dishId", id)
@@ -498,7 +499,7 @@ export const updateDish = async (id, image, attribute) => {
   Object.entries(attribute).forEach(([key, value]) => {
     formData.append(key, value);
   });
-  console.log("daaaaaaaaaaaaaaaaata",formData)
+  console.log("daaaaaaaaaaaaaaaaata", formData)
   try {
     const response = await axios.put(
       "https://homemealtaste.azurewebsites.net/api/Dish/update-dish-not-exist-in-session",
@@ -544,17 +545,17 @@ export const updateMeal = async (id, image, attribute, dishes) => {
     formData.append("DishIds", dishId);
   });
   // Assuming dishes is an array of key-value pairs (objects)
- console.log("daaaaaaaaaaaaaaaaata",formData)
-    const response = await axios.put(
-      "https://homemealtaste.azurewebsites.net/api/Meal/update-meal-not-exist-in-session",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log("Response:", response.data); // Log the response data for debugging
+  console.log("daaaaaaaaaaaaaaaaata", formData)
+  const response = await axios.put(
+    "https://homemealtaste.azurewebsites.net/api/Meal/update-meal-not-exist-in-session",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  console.log("Response:", response.data); // Log the response data for debugging
 };
 
 export const updateProfile = async (values) => {
@@ -582,7 +583,7 @@ export const updateProfile = async (values) => {
     console.error("Full error object:", error);
   }
 };
-export const getAllDishOnSessionByKitchenId = async (id) =>{
+export const getAllDishOnSessionByKitchenId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Dish/get-all-dish-in-meal-session-by-kitchen-id?kitchenid=${id}`)
     return response.data
@@ -601,7 +602,7 @@ export const getAllSessionRegisterTrue = async (id) => {
   }
 };
 
-export const getAllOrderWithPaid = async (id) =>{
+export const getAllOrderWithPaid = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-with-status-paid-by-meal-session-id?mealsessionId=${id}`)
     return response.data
@@ -609,7 +610,7 @@ export const getAllOrderWithPaid = async (id) =>{
     console.log("error get all order b y mealsession id", error)
   }
 }
-export const getAllOrderCompleteHomePage = async (id) =>{
+export const getAllOrderCompleteHomePage = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order-with-status-completed`)
     return response.data
@@ -617,7 +618,7 @@ export const getAllOrderCompleteHomePage = async (id) =>{
     console.log("error get all order comleted by mealsession id", error)
   }
 }
-export const getAllOrderProcessingHomePage = async (id) =>{
+export const getAllOrderProcessingHomePage = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-status-processing`)
     return response.data
@@ -625,7 +626,7 @@ export const getAllOrderProcessingHomePage = async (id) =>{
     console.log("error get all order comleted by mealsession id", error)
   }
 }
-export const getAllNewOrderHomePage = async (id) =>{
+export const getAllNewOrderHomePage = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-all-order`)
     return response.data
@@ -634,7 +635,7 @@ export const getAllNewOrderHomePage = async (id) =>{
   }
 }
 
-export const getAllSessionByAreaIdWithStatusOPEN   = async (id) => {
+export const getAllSessionByAreaIdWithStatusOPEN = async (id) => {
   try {
     const response = await axios.get(
       `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-open?areaid=${id}`
@@ -645,7 +646,7 @@ export const getAllSessionByAreaIdWithStatusOPEN   = async (id) => {
   }
 };
 
-export const getAllMealSEssionWithStatusBeforeUpdateArea  = async (id) => {
+export const getAllMealSEssionWithStatusBeforeUpdateArea = async (id) => {
   try {
     const response = await axios.get(
       `https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-not-status-completed-and-cancelled-by-kitchen-id?kitchenId=${id}`
@@ -655,15 +656,15 @@ export const getAllMealSEssionWithStatusBeforeUpdateArea  = async (id) => {
     console.log("get all meal session by fot update area ", error);
   }
 };
-export const UpdateAllMealSessionToCancel = async (value)=>{
+export const UpdateAllMealSessionToCancel = async (value) => {
   try {
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-area-and-all-meal-session-with-status-processing`)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-area-and-all-meal-session-with-status-processing`)
   } catch (error) {
     console.log("post status paid to complete errror", error)
   }
 }
 
-export const getAllPriceMealSessionByKitchenId  = async (id) => {
+export const getAllPriceMealSessionByKitchenId = async (id) => {
   try {
     const response = await axios.get(
       `https://homemealtaste.azurewebsites.net/api/Kitchen/get-total-price-all-meal-session-by-kitchen-id?kitchenId=${id}`
@@ -673,9 +674,9 @@ export const getAllPriceMealSessionByKitchenId  = async (id) => {
     console.log("get all meal session have price compelete kitchenid ", error);
   }
 };
-export const UpdateMealSesionStatus = async (value)=>{
+export const UpdateMealSesionStatus = async (value) => {
   try {
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`)
   } catch (error) {
     console.log("post status paid to complete errror", error)
   }
@@ -705,20 +706,31 @@ export const updateMealSessionWhenUpdateArea = async (values) => {
     console.error("Full error object:", error);
   }
 };
-export const postStatusOrder = async (id, value)=>{
+export const postStatusOrder = async (id, value) => {
   try {
     console.log(id)
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-single-status-order?orderId=${id}&status=${value}`)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/Order/change-single-status-order?orderId=${id}&status=${value}`)
   } catch (error) {
     console.log("post status paid to complete or noteat errror", error)
   }
 }
 
-export const UpdateMealSessionStatus = async (value)=>{
+export const UpdateMealSessionStatus = async (value) => {
   try {
-     await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`, value)
-     console.log("patch    UPDATE IDD ", value)
+    await axios.patch(`https://homemealtaste.azurewebsites.net/api/MealSession/update-status-meal-session`, value)
+    console.log("patch    UPDATE IDD ", value)
   } catch (error) {
     console.log("post status mealsesion cancel", error)
   }
 }
+export const getTransactionByUserID = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Transaction/get-all-transaction-by-user-id?userid=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error getting user order by id", error);
+    throw error; // Rethrow the error so that the calling code can handle it
+  }
+};
