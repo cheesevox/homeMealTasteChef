@@ -30,7 +30,7 @@ export default function AddNewMealSession({ navigation, route }) {
   const [selectedSession, setSelectedSession] = useState(null);
   const [values, setValues] = useState({
     mealId: selected,
-    sessionIds:[session?.sessionId],
+    sessionIds: [session?.sessionId],
     price: 0,
     quantity: 1,
     areaId: user?.areaId,
@@ -134,7 +134,7 @@ export default function AddNewMealSession({ navigation, route }) {
       }
     });
   };
-
+  const isButtonDisabled = values.price === 0 && values.quantity === 1;
   return (
     <SafeAreaView>
       <HeaderComp
@@ -209,8 +209,7 @@ export default function AddNewMealSession({ navigation, route }) {
               }}
               onChangeText={(text) => setValues({ ...values, quantity: text })}
             />
-            <View style={{ justifyContent: 'center' }}>
-              {/* {group?.sessions && group?.sessions?.map((session, index) => (
+            {/* {group?.sessions && group?.sessions?.map((session, index) => (
                 <TouchableOpacity
                   key={index}
                   style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -223,7 +222,6 @@ export default function AddNewMealSession({ navigation, route }) {
                   <Text>{`Session Type: ${session?.sessionType}`}</Text>
                 </TouchableOpacity>
               ))} */}
-            </View>
             <View
               style={{
                 position: "absolute",
@@ -232,11 +230,19 @@ export default function AddNewMealSession({ navigation, route }) {
                 alignSelf: "center",
               }}
             >
-              <Button
-                title="Save"
-                color="#ECC26D"
-                onPress={() => handleCreateMealSession()}
-              ></Button>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#ECC26D',
+                  borderRadius: 10,
+                  padding: 15,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={handleCreateMealSession}
+                disabled={isButtonDisabled}
+              >
+                <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>Save</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}

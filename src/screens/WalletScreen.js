@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { createPayment, getTransactionByUserID } from "../Api";
+import { createPayment, getTransactionByUserID, getUserByID } from "../Api";
 import { userimage } from "../Constant";
 import { CheckBox } from "react-native-elements";
 import { rows } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
@@ -33,7 +33,7 @@ const WalletScreen = ({ navigation, route }) => {
     setShowWebView(true);
     navigation.navigate("WebScreen", { link });
   };
-
+  const [profile, setProfile] = useState();
   const [link, setLink] = useState("");
   const [transaction, setTransaction] = useState([]);
   const fetchAllTransactionByUserId = (id) => {
@@ -45,6 +45,16 @@ const WalletScreen = ({ navigation, route }) => {
         console.error("Error fetching transactions:", error);
       });
   };
+  const fectProfileByCustomerId = () => {
+    getUserByID(user?.userId).then((res) => {
+      console.log("ptroooooooofileeeeeeeee", res)
+      setProfile(res);
+    });
+  };
+
+  useEffect(() => {
+    fectProfileByCustomerId();
+  }, []);
   useEffect(() => {
     fetchAllTransactionByUserId(id)
   }, [id])
@@ -75,6 +85,14 @@ const WalletScreen = ({ navigation, route }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = () => {
+      fetchAllTransactionByUserId(id)
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, [id]);
   const handlePress = async () => {
     // Call createPaymentCustomer first
     createPaymentCustomer();
@@ -84,6 +102,7 @@ const WalletScreen = ({ navigation, route }) => {
   };
   const filteredTransactions = transaction.filter((item) => item.transactionType === 'TRANSFER');
   const filteredTransactionsRecharge = transaction.filter((item) => item.transactionType === 'RECHARGED');
+  const filteredTransactionsFINED = transaction.filter((item) => item.transactionType === 'FINED');
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -121,7 +140,7 @@ const WalletScreen = ({ navigation, route }) => {
         renderItem={renderItem}
       /> */}
       <FlatList
-        data={filteredTransactions}
+        data={filteredTransactions?.slice()?.reverse()}
         keyExtractor={(item) => item.transactionId.toString()}
         renderItem={renderItem}
       />
@@ -144,14 +163,11 @@ const WalletScreen = ({ navigation, route }) => {
           justifyContent: "space-between",
         }}
       >
-        {/* <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 26,
-          }}
-        >
-          Fined
-        </Text> */}
+         <FlatList
+        data={filteredTransactionsFINED?.slice()?.reverse()}
+        keyExtractor={(item) => item.transactionId.toString()}
+        renderItem={renderItemFined}
+      />
       </View>
     </View>
   );
@@ -171,16 +187,8 @@ const WalletScreen = ({ navigation, route }) => {
           justifyContent: "space-between",
         }}
       >
-        {/* <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 26,
-          }}
-        >
-          Rechard
-        </Text> */}
          <FlatList
-        data={filteredTransactionsRecharge}
+        data={filteredTransactionsRecharge?.slice()?.reverse()}
         keyExtractor={(item) => item.transactionId.toString()}
         renderItem={renderItem}
       />
@@ -197,12 +205,28 @@ const WalletScreen = ({ navigation, route }) => {
     <View style={{ margin: 10, padding: 10, backgroundColor: '#f0f0f0', borderRadius:20, elevation:5 }}>
       <Text>Transaction ID: {item.transactionId}</Text>
       <Text>Date: {item.date}</Text>
-      <Text>Amount: {item.amount}</Text>
+      <Text>Amount: +{item.amount}</Text>
       <Text>Description: {item.description}</Text>
       <Text>Status: {item.status}</Text>
     </View>
   );
-
+  const renderItemFined = ({ item }) => (
+    <View style={{ margin: 10, padding: 10, backgroundColor: '#f0f0f0', borderRadius:20, elevation:5 }}>
+      <Text>Transaction ID: {item.transactionId}</Text>
+      <Text>Date: {item.date}</Text>
+      <Text>Amount: -{item.amount}</Text>
+      <Text>Description: {item.description}</Text>
+      <Text>Status: {item.status}</Text>
+    </View>
+  );
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      console.log('About to blur, resetting state...');
+      setValues((prevValues) => ({ ...prevValues, balance: '' }));
+      setSelection(false);
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComp label="Wallet" onBack={() => navigation.goBack()} />
@@ -294,7 +318,7 @@ const WalletScreen = ({ navigation, route }) => {
         />
         {/* <Text style={{fontSize:20, fontWeight:'bold', color:'white'}}>Balance :</Text> */}
         <Text style={{ fontSize: 21, fontWeight: "bold", color: "orange" }}>
-          Balance : {user.walletDtoResponse?.balance} VND
+          Balance : {profile?.walletDto?.balance} VND
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 18 }}>
           Input For Reacharge
@@ -308,9 +332,12 @@ const WalletScreen = ({ navigation, route }) => {
             marginTop: 10,
           }}
         >
-          <TextInput
+           <TextInput
             placeholder="Input monney incomming"
-            onChangeText={(text) => setValues({ ...values, balance: text })}
+            onChangeText={(text) => {
+              setValues({ ...values, balance: text === '' ? '' : text });
+            }}
+            value={values.balance}
           ></TextInput>
         </View>
         <View style={{ justifyContent: "center", marginTop: 10 }}>

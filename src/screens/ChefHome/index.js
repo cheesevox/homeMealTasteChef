@@ -11,7 +11,7 @@ import {
 import BellIcon from "../../components/Icons/BellIcon";
 import MessageIcon from "../../components/Icons/MessageIcon";
 import Item from "./components/Item";
-import { getAllDishByKitchenId, getAllMealByKitchen, getAllMealSessionByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage, getAllPriceMealSessionByKitchenId } from "../../Api";
+import { getAllDishByKitchenId, getAllMealByKitchen, getAllMealSessionByKitchen, getAllNewOrderHomePage, getAllOrderByMealSessionId, getAllOrderCompleteHomePage, getAllOrderProcessingHomePage, getAllPriceMealSessionByKitchenId, getTransactionByUserID } from "../../Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DishItem from "./components/DishItem";
@@ -33,13 +33,19 @@ const ChefHomeScreen = ({ navigation }) => {
   //   fetchAllOrderByMealsession()
   // }, [user?.kitchenId]);
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  
-  const fectchAllPriceMealsession = (id) => {
-    getAllPriceMealSessionByKitchenId(id).then((res) => {
-      // console.log("RESSSSS Complete", res)
-      setPriceMeal(res)
-    })
-  }
+  const [transaction, setTransaction] = useState([]);
+
+  const fetchAllTransactionByUserId = () => {
+    getTransactionByUserID(user?.userId)
+      .then((res) => {
+        console.log("OOOOOOOOOORDER TRANNNNNNNFERRRR", res)
+        setTransaction(res);
+      })
+  };
+
+  const totalTransferAmount = transaction
+    .filter((transaction) => transaction.transactionType === 'TRANSFER')
+    .reduce((total, transaction) => total + transaction.amount, 0);
 
   const fectchAllOrderComplete = (id) => {
     getAllMealSessionByKitchen(id).then((res) => {
@@ -47,7 +53,7 @@ const ChefHomeScreen = ({ navigation }) => {
       setMeal(res)
     })
   }
- 
+
   const fectchAllNewOrder = () => {
     getAllNewOrderHomePage().then((res) => {
       setOrder(res)
@@ -57,19 +63,16 @@ const ChefHomeScreen = ({ navigation }) => {
     const fetchData = () => {
       fectchAllOrderComplete(id);
       fectchAllNewOrder();
-      fectchAllPriceMealsession(id);
+      fetchAllTransactionByUserId()
     };
     fetchData();
     const intervalId = setInterval(fetchData, 5000);
     return () => clearInterval(intervalId);
-  }, [id]);
+  }, [id, user?.userId]);
 
   const countComplete = meal ? meal.filter(item => item.status === 'COMPLETED').length : 0;
-  // console.log(":COUNTTTTTTTTTTTTT", countComplete)
   const countProcessing = meal ? meal.filter(item => item.status === 'PROCESSING').length : 0;
-  // console.log(":COUNTTTTTTTTTTTTTprocesss", countProcessing)
   const count = order ? order.filter(item => item.status === 'PAID').length : 0;
-  // console.log(":COUNTTTTTTTTTTTTTprocesss", count)
 
   const CartCard = ({ item }) => {
     return (
@@ -138,29 +141,46 @@ const ChefHomeScreen = ({ navigation }) => {
           }}
         >
           <TouchableOpacity>
-            <BellIcon color={"orange"} />
+            <View style={{ margin: 20 }}></View>
           </TouchableOpacity>
-          <MessageIcon color={"orange"} />
         </View>
         <View
           style={{
             alignItems: "center",
-            bottom: 40
+            bottom: 40,
+            flexDirection: "column"
           }}
         >
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ justifyContent: "center" }}>
+          <View style={{}}>
             <Text
               style={{
                 fontSize: 22,
                 fontWeight: 500,
                 color: "#e06666",
                 textAlign: "center",
-                width: '60%',
+                width: '100%',
                 fontWeight: 'bold'
               }}
             >
-              Home Welcome! {user?.name}
+              Home Welcome !
             </Text>
+            </View>
+            <View style={{}}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 500,
+                  color: "#e06666",
+                  textAlign: "center",
+                  width: '100%',
+                  fontWeight: 'bold',
+                  textAlign: "center",
+                }}
+              >
+                {user?.name}
+              </Text>
+            </View>
           </View>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
@@ -179,7 +199,7 @@ const ChefHomeScreen = ({ navigation }) => {
               <Text>{countProcessing}</Text>
             </Text>
             <Text>
-              Inprocess Meal 
+              Inprocess Meal
             </Text>
           </View>
           <View style={{ padding: 20, borderWidth: 0.5, borderBottomRightRadius: 30 }}>
@@ -187,15 +207,16 @@ const ChefHomeScreen = ({ navigation }) => {
               <Text>{countComplete}</Text>
             </Text>
             <Text>
-              Complete Meal 
+              Complete Meal
             </Text>
           </View>
         </View>
         <View style={{ alignItems: "center", margin: 5, }}>
           <Text style={{ fontSize: 25 }} >
             {/* {priceMeal} */}
+            {totalTransferAmount}
           </Text>
-          <Text style={{ fontWeight: 100, color: 'black' }}>
+          <Text style={{ fontWeight: 200, color: 'black' }}>
             Total Earning
           </Text>
         </View>
@@ -204,7 +225,7 @@ const ChefHomeScreen = ({ navigation }) => {
         <Text style={styles.titleStyle}>{"New Booking Order"}</Text>
         {/* <Text style={styles.titleStyle}>{"Booking"}</Text> */}
         <View style={styles.listDishStyle}>
-        <FlatList
+          <FlatList
             data={order?.reverse().slice() && order.filter(item => item.status === 'PAID')}
             keyExtractor={(item) => item?.orderId.toString()} // Corrected keyExtractor typo
             renderItem={({ item }) => (
@@ -215,7 +236,7 @@ const ChefHomeScreen = ({ navigation }) => {
         </View>
       </View>
     </View>
-    
+
   );
 };
 
@@ -249,7 +270,7 @@ const styles = StyleSheet.create({
   },
   listDishStyle: {
     width: "100%",
-    height:'70%'
+    height: '70%'
   },
 });
 

@@ -24,6 +24,15 @@ const UserProfileScreen = ({ navigation, route }) => {
       setAllArea(res)
     })
   }
+  useEffect(() => {
+    const fetchData = () => {
+      fectProfileByCustomerId()
+      fecthAllAreaId()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, [user?.userId]);
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
       setProfile(res)

@@ -305,6 +305,7 @@ const FormDish = (props) => {
             paddingVertical: 10,
             backgroundColor: "#FFAB01",
             borderRadius: 20,
+            
           }}
           onPress={() => {
             handleCreateNewDish();
@@ -323,9 +324,10 @@ const FormDish = (props) => {
             }}
             onPress={() => {
               //call api
+              navigation.goBack()
             }}
           >
-            <Text style={styles.buttonTextStyle}>{"Remove"}</Text>
+            <Text style={styles.buttonTextStyle}>{"Cancel"}</Text>
           </TouchableOpacity>
         )}
       </View>

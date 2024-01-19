@@ -31,13 +31,13 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     status: status
   });
   const [mealValue, setMealValue] = useState({
-    mealSessionIds: [], 
+    mealSessionIds: [],
     status: "CANCELLED",
   });
   const [newStatus, setNewStatus] = useState([])
 
   const onHandleCompletedOrder = (mealSessionId, newStatus) => {
-    setStatus(newStatus);  
+    setStatus(newStatus);
     setValue({
       status: newStatus,
     });
@@ -58,21 +58,21 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     postStatusOrderForCustomer(mealSessionId, newStatus);
     fectSingerMealSessionById()
   };
+
   const onHandleCancelMealSession = (mealSessionId) => {
-    setMealValue(mealSessionId => ({
+    setMealValue((prevMealValue) => ({
       mealSessionIds: [mealSessionId],
       status: "CANCELLED"
     }));
-    if (newStatus === 'CANCELLED') {
-      Toast.show({
-        type: 'error',
-        text1: 'Order Cancelled',
-        text2: 'Your order has been cancelled.',
-      });
-    }
+    Toast.show({
+      type: 'error',
+      text1: 'Order Cancelled',
+      text2: 'Your order has been cancelled.',
+    });
     UpdateMealSessionStatus(mealValue);
-    fectSingerMealSessionById()
+    fectSingerMealSessionById(mealSessionId); // Assuming there's a typo in your function name
   };
+
   const onHandleOrderStatus = (orderId, newStatus) => {
     setStatusOrder(newStatus);  // Assuming setValue is a state update function
     setValueOrder({
@@ -82,14 +82,20 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
     if (newStatus === 'NOTEAT') {
       Toast.show({
         type: 'error',
-        text1: 'Order Cancelled',
-        text2: 'Your order has been cancelled.',
+        text1: 'Session Not Ready End Ongoing',
+        text2: 'Your order will been if session ongoing.',
       });
-    } else {
+    } else if(newStatus === 'NOTEAT'){
       Toast.show({
         type: 'success',
-        text1: 'Order Success',
-        text2: 'Your order has been done.',
+        text1: 'Order Customer Success',
+        text2: 'Your order has been compeleted.',
+      });
+    }else{
+      Toast.show({
+        type: 'error',
+        text1: 'Session Not Ready Ongoing',
+        text2: 'Your order will been if session ongoing.',
       });
     }
     postStatusOrder(orderId, newStatus);
@@ -99,6 +105,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   const [mealsesion, setMealSession] = useState([])
   const fectAllOrderByMealSesssionId = () => {
     getAllOrderByMealSessionId(item?.mealSessionId).then((res) => {
+      // console.log("RESSSMEALLLLLLLLLLLLL", res)
       setOrder(res);
     });
   };
@@ -122,7 +129,16 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
 
   useEffect(() => {
     fectAllOrderByMealSesssionId()
-  }, [item?.mealSessionId])
+  }, [])
+  useEffect(() => {
+    const fetchData = () => {
+      fectAllOrderByMealSesssionId()
+      fectSingerMealSessionById()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 2000)
+    return () => clearInterval(intervalId)
+  }, []);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -172,7 +188,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
           justifyContent: 'space-around'
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: "#30be25",
             borderRadius: 18,
@@ -187,7 +203,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
           <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
             Update Meal
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={{
             backgroundColor: "#f96163",
@@ -197,7 +213,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             width: "40%",
             top: 100,
             alignItems: "center",
-            display: mealsesion?.status !== 'CANCELLED' ? 'flex' : 'none',
+            display: mealsesion?.status === 'CANCELLED' || mealsesion?.status === 'COMPLETED' ? 'none' : 'flex',
           }}
           onPress={() => onHandleCancelMealSession(item?.mealSessionId)}
         >
@@ -313,11 +329,11 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
   });
 
   const renderItem = ({ item }) => (
-    <View style={{ padding: 40, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor: 'white' }}>
+    <View style={{ padding: 30, margin: 20, elevation: 5, borderRadius: 10, flexDirection: 'row', backgroundColor: 'white' }}>
       <Image style={{ width: 100, height: 100, resizeMode: 'cover', borderRadius: 20, padding: 40 }}
         source={require("../../../assets/images/avatar.jpg")}></Image>
-      <View style={{ marginHorizontal: 5, }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ marginHorizontal:10 }}>
+        <View style={{ justifyContent: 'space-between' }}>
           <View>
             <Text>Order ID: {item.orderId}</Text>
             <Text>Status: {item.status}</Text>
@@ -325,45 +341,42 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
             <Text>Slot: {item.quantity}</Text>
             <Text>Total Price: {item.totalPrice}</Text>
           </View>
-          <View>
-            {item.status === 'READY' && (
-              <>
-                <TouchableOpacity
-                  style={{
-                    elevation: 5,
-                    padding: 10,
-                    borderRadius: 10,
-                    marginHorizontal: 20,
-                    backgroundColor: 'green',
-                    flexDirection: "row",
-                    justifyContent: 'space-between',
-                    width: 115,
-                    margin: 10
-                  }}
-                  onPress={() => onHandleOrderStatus(item?.orderId, 'COMPLETED')}
-                >
-                  <Text style={{ color: 'white' }}>COMPLETE </Text>
-                  <Ionicons size={20} color='white' name='checkmark-circle-outline' />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    elevation: 5,
-                    padding: 10,
-                    borderRadius: 10,
-                    marginHorizontal: 20,
-                    backgroundColor: 'red',
-                    flexDirection: "row",
-                    justifyContent: 'space-between',
-                    width: 90,
-                  }}
-                  onPress={() => onHandleOrderStatus(item?.orderId, 'NOTEAT')}
-                >
-                  <Text style={{ color: 'white' }}>NOT EAT </Text>
-                  <Ionicons size={20} color='white' name='checkmark-circle-outline' />
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
+        </View>
+        <View style={{ flexDirection: 'row' , alignItems:'center', right:120, top:10}}>
+          {item.status === 'READY' && (
+            <>
+              <TouchableOpacity
+                style={{
+                  elevation: 5,
+                  padding: 10,
+                  borderRadius: 10,
+                  marginHorizontal: 20,
+                  backgroundColor: 'green',
+                  flexDirection: "row",
+                  justifyContent: 'space-between',
+                }}
+                onPress={() => onHandleOrderStatus(item?.orderId, 'COMPLETED')}
+              >
+                <Text style={{ color: 'white' }}>COMPLETE </Text>
+                <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  elevation: 5,
+                  padding: 10,
+                  borderRadius: 10,
+                  marginHorizontal: 20,
+                  backgroundColor: 'red',
+                  flexDirection: "row",
+                  justifyContent: 'space-between',
+                }}
+                onPress={() => onHandleOrderStatus(item?.orderId, 'NOTEAT')}
+              >
+                <Text style={{ color: 'white' }}>NOT EAT </Text>
+                <Ionicons size={20} color='white' name='checkmark-circle-outline' />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
       <View style={{ width: "100%" }}>
@@ -397,13 +410,17 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         borderTopRightRadius: 30, borderTopLeftRadius: 30,
         marginHorizontal: 20
       }}>
-        <Image
-          source={{ uri: mealsesion?.mealDtoForMealSessions?.image }}
-          style={{
-            width: '100', height: '100%', resizeMode: 'cover',
-            borderTopRightRadius: 30, borderTopLeftRadius: 30,
-          }}
-        />
+        {mealsesion?.mealDtoForMealSessions?.image ? (
+          <Image
+            source={{ uri: mealsesion?.mealDtoForMealSessions?.image }}
+            style={{
+              width: '100', height: '100%', resizeMode: 'cover',
+              borderTopRightRadius: 30, borderTopLeftRadius: 30,
+            }}
+          />
+        ) : (
+          <Text>No image available</Text>
+        )}
       </View>
       <TabView
         navigationState={{ index, routes }}
@@ -414,7 +431,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
           activeTintColor: "white", // Change this to your desired color
           tabBarStyle: { backgroundColor: "black" }, // Change this to your desired background color
         }}
-        sceneContainerStyle={{ backgroundColor: "white" }} // Change this to your desired color
+        sceneContainerStyle={{ backgroundColor: "#97a4a8" }} // Change this to your desired color
         style={{
           flex: 3,
           borderTopRightRadius: 20,
@@ -425,7 +442,7 @@ const MealSessionDetailSceen = ({ navigation, route }) => {
         renderTabBar={(props) => (
           <TabBar
             {...props}
-            style={{ backgroundColor: "white" }}
+            style={{ backgroundColor: "#A2d8ba" }}
             labelStyle={{ color: "black" }}
           />
         )}

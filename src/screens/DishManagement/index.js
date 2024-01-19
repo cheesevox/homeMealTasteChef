@@ -108,7 +108,8 @@ const DishManagement = ({ navigation }) => {
               padding: 15,
               width: '50%',
               borderTopLeftRadius: 30,
-              borderTopRightRadius: 30
+              borderTopRightRadius: 30,
+              top:40
             }}>
               <Ionicons name="checkmark-circle-outline" size={20} />
               <Text style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}> ADD MORE DISH</Text>

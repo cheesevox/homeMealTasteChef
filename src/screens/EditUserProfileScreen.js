@@ -123,7 +123,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-      
+
         <TextInput
           placeholder={profile?.profile?.username}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
@@ -145,40 +145,15 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
-          <Dropdown
-            style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={district}
-            maxHeight={300}
-            labelField="districtName"
-            valueField="districtId"
-            value={values.districtId}
-            placeholder={profile?.profile?.districtDto?.districtName}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-          ></Dropdown>
+        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 15, borderRadius: 20 }}>
+          <Text>
+            {profile?.profile?.districtDto?.districtName}
+          </Text>
         </View>
-        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
-          <Dropdown
-            style={[styles.dropdown, isFocus && { borderColor: "blue"}]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            placeholder={area?.areaName}
-            data={allArea}
-            dropdownPosition="top"
-            maxHeight={400}
-            labelField="areaName"
-            valueField="areaId"
-            value={values.areaId}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-          ></Dropdown>
+        <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 15, borderRadius: 20 }}>
+          <Text>
+            {area?.areaName}
+          </Text>
         </View>
       </View>
 

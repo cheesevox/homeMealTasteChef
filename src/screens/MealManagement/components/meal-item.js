@@ -12,7 +12,7 @@ const MealItem = (props) => {
   const { data, navigation } = props;
   const [meals, setMeals] = useState([]);
   const user = useSelector((state) => state.user.user);
-  console.log("DATAAAAAAAAAAAAAAAAAAAAAAAAa", data);
+  // console.log("DATAAAAAAAAAAAAAAAAAAAAAAAAa", data);
   const refresh = useSelector((state)=>state.meal.refresh)
   console.log("refresh index.js la",refresh?.refresh)
   const handleDelete = (id) => {
@@ -47,8 +47,8 @@ const MealItem = (props) => {
   ]);
 
 
-  console.log("MEALLLLLLLLLLLLLL ", data)
-  console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD ", data?.mealId)
+  // console.log("MEALLLLLLLLLLLLLL ", data)
+  // console.log("MEALLLLLLLLLLLLLL IDDDDDDDDDDDDDDD ", data?.mealId)
 
   return (
     <View style={styles.container}>

@@ -16,10 +16,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import { RouteName } from "../Constant";
 import Toast from "react-native-toast-message";
+import messaging from '@react-native-firebase/messaging';
 
 const LoginScreen = ({ navigation, route }) => {
   const user = useSelector((state)=>state.user.user)
   // console.log("Account when login",user)
+  const [token, setToken] = useState();
+  useEffect(() => {
+    messaging().getToken().then(token => {
+      console.log("tokennnnnnnnn login page", token)
+      setToken(token)
+      setValues({
+        ...values,
+        DeviceToken: token
+      })
+    })
+  }, [])
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -27,6 +39,7 @@ const LoginScreen = ({ navigation, route }) => {
   const [values, setValues] = useState({
     phone: null,
     password: null,
+    DeviceToken : null
   });
   const Login = () => {
     login(values, navigation,Toast)

@@ -11,10 +11,11 @@ import * as Icon from "react-native-feather";
 import React, { useEffect, useState } from 'react'
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
-import { getAllArea, getAllAreaByDistrictId, getAllDistrict, getAllMealSEssionWithStatusBeforeUpdateArea } from './Api'
+import { getAllArea, getAllAreaByDistrictId, getAllDistrict, getAllMealSEssionWithStatusBeforeUpdateArea, updateMealSessionWhenUpdateArea, updateProfile } from './Api'
 import { useSelector, useDispatch } from 'react-redux';
 import Toast from "react-native-toast-message";
 import { ScrollView } from "react-native";
+import { value } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 
 const UpdateAreaScreen = ({ navigation, route }) => {
     const user = useSelector(state => state.user.user)
@@ -22,7 +23,7 @@ const UpdateAreaScreen = ({ navigation, route }) => {
     const profile = route.params;
     const [district, setDistrict] = useState([]);
     const [allArea, setAllArea] = useState([])
-    const [areaByDistrict, setAreaByDistrict] = useState();
+    const [areaByDistrict, setAreaByDistrict] = useState([]);
     const [districtId, setDistrcitId] = useState();
     const [values, setValues] = useState({
         userId: profile?.profile?.userId,
@@ -35,49 +36,112 @@ const UpdateAreaScreen = ({ navigation, route }) => {
     });
     const id = user?.kitchenId
     const [mealInSession, setMealInSession] = useState();
+    const [mealInSessionProcessing, setMealInSessionProcessing] = useState([]);
+    const [districtIdValue, setDistrcitIdValue] = useState();
     const fecthAllMealInSessionBeforeUpdateArea = (id) => {
         getAllMealSEssionWithStatusBeforeUpdateArea(id).then((res) => {
-            console.log("RESSSSSSSSS", res)
             setMealInSession(res)
         })
     }
-    useEffect(() => {
-        fecthAllMealInSessionBeforeUpdateArea(id)
-    }, [id])
+    const fetchAllMealSessionProcessingBykitchnId = (id) => {
+        getAllMealSEssionWithStatusBeforeUpdateArea(id).then((res) => {
+            setMealInSessionProcessing(res)
+        })
+    }
+    const fecthAllArea = () => {
+        getAllArea().then((res) => {
+            setAllArea(res);
+        });
+    };
     const fetchAllDistrict = () => {
         getAllDistrict().then((res) => {
             setDistrict(res);
         });
     };
-    const fecthAllAreaByDistrictId = (districtId) => {
-        getAllAreaByDistrictId(districtId).then((res) => {
+    const fecthAllAreaByDistrictId = () => {
+        getAllAreaByDistrictId(districtIdValue).then((res) => {
+            console.log("LOGGGGG", res)
             setAreaByDistrict(res);
-        });
-    };
-
-    const fecthAllArea = () => {
-        getAllArea().then((res) => {
-            setAllArea(res);
         });
     };
 
     useEffect(() => {
         fetchAllDistrict();
         fecthAllArea();
-        fecthAllAreaByDistrictId(districtId)
-    }, [districtId]);
-    const area = allArea.find(item => item?.areaId === profile?.profile?.areaId);
-    // console.log("offffffffffffffffffff", mealInSession[0]?.status)
+        fetchAllMealSessionProcessingBykitchnId(id)
+        fecthAllMealInSessionBeforeUpdateArea(id)
+    }, [id]);
 
-    const onHandleUpdateProfile = () => {
+    useEffect(() => {
+        const fetchData = () => {
+            fetchAllDistrict();
+            fecthAllArea();
+            fetchAllMealSessionProcessingBykitchnId(id)
+            fecthAllMealInSessionBeforeUpdateArea(id)
+        }
+        fetchData()
+        const intervalId = setInterval(fetchData, 5000)
+        return () => clearInterval(intervalId)
+    }, [id]);
+    useEffect(() => {
+        if (districtIdValue) {
+            fecthAllAreaByDistrictId(districtIdValue);
+        }
+    }, [districtIdValue]);
+
+    useEffect(() => {
+        const newMealSessionIds = mealInSessionProcessing.map(meal => meal.mealSessionId);
+        setMealSessionIds({ mealSessionIds: newMealSessionIds });
+    }, [mealInSessionProcessing]);
+
+    const onHandleUpdateArea = () => {
         updateProfile(values);
         Toast.show({
             type: "success",
             text1: "Update",
             text2: "Update Successfully.",
         });
+        updateMealSessionWhenUpdateArea(mealSessionIds)
+            .then(() => {
+                Toast.show({
+                    type: "success",
+                    text1: "Home Meal Taste",
+                    text2: "Add new Successfully.",
+                });
+                navigation.goBack();
+            })
+            .catch((error) => {
+                Toast.show({
+                    type: "error",
+                    text1: "Home Meal Taste",
+                    text2: "Add new failed.",
+                });
+            });
     };
 
+    const handleDistrictChange = (selectedDistrictId) => {
+        setValues((prevValues) => ({
+            ...prevValues,
+            districtId: selectedDistrictId,
+        }));
+        setDistrcitIdValue(selectedDistrictId)
+    };
+
+    const handleAreaChange = (selectedAreaId) => {
+        setValues((prevValues) => ({
+            ...prevValues,
+            areaId: selectedAreaId,
+        }));
+    };
+
+    const [mealSessionIds, setMealSessionIds] = useState([
+        {
+            mealSessionIds: null
+        }
+    ])
+
+    console.log("mealsessssssssssion", mealInSession);
+    console.log("mealsesssssionprofcingggggg", mealInSessionProcessing);
     const renderSessionItem = ({ item }) => {
         const mealSessionId = item.mealSessionId;
         return (
@@ -87,7 +151,6 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                 }}
                 onPress={() => {
                     navigation.navigate("MealSessionDetail", { mealSessionId });
-                    // }
                 }}
             >
                 <View
@@ -195,10 +258,14 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                         maxHeight={300}
                         labelField="districtName"
                         valueField="districtId"
-                        // value={values.districtId}
+                        value={values.districtId}
                         placeholder={profile?.profile?.districtDto?.districtName}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
+                        onChange={(selectedItem) => {
+                            // console.log("SEELEEEEEEE", selectedItem?.districtId)
+                            handleDistrictChange(selectedItem?.districtId)
+                        }}
                     ></Dropdown>
                 </View>
                 <View style={{ marginHorizontal: 40, marginVertical: 20, borderWidth: 1, padding: 5 }}>
@@ -208,19 +275,19 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
                         iconStyle={styles.iconStyle}
-                        placeholder={area?.areaName}
-                        data={allArea}
+                        data={areaByDistrict}
                         dropdownPosition="top"
                         maxHeight={400}
                         labelField="areaName"
                         valueField="areaId"
-                        // value={values.areaId}
+                        value={values.areaId}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
+                        onChange={(selectedItem) => handleAreaChange(selectedItem.areaId)}
                     ></Dropdown>
                 </View>
             </View>
-            <View style={{ height: '52%' }}>
+            <View style={{ height: '50%' }}>
                 <FlatList
                     data={mealInSession}
                     keyExtractor={(item) => item.mealSessionId.toString()}
@@ -228,7 +295,7 @@ const UpdateAreaScreen = ({ navigation, route }) => {
                     showsHorizontalScrollIndicator={false}
                 />
                 <View style={{ justifyContent: "center", alignItems: "center", margin: 20 }}>
-                {mealInSession && mealInSession.length > 0 && mealInSession.every(meal => meal.status === 'processing') && (
+                    {mealInSession?.length > 0 && mealInSession.every(meal => meal.status !== "APPROVED" && meal.status !== "MAKING") && (
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "#f96163",

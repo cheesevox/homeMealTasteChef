@@ -15,6 +15,7 @@ import { ArrowDownLeft } from "react-native-feather";
 import { faArrowLeft, faMugSaucer } from "@fortawesome/free-solid-svg-icons";
 import { postStatusPaidToCompleted } from "../../Api";
 import { RouteName } from "../../Constant";
+import HeaderComp from "../HeaderComp";
 
 const ChefOrderDetailScreen = ({ navigation, route }) => {
 
@@ -128,40 +129,7 @@ const ChefOrderDetailScreen = ({ navigation, route }) => {
     return (
         <SafeAreaView style={{ backgroundColor: Colors.white, flex: 1}}>
             <View>
-                <View style={styles.topNavigate}>
-                    <View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            width: "90%",
-                        }}
-                    >
-                        <TouchableOpacity onPress={() => navigation.goBack()} 
-                        style={{
-                            padding:5, borderRadius:20,
-                            backgroundColor:'orange'}}>
-                            <FontAwesomeIcon icon={faArrowLeft} size={20} color="white"  />
-                        </TouchableOpacity>
-                        <View style={{backgroundColor:'orange', borderRadius:20}}>
-                        <Text
-                            style={{
-                                fontSize: 22,
-                                fontWeight: "bold",
-                                color: "#e65332",
-                                paddingHorizontal:30,
-                                borderRadius:20,
-                                height:35
-                            }}
-                        >
-                            Order Detail
-                        </Text>
-                        </View>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+            <HeaderComp label="Order Detail" onBack={() => navigation.goBack()} />
             </View>
             {/* <FlatList
           showsVerticalScrollIndicator={false}

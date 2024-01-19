@@ -51,6 +51,10 @@ const SessionManagement = (props) => {
     {
       label: "Cancel",
       value: "CANCEL"
+    },
+    {
+      label: "Rejected",
+      value: "REJECTED"
     }
   ];
 
@@ -142,7 +146,15 @@ const SessionManagement = (props) => {
   const formatter = new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate())
   // const [newData, setNewData] = useState([])
-
+  useEffect(() => {
+    const fetchData = ()=>{
+      fectAllMealSessionByKitchenId()
+      fetchAllMealSession()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return()=> clearInterval(intervalId)
+  }, []);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       fetchAllMealSession();
@@ -156,13 +168,8 @@ const SessionManagement = (props) => {
       // console.log("default tab la", tab);
       setNewData(
         mealInSession.filter((item) => {
-          // Check for both date and status
           const isMatchingStatus = item.status.toUpperCase().includes(tab);
-
-          // Check for kitchenId
           const isMatchingKitchenId = !kitchenId || item?.kitchenDtoForMealSession?.kitchenId === kitchenId;
-
-          // Return true only if all conditions are met
           return isMatchingStatus && isMatchingKitchenId;
         })
       );

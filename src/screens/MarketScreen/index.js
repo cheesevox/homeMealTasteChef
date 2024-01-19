@@ -45,22 +45,6 @@ const MarketScreen = ({ navigation }) => {
   const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
 
-  // useEffect(() => {
-  //   if (session) {
-  //     const filteredSessions = session.filter(item => {
-  //       // Assuming item.endDate is a Date object
-  //       const sessionEndDate = item?.endDate;
-  //       // Check if sessionEndDate is a valid date
-  //       if (sessionEndDate instanceof Date && !isNaN(sessionEndDate.getTime())) {
-  //         // Compare sessionEndDate with selectedDate
-  //         return sessionEndDate >= selectedDate;
-  //       }
-  //     });
-  //     console.log("NEWWWWWWWWWWWSESIIIIIIIIIONFUUTE ", filteredSessions);
-  //     setFutureSessions(filteredSessions);
-  //   }
-  // }, [session, selectedDate]);
-
   useEffect(() => {
     if (selectedDate) {
       // Filter sessions based on selected date
@@ -90,7 +74,6 @@ const MarketScreen = ({ navigation }) => {
   const showDatePicker = () => {
     setShow(true);
   };
-  // console.log("DATEEEEEEEEEEEe", formatter.format(selectedDate))
   return (
     <View>
       <HeaderComp label={"Maket Session"} isHasBackIcon={false} />
@@ -100,7 +83,7 @@ const MarketScreen = ({ navigation }) => {
       <View style={{
         flexDirection: "row", alignItems: "center",
         marginHorizontal: 40, marginVertical: 10, justifyContent: "center",
-        borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
+        borderRadius: 30, borderWidth:1
       }}>
         <TouchableOpacity onPress={showDatePicker}>
           <Ionicons name="calendar-outline" size={22} />
@@ -128,8 +111,8 @@ const MarketScreen = ({ navigation }) => {
       <View style={{
         margin: 15,
         borderRadius: 20,
-        elevation: 5,
-        // height: '86%',
+        borderWidth:2,
+        height: '72%',
       }}>
         <View style={{ paddingTop: 10 }}>
           <SessionList navigation={navigation} sessions={newData}/>

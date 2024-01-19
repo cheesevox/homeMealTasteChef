@@ -88,10 +88,11 @@ const MealManagement = ({ navigation }) => {
               padding: 15,
               width: '50%',
               borderTopLeftRadius: 30,
-              borderTopRightRadius: 30
+              borderTopRightRadius: 30,
+              top:35
             }}>
               <Ionicons name="checkmark-circle-outline" size={20} />
-              <Text style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}> ADD MORE MEAL</Text>
+              <Text style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}> ADD MORE MEAL </Text>
               <Ionicons name="add-circle-outline" size={20} />
             </View>
           </Pressable>

@@ -184,20 +184,13 @@ export const getAllOrderByCutomerId = async (id) => {
 export const getAllAreaByDistrictId = async (id) => {
   try {
     const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Area/get-area-by-district-id?districtid=${id}`)
-    console.log("tra ve area cho kaooooooooooo", response.data)
+    // console.log("tra ve area cho kaooooooooooo", response.data)
     return response.data
   } catch (error) {
-    console.log("error in getall area by district")
+    console.log("error in get all area by district")
   }
 }
-// export const getAllDistrict = async () => {
-//   try {
-//     const repose = await axios.get(
-//       `https://homemealtaste.azurewebsites.net/api/District/get-all-district`
-//     );
-//     return repose.data;
-//   } catch (error) {}
-// };
+
 
 export const getUserByID = async (id) => {
   try {
@@ -560,7 +553,6 @@ export const updateMeal = async (id, image, attribute, dishes) => {
 
 export const updateProfile = async (values) => {
   console.log("values for updating profile:", values);
-
   try {
     const response = await axios.put(
       "https://homemealtaste.azurewebsites.net/api/User/update-profile-chef",
@@ -578,7 +570,6 @@ export const updateProfile = async (values) => {
   } catch (error) {
     console.error("Error updating profile:", error.message);
     console.error("Error details:", error.response);
-
     // Log the entire error object for more information
     console.error("Full error object:", error);
   }
@@ -685,14 +676,11 @@ export const UpdateMealSesionStatus = async (value) => {
 export const updateMealSessionWhenUpdateArea = async (values) => {
   console.log("values for mealsesion updating area:", values);
   try {
-    const response = await axios.put(
+    const response = await axios.patch(
       "https://homemealtaste.azurewebsites.net/api/MealSession/update-area-and-all-meal-session-with-status-processing",
       values
     );
-
-    // Log the response data for debugging
     console.log("Update Profile Response:", response.data);
-
     if (response.status === 200) {
       console.log("Update successful.");
     } else {
@@ -732,5 +720,15 @@ export const getTransactionByUserID = async (id) => {
   } catch (error) {
     console.log("Error getting user order by id", error);
     throw error; // Rethrow the error so that the calling code can handle it
+  }
+};
+export const getAllMealSEssionProcessingByKitchenId = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/MealSession/get-all-meal-session-with-not-status-completed-and-cancelled-by-kitchen-id?kitchenId=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("get all meal session by fot update area ", error);
   }
 };

@@ -23,7 +23,7 @@ const MealSessionScreen = ({ navigation }) => {
       // console.log("Ress allmealsession by kitchen", res);
       setMealSession(res);
     });
-    console.log("all meal session:", user.kitchenId);
+    // console.log("all meal session:", user.kitchenId);
   };
 
   const onChange = (event, selectedDate) => {
@@ -43,14 +43,18 @@ const MealSessionScreen = ({ navigation }) => {
   };
   const fetchAllMealInSession = async () => {
     console.log(formatter.format(selectedDate))
-    console.log("meal sesison", mealSession)
+    // console.log("meal sesison", mealSession)
     mealSession.filter((item) => item.createDate.includes(formatter.format(selectedDate))
     )
   }
   useEffect(() => {
-    fectAllMealSessionByKitchenId()
-  }, [])
-  
+    const fetchData = () => {
+      fectAllMealSessionByKitchenId()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, []);
   useEffect(() => {
     console.log("hehehehe", formatter.format(selectedDate))
     console.log("mealsession", mealSession)
@@ -82,7 +86,7 @@ const MealSessionScreen = ({ navigation }) => {
         }}
         onPress={() => {
           // if (item.status === 'PROCESS') {
-          navigation.navigate("MealSessionDetail", {mealSessionId});
+          navigation.navigate("MealSessionDetail", { mealSessionId });
           // }
         }}
       // disabled={item.status !== 'APPROVED'}
@@ -103,6 +107,8 @@ const MealSessionScreen = ({ navigation }) => {
               width: 100,
               height: 100,
               borderRadius: 10,
+              alignItems: 'center',
+              marginVertical:20
             }}
             source={{ uri: item?.mealDtoForMealSession?.image }}
           />
@@ -110,18 +116,17 @@ const MealSessionScreen = ({ navigation }) => {
             <Text style={{ ...styles.text, fontSize: 16, textAlign: "center" }}>
               {item.mealDtoForMealSession?.name}
             </Text>
-            <Text
-              style={{ ...styles.text, fontSize: 12 }}
-            >{`Description: ${item.mealDtoForMealSession?.description}`}</Text>
+
             <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
+                borderRadius: 20,
               }}
             >
               <Text
                 style={{ ...styles.text, fontSize: 12 }}
+              >{`Description: ${item.mealDtoForMealSession?.description}`}</Text>
+              <Text
+                style={{ fontSize: 12 }}
               >{`Price: ${item.price}`}</Text>
               <Text
                 style={{ ...styles.text, fontSize: 12 }}
@@ -129,24 +134,14 @@ const MealSessionScreen = ({ navigation }) => {
               <Text
                 style={{ ...styles.text, fontSize: 12 }}
               >{`Create At: ${item.createDate}`}</Text>
-            </View>
-            <View
-              style={{
-                borderRadius: 20,
-              }}
-            >
               <Text>Status :{item.status}</Text>
-              {/* <Text>Status :{item.createDate}</Text> */}
-
               <View style={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between'
               }}>
                 <Text>Session :{item.sessionDtoForMealSession.sessionType}</Text>
-                {/* <Text>Area :{item.sessionDtoForMealSession.areaDtoForMealSession.areaName}</Text> */}
               </View>
-
             </View>
           </View>
         </View>
@@ -162,7 +157,7 @@ const MealSessionScreen = ({ navigation }) => {
       <View style={{
         flexDirection: "row", alignItems: "center",
         marginHorizontal: 40, marginVertical: 15, justifyContent: "center",
-        borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
+        borderRadius: 30, borderWidth:1, backgroundColor: '#00000000'
       }}>
         <TouchableOpacity onPress={showDatePicker}>
           <Ionicons name="calendar-outline" size={22} />

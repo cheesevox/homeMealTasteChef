@@ -442,6 +442,7 @@ const FromMeal = (props) => {
             paddingVertical: 10,
             backgroundColor: "#FFAB01",
             borderRadius: 20,
+            display : dishInMeal.length == 0 ? 'none' : 'flex'
           }}
           onPress={() => {
             onHandleCreateNewMeal();

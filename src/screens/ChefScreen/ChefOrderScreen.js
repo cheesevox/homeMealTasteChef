@@ -189,7 +189,7 @@ const ChefOrderScreen = ({ navigation }) => {
       <View style={{
         flexDirection: "row", alignItems: "center",
         marginHorizontal: 40, marginVertical: 10, justifyContent: "center",
-        borderRadius: 30, elevation: 5, backgroundColor: '#00000000'
+        borderRadius: 30,borderWidth:1, backgroundColor: '#00000000'
       }}>
         <TouchableOpacity onPress={showDatePicker}>
           <Ionicons name="calendar-outline" size={22} />
