@@ -7,11 +7,13 @@ const SessionList = ({ sessions }) => {
     const groupedSessions = groupSessionsByDates(sessions);
     // console.log("Gourpppsession ", groupedSessions)
     return (
-        <ScrollView style={{ height: '85%' }}>
-            {groupedSessions.slice().reverse().map((group, index) => (
-                <SessionItemGroup key={index} group={group} groupedSessions={groupedSessions}  />
-            ))}
-        </ScrollView>
+        <FlatList
+            data={groupedSessions.slice().reverse()}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+                <SessionItemGroup group={item} groupedSessions={groupedSessions} />
+            )}
+        />
     );
 };
 const SessionItem = ({ session, groupedSessions,  }) => {
@@ -73,14 +75,9 @@ const SessionItem = ({ session, groupedSessions,  }) => {
 };
 
 const SessionItemGroup = ({ session, group, groupedSessions, selectedDate }) => {
-    const navigation = useNavigation();
     return (
-        <View style={{ justifyContent: 'center', borderWidth: 1, borderRadius: 10, margin: 20 }}>
+        <View style={{ justifyContent: 'center', borderRadius: 10, margin: 20 }}>
             <TouchableOpacity
-                onPress={() =>
-                    //   navigation.navigate("SessionManagement", { session, groupedSessions  })
-                    navigation.navigate("SessionManagement", { session, group: groupedSessions.find(group => group.sessions.includes(session))})
-                }
             >
                 <Text style={{ textAlign: 'center', fontSize: 17 }}>{` End Date: ${group.endDate}`}</Text>
                 {/* {group.sessions.map((session, index) => (
@@ -92,7 +89,6 @@ const SessionItemGroup = ({ session, group, groupedSessions, selectedDate }) => 
                     renderItem={({ item }) => (
                         <SessionItem session={item} groupedSessions={groupedSessions} />
                     )}
-                    horizontal={true}
                 />
             </TouchableOpacity>
         </View>
